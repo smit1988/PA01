@@ -97,8 +97,8 @@ int main(int argc, char * * argv)
     printf("Welcome to ECE264, we are working on PA01.\n\n");
 
     // Uncomment to run two example (incomplete) testcases.
-    //test_00_arraySum();
-    //test_01_arrayCountNegative();
+    test_00_arraySum();
+    test_01_arrayCountNegative();
 
     return EXIT_SUCCESS;
 }
