@@ -1,0 +1,31 @@
+Breakpoint 1 at 0x400790: file pa01.c, line 59.
+Starting program: /home/shay/b/smit1988/ECE264/Solutions/PA01/PA01/pa01 
+
+Breakpoint 1, test_arrayCountNegative (array=0x7fffffffe3e0, len=4, expected=1)
+    at pa01.c:61
+61	    printArray(array, len);
+Missing separate debuginfos, use: debuginfo-install glibc-2.12-1.132.el6_5.3.x86_64
+No symbol "argc" in current context.
+$1 = 4
+$2 = (int *) 0x7fffffffe3e0
+$3 = 1
+62	    int count = arrayCountNegative(array,len); 
+63	    printf(". count = %d, expected = %d.", count, expected);
+Continuing.
+
+Breakpoint 1, test_arrayCountNegative (array=0x7fffffffe3e0, len=0, expected=0)
+    at pa01.c:61
+61	    printArray(array, len);
+Continuing.
+
+Breakpoint 1, test_arrayCountNegative (array=0x7fffffffe3c0, len=5, expected=0)
+    at pa01.c:61
+61	    printArray(array, len);
+Continuing.
+
+Breakpoint 1, test_arrayCountNegative (array=0x7fffffffe3b0, len=4, expected=4)
+    at pa01.c:61
+61	    printArray(array, len);
+Continuing.
+
+Program exited normally.
