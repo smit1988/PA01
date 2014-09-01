@@ -23,8 +23,18 @@ int arrayCountNegative(int * array, int len)
 }
 
 int arrayIsIncreasing(int * array, int len)
-{    
-    return 0;
+{
+  int x;
+  //Return 1 if array is empty
+  if(len == 0)
+    return 1;
+  //Return 0 if the current array value is greater than the next    
+  for(x = 0; x < (len - 1); x++){
+    if(*(array + x) > *(array + x + 1))
+      return 0;
+  }
+  //Return 1 otherwise
+  return 1;
 }
 
 int arrayIndexRFind(int needle, const int * haystack, int len)
