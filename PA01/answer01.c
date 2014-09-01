@@ -3,7 +3,12 @@
 
 int arraySum(int * array, int len)
 {
-    return 0;
+  int x, sum = 0;
+  for(x = 0; x < len; x++){
+    sum = *(array + x) + sum;
+  }
+
+  return 0;
 }
 
 int arrayCountNegative(int * array, int len)
