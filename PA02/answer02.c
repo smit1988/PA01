@@ -6,5 +6,7 @@
 
 size_t my_strlen(const char * str)
 {
-  return 0;
+  char * x;
+  for(x = (char *) str; *x != '\0'; x++);
+  return (x - str);
 }

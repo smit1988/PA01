@@ -29,7 +29,7 @@ int main(int argc, char * * argv)
     printf("my_strlen(\"%s\") = %d\n", s2, (int) my_strlen(s2));
     printf("my_strlen(\"%s\") = %d\n", s3, (int) my_strlen(s3));
 
-    // -- my_countchar, should be: 3, 0, and 2
+    /*    // -- my_countchar, should be: 3, 0, and 2
     printf("my_countchar(\"%s\", 'l') = %d\n", s1, (int) my_countchar(s1, 'l'));
     printf("my_countchar(\"%s\", 'o') = %d\n", s2, (int) my_countchar(s2, 'o'));
     printf("my_countchar(\"%s\", 'o') = %d\n", s3, (int) my_countchar(s3, 'o'));
@@ -61,7 +61,7 @@ int main(int argc, char * * argv)
 
     // -- my_atoi. You will have to do this for yourself.
 
-    return EXIT_SUCCESS;
+    return EXIT_SUCCESS;*/
 }
 
 
