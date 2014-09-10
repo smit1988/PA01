@@ -37,3 +37,16 @@ char * my_strchr(const char * str, int ch)
     return x;
   return NULL;
 }
+
+char * my_strrchr(const char * str, int ch)
+{
+  char * x;
+  //Point to end of string
+  for(x = (char *) str; *x != '\0'; x++);
+  //Point to ch or at beginning of string
+  for(x; *x != ch && x != (char *) str; x--);
+  //Catch beginning of string
+  if(*x == ch)
+    return x;
+  return NULL;
+}
