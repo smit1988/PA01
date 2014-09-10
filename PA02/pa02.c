@@ -61,12 +61,17 @@ int main(int argc, char * * argv)
     printf("my_strcpy(buffer, \"%s\"), buffer = \"%s\"\n", s3, buffer);
     
     // -- my_strcat. You will have to do this yourself... just
-    printf("Should print 123456: %s", my_strcat("1234", "56"));
+    char buffer2[BUFFER_LEN];
+    my_strcpy(buffer2, s1);
+    printf("Should print Hello World!56: %s\n", my_strcat(buffer2, "56"));
     // look at my_strcpy for an example, and go from there.
     // -- my_isspace. You will have to do this for yourself.
-
+    printf("Space %d\n", my_isspace(' '));
+    printf("Not a space %d\n", my_isspace('f'));
     // -- my_atoi. You will have to do this for yourself.
-
+    printf("0: %d\n", my_atoi("0"));
+    printf("1234pie: %d\n", my_atoi("1234pie"));
+    printf("pie1234: %d\n", my_atoi("pie1234"));
     return EXIT_SUCCESS;
 }
 
