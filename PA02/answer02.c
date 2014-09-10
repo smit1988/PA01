@@ -107,3 +107,9 @@ char * my_strcat(char * dest, const char * src)
   return dest;
 }
 
+int my_isspace(int ch)
+{
+  if(ch == ' ' || ch == '\t' || ch == '\n' || ch == '\v' || ch == '\f' || ch == '\r')
+    return 1;
+  return 0;
+}
