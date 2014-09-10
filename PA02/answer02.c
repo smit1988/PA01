@@ -82,29 +82,22 @@ char * my_strstr(const char * haystack, const char * needle)
   return NULL;
 }
 
-char * my_strcpy(char * dest, const char * src){
+char * my_strcpy(char * dest, const char * src)
+{
   char * x;
-  for(x = (char *) src; *x != '\0'; x++)
-    {
-      *dest = *x;
-      dest++;
-    }
-  *(dest++) = '\0';
-  dest = dest - (x - (char *) src) - 1;
+  char * y;
+  x = dest;
+  y = (char *) src;
+  while((*(x++) = *(y++)) != 0);
   return dest;
 }
 
 char * my_strcat(char * dest, const char * src)
 {
   char * x;
-  for(dest; *dest != '\0'; dest++);
-  for(x = (char *) src; *x != '\0'; x++)
-    {
-      *dest = *x;
-      dest++;
-    }
-  *(dest++) = '\0';
-  dest = dest - (x - (char *) src) - 1;
+  x = dest;
+  for(x; *x != '\0'; x++);
+  my_strcpy(x, src);
   return dest;
 }
 

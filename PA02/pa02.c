@@ -61,7 +61,7 @@ int main(int argc, char * * argv)
     printf("my_strcpy(buffer, \"%s\"), buffer = \"%s\"\n", s3, buffer);
     
     // -- my_strcat. You will have to do this yourself... just
-
+    printf("Should print 123456: %s", my_strcat("1234", "56"));
     // look at my_strcpy for an example, and go from there.
     // -- my_isspace. You will have to do this for yourself.
 
