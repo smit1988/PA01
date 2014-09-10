@@ -84,14 +84,26 @@ char * my_strstr(const char * haystack, const char * needle)
 
 char * my_strcpy(char * dest, const char * src){
   char * x;
-  int count = 0;
   for(x = (char *) src; *x != '\0'; x++)
     {
       *dest = *x;
       dest++;
-      count++;
     }
   *(dest++) = '\0';
-  dest = dest - count - 1;
+  dest = dest - (x - (char *) src) - 1;
   return dest;
 }
+
+char * my_strcat(char * dest, const char * src)
+{
+  char * x;
+  for(dest; *dest != '\0'; dest++);
+  for(x = (char *) src; *x != '\0'; x++)
+    {
+      *dest = *x;
+    }
+  *(dest++) = '\0';
+  dest = dest - (x - (char *) src) - 1;
+  return dest;
+}
+

@@ -59,15 +59,15 @@ int main(int argc, char * * argv)
     printf("my_strcpy(buffer, \"%s\"), buffer = \"%s\"\n", s2, buffer);
     my_strcpy(buffer, s3);
     printf("my_strcpy(buffer, \"%s\"), buffer = \"%s\"\n", s3, buffer);
-    /*
+    
     // -- my_strcat. You will have to do this yourself... just
-    // look at my_strcpy for an example, and go from there.
 
+    // look at my_strcpy for an example, and go from there.
     // -- my_isspace. You will have to do this for yourself.
 
     // -- my_atoi. You will have to do this for yourself.
 
-    return EXIT_SUCCESS;*/
+    return EXIT_SUCCESS;
 }
 
 
