@@ -101,6 +101,7 @@ char * my_strcat(char * dest, const char * src)
   for(x = (char *) src; *x != '\0'; x++)
     {
       *dest = *x;
+      dest++;
     }
   *(dest++) = '\0';
   dest = dest - (x - (char *) src) - 1;
