@@ -67,17 +67,17 @@ char * my_strstr(const char * haystack, const char * needle)
       if(*hay == *nee)
         {
           place = hay;
+	  //If letter found, compare next letters
           for(nee; *nee == *hay; nee++)
             {
 	      if(*(nee + 1) == '\0')
 	        return place;
 	      hay++;
             }
+	  //If subsequent letter not found, pick up from first letter location
           hay = place;
         }
       hay++;
     }
   return NULL;
-  //If letter found, compare next letters
-  //If subsequent letter not found, pick up from first letter location
 }
