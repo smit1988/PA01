@@ -50,3 +50,34 @@ char * my_strrchr(const char * str, int ch)
     return x;
   return NULL;
 }
+
+char * my_strstr(const char * haystack, const char * needle)
+{
+  char * nee;
+  char * hay;
+  //Holds the location of last match
+  char * place;
+  nee = (char *) needle;
+  hay = (char *) haystack;
+  if(*nee == '\0')
+    return hay;
+  while(*hay != '\0')
+    {
+      //Find first letter of needle in haystack
+      if(*hay == *nee)
+        {
+          place = hay;
+          for(nee; *nee == *hay; nee++)
+            {
+	      if(*(nee + 1) == '\0')
+	        return place;
+	      hay++;
+            }
+          hay = place;
+        }
+      hay++;
+    }
+  return NULL;
+  //If letter found, compare next letters
+  //If subsequent letter not found, pick up from first letter location
+}

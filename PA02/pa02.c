@@ -44,12 +44,12 @@ int main(int argc, char * * argv)
     printf("my_strrchr(\"%s\", 'o') = %s\n", s2, my_strrchr(s2, 'o'));
     printf("my_strrchr(\"%s\", '\\0') = %s\n", s3, my_strrchr(s3, '\0'));
 
-    /*
+    
     // -- my_strstr, should be: "World!", "Hello World!", "(null)"
     printf("my_strstr(\"%s\", \"World\") = %s\n", s1, my_strstr(s1, "World"));
     printf("my_strstr(\"%s\", \"\") = %s\n", s1, my_strstr(s1, ""));
     printf("my_strstr(\"%s\", \"hello\") = %s\n", s1, my_strstr(s1, "hello"));
-    
+    /*
     // -- my_strcpy. For this function you need a buffer where you
     // copy the string to. 
     char buffer[BUFFER_LEN];
