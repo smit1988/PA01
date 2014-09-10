@@ -22,3 +22,18 @@ int my_countchar(const char * str, char ch)
     }
   return count;
 }
+
+char * my_strchr(const char * str, int ch)
+{
+  char * x;
+  //Search until end of string
+  for(x = (char *) str; *x != '\0'; x++)
+    {
+      if(*x == ch)
+	return x;
+    }
+  //Catch null value
+  if(ch == '\0')
+    return x;
+  return NULL;
+}
