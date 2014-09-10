@@ -113,3 +113,31 @@ int my_isspace(int ch)
     return 1;
   return 0;
 }
+
+int my_atoi(const char * str)
+{
+  int ret;
+  int negative = 1;
+  char * x;
+  x = (char *) str;
+  //Increment str to skip all whitespace
+  for(x; my_isspace(*x); x++);
+  //Take note of minus sign
+  if(*x == '-')
+    {
+      negative = -1;
+      x++;
+    }
+  else if(*x < '0' || *x > '9')
+    return 0;
+  //Initialize a return value "ret" to 0
+  ret = 0;
+  while(*x >= '0' && *x <= '9')
+    {
+      ret*=10;
+      ret+= *x - '0';
+      x++;
+    }
+  //Return ret or -ret
+  return (negative * ret);
+}
