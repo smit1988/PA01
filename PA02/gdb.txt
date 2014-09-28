@@ -1,0 +1,15 @@
+Breakpoint 1 at 0x40052e: file pa02.c, line 24.
+Starting program: /home/shay/b/smit1988/ECE264/Solutions/PA01/PA02/pa02 
+
+Breakpoint 1, main (argc=1, argv=0x7fffffffe508) at pa02.c:24
+24	    const char * s2 = "";
+$1 = 1
+25	    const char * s3 = "foo";
+$2 = 0x0
+Argument list to give program being debugged when it is started is "".
+$3 = 1
+28	    printf("my_strlen(\"%s\") = %d\n", s1, (int) my_strlen(s1));
+$4 = 1
+Continuing.
+
+Program exited normally.
