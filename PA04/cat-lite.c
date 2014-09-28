@@ -14,28 +14,45 @@ int main(int argc, char * * argv)
 {
   // We want some variables to store which "switches" were set
   int showHelp = FALSE;
-  int serveIceCream = FALSE;
   int badSwitch = FALSE;
+  int standardIn = FALSE;
 
-  // Loop through the arguments, looking for our switches...
-  int ind = 1; // we always skip 0, which is the program path
-  for( ; ind < argc; ++ind) {
-    if(strcmp(argv[ind], "--help") == 0) 
-      showHelp = TRUE;
-    else if(strcmp(argv[ind], "-i") == 0)
-      serveIceCream = TRUE;
-    else if(strcmp(argv[ind], "--serve-icecream") == 0)
-      serveIceCream = TRUE;
-    else {
-      badSwitch = TRUE; // best not to run if there's an error
-      fprintf(stderr, "Unknown switch: '%s'\n", argv[ind]);
+  FILE *fptr;
+
+  // Test for '-', empty, nonexistent file, and help. Otherwise, it's a file
+  if(argc == 1)
+    //do something with standard input, then exit
+  else {
+    int ind = 1; // we always skip 0, which is the program path
+    for( ; ind < argc; ++ind) {
+      if(strcmp(argv[ind], "--help") == 0) {
+        printf("Usage: cat-lite [--help] [FILE]...\n"
+               "With no FILE, or when FILE is -, read standard input.\n\n"
+               "Examples:\n"
+               "  cat-lite README   Print the file README to standard output.\n"
+               "  cat-lite f - g    Print f's contents, then standard input,\n"
+               "                    then g's contents.\n"
+	       "  cat-lite          Copy standard input to standard output.\n");
+        return EXIT_SUCCESS;
+      }
+      else if(strcmp(argv[ind], "-") == 0)
+        standardIn = TRUE;
+      else if(fopen(argv[ind] == NULL)
+        badSwitch = TRUE;
+      else if(strcmp(argv[ind], "--serve-icecream") == 0)
+        serveIceCream = TRUE;
+      else {
+        badSwitch = TRUE; // best not to run if there's an error
+        fprintf(stderr, "Unknown switch: '%s'\n", argv[ind]);
+      }
     }
   }
 
   // Usually you want to bail if the switches aren't perfect...
   // because this helps developers make more reliable software.
   if(badSwitch) {
-    fprintf(stderr, "Aborting...\n");
+    // cat cannot open the file that caused the error
+    //    fprintf(stderr, "cat cannot open %s\n",argv[1]);
     return EXIT_FAILURE;
   }
 
@@ -45,10 +62,10 @@ int main(int argc, char * * argv)
            "With no FILE, or when FILE is -, read standard input.\n\n"
            "Examples:\n"
            "  cat-lite README   Print the file README to standard output.\n"
-           "  cat-lite f - g    Print f's contents, then standard input,\n" 
+	   "  cat-lite f - g    Print f's contents, then standard input,\n"
            "                    then g's contents.\n"
-           "  cat-lite          Copy standard input to standard output.\n");
-    return EXIT_SUCCESS;
+	   "  cat-lite          Copy standard input to standard output.\n");
+	   return EXIT_SUCCESS;
   }
 
   // And here we do something intelligent:
