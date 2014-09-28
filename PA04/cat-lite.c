@@ -9,15 +9,15 @@
 
 int main(int argc, char * * argv)
 {
-  int ind;
+  int ind, ch;
   //may need a bigger string
-  char str[80];
+  char str[100];
   FILE *fptr;
 
   // Test for '-', empty, nonexistent file, and help. Otherwise, it's a file
   if(argc == 1){
-    scanf("%79s",str);
-    printf("%s\n",str);
+    fgets(str,100,stdin);
+    printf("%s",str);
     return EXIT_SUCCESS;
     //do something with standard input, then exit
   }
@@ -38,21 +38,30 @@ int main(int argc, char * * argv)
 
     //seek bad file
     for(ind = 1; ind < argc; ind++) {
-      if(fopen(argv[ind], "r") == NULL){
+      fptr = fopen(argv[ind], "r");
+      if(fptr == NULL){
         fprintf(stderr, "cat cannot open %s\n",argv[ind]);
 	return EXIT_FAILURE;
       }
+      fclose(fptr);
     }
 
     //Everything should be error free, execute code
     for(ind = 1; ind < argc; ind++) {
       if(strcmp(argv[ind], "-") == 0){
-	scanf("%79s",str);
+	fgets(str,100,stdin);
 	printf("%s\n",str);
         //do something for standard input
       }
       else{
 	//do file stuff
+	fptr = fopen(argv[ind], "r");
+        if(fptr){
+	  while((ch = fgetc(fptr)) != EOF){
+	    printf("%c",ch);
+	  }
+	}
+	fclose(fptr);
       }
     }
   }
