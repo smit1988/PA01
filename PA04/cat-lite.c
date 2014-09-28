@@ -38,12 +38,14 @@ int main(int argc, char * * argv)
 
     //seek bad file
     for(ind = 1; ind < argc; ind++) {
-      fptr = fopen(argv[ind], "r");
-      if(fptr == NULL){
-        fprintf(stderr, "cat cannot open %s\n",argv[ind]);
-	return EXIT_FAILURE;
+      if(strcmp(argv[ind], "-") != 0){
+        fptr = fopen(argv[ind], "r");
+        if(fptr == NULL){
+          fprintf(stderr, "cat cannot open %s\n",argv[ind]);
+      	  return EXIT_FAILURE;
+        }
+        fclose(fptr);
       }
-      fclose(fptr);
     }
 
     //Everything should be error free, execute code
