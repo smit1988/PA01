@@ -9,10 +9,11 @@
 
 int main(int argc, char * * argv)
 {
-  FILE *fptr;
+  //  FILE *fptr;
 
   // Test for '-', empty, nonexistent file, and help. Otherwise, it's a file
   if(argc == 1)
+    printf("compiler test");
     //do something with standard input, then exit
 
   else {
@@ -33,8 +34,8 @@ int main(int argc, char * * argv)
     }
 
     //seek bad file
-    for(ind = 1; ind < argc, ind++) {
-      if(fopen(argv[ind] == NULL){
+    for(ind = 1; ind < argc; ind++) {
+      if(fopen(argv[ind], "r") == NULL){
         fprintf(stderr, "cat cannot open %s\n",argv[ind]);
       }
     }
