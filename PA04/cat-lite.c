@@ -9,18 +9,21 @@
 
 int main(int argc, char * * argv)
 {
-  //  FILE *fptr;
+  int ind;
+  //may need a bigger string
+  char str[80];
+  FILE *fptr;
 
   // Test for '-', empty, nonexistent file, and help. Otherwise, it's a file
-  if(argc == 1)
-    printf("compiler test");
+  if(argc == 1){
+    scanf("%79s",str);
+    printf("%s\n",str);
+    return EXIT_SUCCESS;
     //do something with standard input, then exit
-
+  }
   else {
-    int ind = 1; // we always skip 0, which is the program path
-
     //seek help
-    for( ; ind < argc; ind++){
+    for(ind = 1; ind < argc; ind++){
       if(strcmp(argv[ind], "--help") == 0) {
         printf("Usage: cat-lite [--help] [FILE]...\n"
                "With no FILE, or when FILE is -, read standard input.\n\n"
@@ -37,12 +40,15 @@ int main(int argc, char * * argv)
     for(ind = 1; ind < argc; ind++) {
       if(fopen(argv[ind], "r") == NULL){
         fprintf(stderr, "cat cannot open %s\n",argv[ind]);
+	return EXIT_FAILURE;
       }
     }
 
     //Everything should be error free, execute code
     for(ind = 1; ind < argc; ind++) {
       if(strcmp(argv[ind], "-") == 0){
+	scanf("%79s",str);
+	printf("%s\n",str);
         //do something for standard input
       }
       else{
