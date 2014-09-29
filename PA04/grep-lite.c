@@ -38,7 +38,7 @@ int main(int argc, char * * argv)
   }
   //Check middle terms for anything that isn't -v,-n,-q (or print error, return 2)
   for(ind = 1; ind < (argc - 1); ind++){
-    if((strcmp(argv[ind], "-v") != 0) && (strcmp(argv[ind], "-n") != 0) && (strcmp(argv[ind], "-q") != 0)){
+    if((strcmp(argv[ind], "-v") != 0) && (strcmp(argv[ind], "-n") != 0) && (strcmp(argv[ind], "-q") != 0) && (strcmp(argv[ind], "--invert-match") != 0) && (strcmp(argv[ind], "--line-number") != 0) && (strcmp(argv[ind], "--quiet") != 0)){
       fprintf(stderr, "One or more terms not '-v', '-n', or '-q'\n");
       return 2;
     }
