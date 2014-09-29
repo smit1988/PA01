@@ -11,12 +11,12 @@ int main(int argc, char * * argv)
 {
   int ind, ch;
   //may need a bigger string
-  char str[100];
+  char str[2000];
   FILE *fptr;
 
   // Test for '-', empty, nonexistent file, and help. Otherwise, it's a file
   if(argc == 1){
-    fgets(str,100,stdin);
+    fgets(str,2000,stdin);
     printf("%s",str);
     return EXIT_SUCCESS;
     //do something with standard input, then exit
@@ -51,7 +51,7 @@ int main(int argc, char * * argv)
     //Everything should be error free, execute code
     for(ind = 1; ind < argc; ind++) {
       if(strcmp(argv[ind], "-") == 0){
-	fgets(str,100,stdin);
+	fgets(str,2000,stdin);
 	printf("%s\n",str);
         //do something for standard input
       }
