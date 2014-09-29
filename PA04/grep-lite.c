@@ -11,7 +11,9 @@
 
 int main(int argc, char * * argv)
 {
-  int ind, invert, number, quiet, lineCounted = 1, lineNumber = 1;
+  int ind, invert = FALSE, number = FALSE, quiet = FALSE;
+  int lineCounted = 1;
+  int lineNumber = 1;
   char str [2000];
 
   //Check for no input
