@@ -44,11 +44,11 @@ int main(int argc, char * * argv)
       fprintf(stderr, "One or more terms not '-v', '-n', or '-q'\n");
       return 2;
     }
-    if((strcmp(argv[ind], "-v") == 0) || strcmp(argv[ind], "--invert-match"))
+    if((strcmp(argv[ind], "-v") == 0) || (strcmp(argv[ind], "--invert-match") == 0))
        invert = TRUE;
-    if((strcmp(argv[ind], "-n") == 0) || strcmp(argv[ind], "--line-number"))
+    if((strcmp(argv[ind], "-n") == 0) || (strcmp(argv[ind], "--line-number") == 0))
       number = TRUE;
-    if((strcmp(argv[ind], "-q") == 0) || strcmp(argv[ind], "--quiet"))
+    if((strcmp(argv[ind], "-q") == 0) || (strcmp(argv[ind], "--quiet") == 0))
       quiet = TRUE;
   }
   //The value of ind should be the last value of argv
