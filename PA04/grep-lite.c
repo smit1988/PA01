@@ -2,13 +2,17 @@
 //Ece264
 //9/26/2014
 
+#define TRUE 1
+#define FALSE 0
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 int main(int argc, char * * argv)
 {
-  int ind;
+  int ind, invert, number, quiet, lineCounted = 1, lineNumber = 1;
+  char str [2000];
   //Check for help
   for(ind = 1; ind < argc; ind++){
     if(strcmp(argv[ind], "--help") == 0){
@@ -31,8 +35,23 @@ int main(int argc, char * * argv)
       fprintf(stderr, "One or more terms not '-v', '-n', or '-q'\n");
       return 2;
     }
+    if(strcmp(argv[ind], "-v") == 0)
+       invert = TRUE;
+    if(strcmp(argv[ind], "-n") == 0)
+      number = TRUE;
+    if(strcmp(argv[ind], "-q") == 0)
+      quiet = TRUE;
   }
+  //The value of ind should be the last value of argv
   //Check last term for -, if so print error and return 2
+  if(strcmp(argv[ind][0], "-") == 0){
+    fprintf(stderr, "PATTERN starts with a '-'");
+    return 2;
+  }
+  //Default, print every line that matches
+  //Quiet, print nothing, return correct values
+  //Invert, print nonmatching lines
+  //Number, Print line numbers
   //fgets every line up to 2000 characters
   //strstr every line
   //keep track of which lines match, may be inverted
@@ -41,4 +60,40 @@ int main(int argc, char * * argv)
   //If quiet, only return correct exit code
   //Return 0 if at least one matching line, 1 otherwise
 
+  while(fgets(str, 2000, stdin) != NULL){
+    //The value of ind should still be the last value of argv
+    if(strstr(str, argv[ind]) != NULL){
+      //found on this line
+      if(invert != TRUE){
+	//return value will be 0
+	lineCounted = 0;
+	if(quiet){
+	  //Found a line, no reason to continue searching
+	  return lineCounted;
+	}
+	else{
+	  if(number)
+	    printf("%d:", lineNumber);
+	  printf("%s",str);
+	}
+      }
+    }
+    else{
+      if(invert){
+	//return value will be 0
+	lineCounted = 0;
+	if(quiet){
+	  //Found a line, no reason to continue searching
+	  return lineCounted;
+	}
+	else{
+	  if(number)
+	    printf("%d:", lineNumber);
+	  printf("%s",str);
+	}
+      }
+    }
+    lineNumber++;
+  }
+  return lineCounted;
 }
