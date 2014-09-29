@@ -13,6 +13,13 @@ int main(int argc, char * * argv)
 {
   int ind, invert, number, quiet, lineCounted = 1, lineNumber = 1;
   char str [2000];
+
+  //Check for no input
+  if(argc == 1){
+    fprintf(stderr, "Likely no input was given\n");
+    return 2;
+  }
+
   //Check for help
   for(ind = 1; ind < argc; ind++){
     if(strcmp(argv[ind], "--help") == 0){
@@ -44,7 +51,7 @@ int main(int argc, char * * argv)
   }
   //The value of ind should be the last value of argv
   //Check last term for -, if so print error and return 2
-  if(strcmp(argv[ind][0], "-") == 0){
+  if(argv[ind][0] == '-'){
     fprintf(stderr, "PATTERN starts with a '-'");
     return 2;
   }
@@ -54,10 +61,7 @@ int main(int argc, char * * argv)
   //Number, Print line numbers
   //fgets every line up to 2000 characters
   //strstr every line
-  //keep track of which lines match, may be inverted
-  //First line number is 1, print number if specified
-  //Print every matching line
-  //If quiet, only return correct exit code
+  //First line number is 1
   //Return 0 if at least one matching line, 1 otherwise
 
   while(fgets(str, 2000, stdin) != NULL){
