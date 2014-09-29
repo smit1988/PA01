@@ -50,6 +50,7 @@ int main(int argc, char * * argv)
       quiet = TRUE;
   }
   //The value of ind should be the last value of argv
+  ind = argc - 1;
   //Check last term for -, if so print error and return 2
   if(argv[ind][0] == '-'){
     fprintf(stderr, "PATTERN starts with a '-'");

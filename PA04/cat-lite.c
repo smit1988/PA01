@@ -9,7 +9,7 @@
 
 int main(int argc, char * * argv)
 {
-  int ind, ch;
+  int ind;
   //may need a bigger string
   char str[2000];
   FILE *fptr;
@@ -59,8 +59,8 @@ int main(int argc, char * * argv)
 	//do file stuff
 	fptr = fopen(argv[ind], "r");
         if(fptr){
-	  while((ch = fgetc(fptr)) != EOF){
-	    printf("%c",ch);
+	  while(fgets(str,2000,fptr) != NULL){
+	    printf("%s",str);
 	  }
 	}
 	fclose(fptr);
