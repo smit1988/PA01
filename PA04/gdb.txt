@@ -1,0 +1,15 @@
+Breakpoint 1 at 0x40052c: file echo-lite.c, line 12.
+Starting program: /home/shay/b/smit1988/ECE264/Solutions/PA01/PA04/echo-lite 
+
+Program exited normally.
+Breakpoint 2 at 0x400523: file echo-lite.c, line 11.
+Starting program: /home/shay/b/smit1988/ECE264/Solutions/PA01/PA04/echo-lite 
+
+Breakpoint 2, main (argc=1, argv=0x7fffffffe4f8) at echo-lite.c:11
+11	  for(ind = 1; ind < argc; ind++) {
+$1 = 1
+14	  printf("\n");
+$2 = 1
+Continuing.
+
+Program exited normally.

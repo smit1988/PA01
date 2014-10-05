@@ -1,0 +1,71 @@
+==1942== Memcheck, a memory error detector
+==1942== Copyright (C) 2002-2012, and GNU GPL'd, by Julian Seward et al.
+==1942== Using Valgrind-3.8.1 and LibVEX; rerun with -h for copyright info
+==1942== Command: ./cat-lite testcases/file1 testcases/file1
+==1942== Parent PID: 9894
+==1942== 
+--1942-- 
+--1942-- Valgrind options:
+--1942--    --tool=memcheck
+--1942--    --leak-check=full
+--1942--    --verbose
+--1942--    --log-file=memcheck.log
+--1942-- Contents of /proc/version:
+--1942--   Linux version 2.6.32-431.29.2.el6.x86_64 (mockbuild@x86-026.build.eng.bos.redhat.com) (gcc version 4.4.7 20120313 (Red Hat 4.4.7-4) (GCC) ) #1 SMP Sun Jul 27 15:55:46 EDT 2014
+--1942-- Arch and hwcaps: AMD64, amd64-sse3-cx16
+--1942-- Page sizes: currently 4096, max supported 4096
+--1942-- Valgrind library directory: /usr/lib64/valgrind
+--1942-- Reading syms from /home/shay/b/smit1988/ECE264/Solutions/PA01/PA04/cat-lite
+--1942-- Reading syms from /usr/lib64/valgrind/memcheck-amd64-linux
+--1942--    object doesn't have a dynamic symbol table
+--1942-- Reading syms from /lib64/ld-2.12.so
+--1942--   Considering /usr/lib/debug/.build-id/57/bf668f99b7f5917b8d55fbb645173c9a644575.debug ..
+--1942--   .. build-id is valid
+--1942-- Scheduler: using generic scheduler lock implementation.
+--1942-- Reading suppressions file: /usr/lib64/valgrind/default.supp
+==1942== embedded gdbserver: reading from /tmp/vgdb-pipe-from-vgdb-to-1942-by-smit1988-on-ecegrid-thin1.ecn.purdue.edu
+==1942== embedded gdbserver: writing to   /tmp/vgdb-pipe-to-vgdb-from-1942-by-smit1988-on-ecegrid-thin1.ecn.purdue.edu
+==1942== embedded gdbserver: shared mem   /tmp/vgdb-pipe-shared-mem-vgdb-1942-by-smit1988-on-ecegrid-thin1.ecn.purdue.edu
+==1942== 
+==1942== TO CONTROL THIS PROCESS USING vgdb (which you probably
+==1942== don't want to do, unless you know exactly what you're doing,
+==1942== or are doing some strange experiment):
+==1942==   /usr/lib64/valgrind/../../bin/vgdb --pid=1942 ...command...
+==1942== 
+==1942== TO DEBUG THIS PROCESS USING GDB: start GDB like this
+==1942==   /path/to/gdb ./cat-lite
+==1942== and then give GDB the following command
+==1942==   target remote | /usr/lib64/valgrind/../../bin/vgdb --pid=1942
+==1942== --pid is optional if only one valgrind process is running
+==1942== 
+--1942-- REDIR: 0x3f79a17530 (strlen) redirected to 0x38049551 (vgPlain_amd64_linux_REDIR_FOR_strlen)
+--1942-- Reading syms from /usr/lib64/valgrind/vgpreload_core-amd64-linux.so
+--1942-- Reading syms from /usr/lib64/valgrind/vgpreload_memcheck-amd64-linux.so
+--1942-- REDIR: 0x3f79a173a0 (index) redirected to 0x4a07bf0 (index)
+--1942-- REDIR: 0x3f79a17420 (strcmp) redirected to 0x4a08530 (strcmp)
+--1942-- Reading syms from /lib64/libc-2.12.so
+--1942--   Considering /usr/lib/debug/.build-id/07/b5ce35eba864a01b697f5ca117e94b9248064f.debug ..
+--1942--   .. build-id is valid
+--1942-- REDIR: 0x3f79e84cd0 (strcasecmp) redirected to 0x480155c (_vgnU_ifunc_wrapper)
+--1942-- REDIR: 0x3f79e86f90 (strncasecmp) redirected to 0x480155c (_vgnU_ifunc_wrapper)
+--1942-- REDIR: 0x3f79e82c40 (__GI_strrchr) redirected to 0x4a07a70 (__GI_strrchr)
+--1942-- REDIR: 0x3f79e7f6e0 (strcmp) redirected to 0x480155c (_vgnU_ifunc_wrapper)
+--1942-- REDIR: 0x3f79f28290 (__strcmp_sse42) redirected to 0x4a08490 (strcmp)
+--1942-- REDIR: 0x3f79e7a640 (malloc) redirected to 0x4a0696c (malloc)
+--1942-- REDIR: 0x3f79e7b520 (free) redirected to 0x4a06369 (free)
+--1942-- REDIR: 0x3f79e83350 (memchr) redirected to 0x4a085d0 (memchr)
+--1942-- REDIR: 0x3f79e89670 (memcpy) redirected to 0x4a08b20 (memcpy)
+--1942-- REDIR: 0x3f79e8aaf0 (strchrnul) redirected to 0x4a09f10 (strchrnul)
+==1942== 
+==1942== HEAP SUMMARY:
+==1942==     in use at exit: 0 bytes in 0 blocks
+==1942==   total heap usage: 4 allocs, 4 frees, 2,272 bytes allocated
+==1942== 
+==1942== All heap blocks were freed -- no leaks are possible
+==1942== 
+==1942== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 6 from 6)
+--1942-- 
+--1942-- used_suppression:      4 U1004-ARM-_dl_relocate_object
+--1942-- used_suppression:      2 glibc-2.5.x-on-SUSE-10.2-(PPC)-2a
+==1942== 
+==1942== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 6 from 6)
