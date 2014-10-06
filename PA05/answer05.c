@@ -45,3 +45,33 @@ void partitionAllMemory(int * arr, int ind, int left)
       partitionAllMemory(arr, ind + 1, left - val);
     }
 }
+
+void partitionIncreasing(int value)
+{
+  return;
+}
+
+void partitionDecreasing(int value)
+{
+  return;
+}
+
+void partitionOdd(int value)
+{
+  return;
+}
+
+void partitionEven(int value)
+{
+  return;
+}
+
+void partitionOddAndEven(int value)
+{
+  return;
+}
+
+void partitionPrime(int value)
+{
+  return;
+}
