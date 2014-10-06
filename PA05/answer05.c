@@ -161,7 +161,17 @@ void partitionOddMemory(int * arr, int ind, int left)
 
 void partitionEvenMemory(int * arr, int ind, int left)
 {
-  return;
+  int val;
+  if (left == 0)
+    {
+      printPartition(arr, ind);
+      return;
+    }
+  for(val = 2;val <= left; val += 2)
+    {
+      arr[ind] = val;
+      partitionEvenMemory(arr, ind + 1, left - val);
+    }
 }
 
 void partitionOddAndEvenMemory(int * arr, int ind, int left)
@@ -189,5 +199,26 @@ void partitionOddAndEvenMemory(int * arr, int ind, int left)
 
 void partitionPrimeMemory(int * arr, int ind, int left)
 {
-  return;
+  int val;
+  int prime;
+  if(left == 0)
+    {
+      printPartition(arr, ind);
+      return:
+    }
+  //The first prime number is 2
+  for(val = 2; val <= left; val++)
+    {
+      //Check for primeness
+      for(prime = 2; (prime < val) && (prime != 1); prime++)
+	{
+	  //If not prime, prime will equal 1 and end both for interations
+	  if(num % prime == 0)
+	    prime = 1;
+	}
+      if(prime != 1)
+	{
+	  arr[ind] = val;
+	  partitionPrimeMemory(arr, ind + 1, left - val);
+    }
 }
