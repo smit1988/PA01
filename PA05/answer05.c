@@ -108,7 +108,7 @@ void partitionOddMemory(int * arr, int ind, int left)
   for(val = 1;val <= left; val += 2)
     {
       arr[ind] = val;
-      partition(arr, ind + 1, left - val);
+      partitionOddMemory(arr, ind + 1, left - val);
     }
 }
 
