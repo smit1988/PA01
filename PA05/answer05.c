@@ -41,12 +41,18 @@ void partitionAll(int value)
 
 void partitionIncreasing(int value)
 {
-  return;
+  int * arr;
+  arr = malloc(sizeof(int) * value);
+  partitionIncreasingMemory(arr, 0, value);
+  free(arr);
 }
 
 void partitionDecreasing(int value)
 {
-  return;
+  int * arr;
+  arr = malloc(sizeof(int) * value);
+  partitionDecreasingMemory(arr, 0, value);
+  free(arr);
 }
 
 void partitionOdd(int value)
@@ -59,17 +65,26 @@ void partitionOdd(int value)
 
 void partitionEven(int value)
 {
-  return;
+  int * arr;
+  arr = malloc(sizeof(int) * value);
+  partitionEvenMemory(arr, 0, value);
+  free(arr);
 }
 
 void partitionOddAndEven(int value)
 {
-  return;
+  int * arr;
+  arr = malloc(sizeof(int) * value);
+  partitionOddAndEvenMemory(arr, 0, value);
+  free(arr);
 }
 
 void partitionPrime(int value)
 {
-  return;
+  int * arr;
+  arr = malloc(sizeof(int) * value);
+  partitionPrimeMemory(arr, 0, value);
+  free(arr);
 }
 
 void partitionAllMemory(int * arr, int ind, int left)
@@ -89,12 +104,44 @@ void partitionAllMemory(int * arr, int ind, int left)
 
 void partitionIncreasingMemory(int * arr, int ind, int left)
 {
-  return;
+  int val;
+  if(left == 0)
+    {
+      printPartition(arr, ind);
+      return;
+    }
+  //The initial minimum can't be lower than 1
+  int min = 1;
+  //After the first value, the min can't be lower than one plus the previous
+  if(ind != 0)
+    min = arr[ind - 1] + 1;
+  //If the min is less than or equal to the remaining integer sum, continue
+  for(val = min;val <= left; val++)
+    {
+      arr[ind] = val;
+      partitionIncreasingMemory(arr, ind + 1, left - val);
+    }
 }
 
 void partitionDecreasingMemory(int * arr, int ind, int left)
 {
-  return;
+  int val;
+  if(left == 0)
+    {
+      printPartition(arr, ind);
+      return;
+    }
+  //The initial maximum can't be higher than the remaining integer sum
+  int max = left;
+  //After the first value, the max can't be higher than one minus the previous
+  if(ind != 0)
+    max = arr[ind - 1] - 1;
+  //If the max is less than or equal to the remaining integer sum, continue
+  for(val = max;val <= left; val++)
+    {
+      arr[ind] = val;
+      partitionIncreasingMemory(arr, ind + 1, left - val);
+    }
 }
 
 void partitionOddMemory(int * arr, int ind, int left)
@@ -119,7 +166,25 @@ void partitionEvenMemory(int * arr, int ind, int left)
 
 void partitionOddAndEvenMemory(int * arr, int ind, int left)
 {
-  return;
+  int val;
+  if(left == 0)
+    {
+      printPartition(arr, ind);
+      return;
+    }
+  for(val = 1;val <= left; val++)
+    {
+      int valid = 0;
+      if(ind == 0)
+	valid = 1;
+      else
+	valid = (arr[ind - 1] % 2) != (val % 2);
+      if(valid == 1)
+	{
+	  arr[ind] = val;
+	  partitionOddAndEvenMemory(arr, ind + 1, left - val);
+	}
+    }
 }
 
 void partitionPrimeMemory(int * arr, int ind, int left)
