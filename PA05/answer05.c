@@ -10,6 +10,9 @@
 #include <string.h>
 #include "answer05.h"
 
+//Initilizes array
+void partitionAllMemory(int * arr, int ind, int left);
+
 void printPartition(int * arr, int length)
 {
   int ind;
@@ -20,7 +23,15 @@ void printPartition(int * arr, int length)
   printf("%d\n", arr[length - 1]);
 }
 
-void partitionAll(int * arr, int ind, int left)
+void partitionAll(int value)
+{
+  int * arr;
+  arr = malloc(sizeof(int) * value);
+  partitionAllMemory(arr, 0, value);
+  free(arr);
+}
+
+void partitionAllMemory(int * arr, int ind, int left)
 {
   int val;
   if(left == 0)
@@ -31,6 +42,6 @@ void partitionAll(int * arr, int ind, int left)
   for(val = 1;val <= left; val++)
     {
       arr[ind] = val;
-      partitionAll(arr, ind + 1, left - val);
+      partitionAllMemory(arr, ind + 1, left - val);
     }
 }
