@@ -39,21 +39,6 @@ void partitionAll(int value)
   free(arr);
 }
 
-void partitionAllMemory(int * arr, int ind, int left)
-{
-  int val;
-  if(left == 0)
-    {
-      printPartition(arr, ind);
-      return;
-    }
-  for(val = 1;val <= left; val++)
-    {
-      arr[ind] = val;
-      partitionAllMemory(arr, ind + 1, left - val);
-    }
-}
-
 void partitionIncreasing(int value)
 {
   return;
@@ -66,7 +51,10 @@ void partitionDecreasing(int value)
 
 void partitionOdd(int value)
 {
-  return;
+  int * arr;
+  arr = malloc(sizeof(int) * value);
+  partitionOddMemory(arr, 0, value);
+  free(arr);
 }
 
 void partitionEven(int value)
@@ -99,32 +87,42 @@ void partitionAllMemory(int * arr, int ind, int left)
     }
 }
 
-void partitionIncreasingMemory(int value)
+void partitionIncreasingMemory(int * arr, int ind, int left)
 {
   return;
 }
 
-void partitionDecreasingMemory(int value)
+void partitionDecreasingMemory(int * arr, int ind, int left)
 {
   return;
 }
 
-void partitionOddMemory(int value)
+void partitionOddMemory(int * arr, int ind, int left)
+{
+  int val;
+  if (left == 0)
+    {
+      printPartition(arr, ind);
+      return;
+    }
+  for(val = 1;val <= left; val += 2)
+    {
+      arr[ind] = val;
+      partition(arr, ind + 1, left - val);
+    }
+}
+
+void partitionEvenMemory(int * arr, int ind, int left)
 {
   return;
 }
 
-void partitionEvenMemory(int value)
+void partitionOddAndEvenMemory(int * arr, int ind, int left)
 {
   return;
 }
 
-void partitionOddAndEvenMemory(int value)
-{
-  return;
-}
-
-void partitionPrimeMemory(int value)
+void partitionPrimeMemory(int * arr, int ind, int left)
 {
   return;
 }
