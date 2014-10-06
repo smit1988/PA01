@@ -204,7 +204,7 @@ void partitionPrimeMemory(int * arr, int ind, int left)
   if(left == 0)
     {
       printPartition(arr, ind);
-      return:
+      return;
     }
   //The first prime number is 2
   for(val = 2; val <= left; val++)
@@ -213,12 +213,13 @@ void partitionPrimeMemory(int * arr, int ind, int left)
       for(prime = 2; (prime < val) && (prime != 1); prime++)
 	{
 	  //If not prime, prime will equal 1 and end both for interations
-	  if(num % prime == 0)
+	  if(val % prime == 0)
 	    prime = 1;
 	}
       if(prime != 1)
 	{
 	  arr[ind] = val;
 	  partitionPrimeMemory(arr, ind + 1, left - val);
+	}
     }
 }
