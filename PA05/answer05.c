@@ -10,12 +10,20 @@
 #include <string.h>
 #include "answer05.h"
 
-//Initilizes array
+//partitionXX allocates memory to partitionXXMemory
 void partitionAllMemory(int * arr, int ind, int left);
+void partitionIncreasingMemory(int value);
+void partitionDecreasingMemory(int value);
+void partitionOddMemory(int value);
+void partitionEvenMemory(int value);
+void partitionOddAndEvenMemory(int value);
+void partitionPrimeMemory(int value);
+void printPartition(int * arr, int length);
 
 void printPartition(int * arr, int length)
 {
   int ind;
+  printf("= ");
   for(ind = 0;ind < (length - 1);ind++)
     {
       printf("%d + ", arr[ind]);
@@ -72,6 +80,51 @@ void partitionOddAndEven(int value)
 }
 
 void partitionPrime(int value)
+{
+  return;
+}
+
+void partitionAllMemory(int * arr, int ind, int left)
+{
+  int val;
+  if(left == 0)
+    {
+      printPartition(arr, ind);
+      return;
+    }
+  for(val = 1;val <= left; val++)
+    {
+      arr[ind] = val;
+      partitionAllMemory(arr, ind + 1, left - val);
+    }
+}
+
+void partitionIncreasingMemory(int value)
+{
+  return;
+}
+
+void partitionDecreasingMemory(int value)
+{
+  return;
+}
+
+void partitionOddMemory(int value)
+{
+  return;
+}
+
+void partitionEvenMemory(int value)
+{
+  return;
+}
+
+void partitionOddAndEvenMemory(int value)
+{
+  return;
+}
+
+void partitionPrimeMemory(int value)
 {
   return;
 }
