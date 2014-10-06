@@ -12,12 +12,12 @@
 
 //partitionXX allocates memory to partitionXXMemory
 void partitionAllMemory(int * arr, int ind, int left);
-void partitionIncreasingMemory(int value);
-void partitionDecreasingMemory(int value);
-void partitionOddMemory(int value);
-void partitionEvenMemory(int value);
-void partitionOddAndEvenMemory(int value);
-void partitionPrimeMemory(int value);
+void partitionIncreasingMemory(int * arr, int ind, int left);
+void partitionDecreasingMemory(int * arr, int ind, int left);
+void partitionOddMemory(int * arr, int ind, int left);
+void partitionEvenMemory(int * arr, int ind, int left);
+void partitionOddAndEvenMemory(int * arr, int ind, int left);
+void partitionPrimeMemory(int * arr, int ind, int left);
 void printPartition(int * arr, int length);
 
 void printPartition(int * arr, int length)
