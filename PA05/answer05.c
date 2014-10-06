@@ -20,3 +20,17 @@ void printPartition(int * arr, int length)
   printf("%d\n", arr[length - 1]);
 }
 
+void partitionAll(int * arr, int ind, int left)
+{
+  int val;
+  if(left == 0)
+    {
+      printPartition(arr, ind);
+      return;
+    }
+  for(val = 1;val <= left; val++)
+    {
+      arr[ind] = val;
+      partitionAll(arr, ind + 1, left - val);
+    }
+}
