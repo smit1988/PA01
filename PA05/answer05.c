@@ -217,15 +217,15 @@ void partitionPrimeMemory(int * arr, int ind, int left)
       printPartition(arr, ind);
       return;
     }
-  //The first prime number is 2
+  //Prime numbers start at 2
   for(val = 2; val <= left; val++)
     {
       //Check for primeness
       for(prime = 2; (prime < val) && (prime != 1); prime++)
 	{
-	  //If not prime, prime will equal 1 and end both for interations
+	  //If not prime, prime will equal 0 (then ++ to 1) and end both for interations
 	  if((val % prime) == 0)
-	    prime = 1;
+	    prime = 0;
 	}
       if(prime != 1)
 	{
