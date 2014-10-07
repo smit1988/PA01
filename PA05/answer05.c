@@ -19,6 +19,8 @@ void partitionEvenMemory(int * arr, int ind, int left);
 void partitionOddAndEvenMemory(int * arr, int ind, int left);
 void partitionPrimeMemory(int * arr, int ind, int left);
 void printPartition(int * arr, int length);
+void printPartitionDecreasing(int * arr, int length);
+
 
 void printPartition(int * arr, int length)
 {
@@ -30,6 +32,18 @@ void printPartition(int * arr, int length)
     }
   printf("%d\n", arr[length - 1]);
 }
+
+void printPartitionDecreasing(int * arr, int length)
+{
+  int ind;
+  printf("= ");
+  for(ind = 0;ind < (length - 1);ind++)
+    {
+      printf("%d + ", arr[length - 1 - ind]);
+    }
+  printf("%d\n", arr[ind]);
+}
+
 
 void partitionAll(int value)
 {
@@ -128,13 +142,16 @@ void partitionDecreasingMemory(int * arr, int ind, int left)
   int val;
   if(left == 0)
     {
-      printPartition(arr, ind);
+      printPartitionDecreasing(arr, ind);
       return;
     }
-  //The initial maximum can't be higher than the remaining integer sum
-  //After the first value, the max can't be higher than one minus the previous
-  //If the max is less than or equal to the remaining integer sum, continue
-  for(val = left;val >= 1; val--)
+  //The initial minimum can't be lower than 1
+  int min = 1;
+  //After the first value, the min can't be lower than one plus the previous
+  if(ind != 0)
+    min = arr[ind - 1] + 1;
+  //If the min is less than or equal to the remaining integer sum, continue
+  for(val = min;val <= left; val++)
     {
       arr[ind] = val;
       partitionIncreasingMemory(arr, ind + 1, left - val);
