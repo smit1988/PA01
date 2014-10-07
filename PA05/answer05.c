@@ -41,7 +41,7 @@ void printPartitionDecreasing(int * arr, int length)
     {
       printf("%d + ", arr[length - 1 - ind]);
     }
-  printf("%d\n", arr[ind]);
+  printf("%d\n", arr[0]);
 }
 
 
