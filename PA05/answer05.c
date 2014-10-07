@@ -145,16 +145,13 @@ void partitionDecreasingMemory(int * arr, int ind, int left)
       printPartitionDecreasing(arr, ind);
       return;
     }
-  //The initial minimum can't be lower than 1
   int min = 1;
-  //After the first value, the min can't be lower than one plus the previous
   if(ind != 0)
     min = arr[ind - 1] + 1;
-  //If the min is less than or equal to the remaining integer sum, continue
   for(val = min;val <= left; val++)
     {
       arr[ind] = val;
-      partitionIncreasingMemory(arr, ind + 1, left - val);
+      partitionDecreasingMemory(arr, ind + 1, left - val);
     }
 }
 
