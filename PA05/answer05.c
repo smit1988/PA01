@@ -132,12 +132,9 @@ void partitionDecreasingMemory(int * arr, int ind, int left)
       return;
     }
   //The initial maximum can't be higher than the remaining integer sum
-  int max = left;
   //After the first value, the max can't be higher than one minus the previous
-  if(ind != 0)
-    max = arr[ind - 1] - 1;
   //If the max is less than or equal to the remaining integer sum, continue
-  for(val = max;val <= left; val++)
+  for(val = left;val >= 1; val--)
     {
       arr[ind] = val;
       partitionIncreasingMemory(arr, ind + 1, left - val);
@@ -200,7 +197,7 @@ void partitionOddAndEvenMemory(int * arr, int ind, int left)
 void partitionPrimeMemory(int * arr, int ind, int left)
 {
   int val;
-  int prime;
+  int prime = 0;
   if(left == 0)
     {
       printPartition(arr, ind);
@@ -213,7 +210,7 @@ void partitionPrimeMemory(int * arr, int ind, int left)
       for(prime = 2; (prime < val) && (prime != 1); prime++)
 	{
 	  //If not prime, prime will equal 1 and end both for interations
-	  if(val % prime == 0)
+	  if((val % prime) == 0)
 	    prime = 1;
 	}
       if(prime != 1)
