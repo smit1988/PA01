@@ -52,7 +52,7 @@ void mower(char ** maze, int row, int column, int whitespace, int w, int h){
 	  printf("E 1\n");
 	}
     }
-  if(row != h)
+  if(row != (h - 1))
     {
       if(maze[row + 1][column] == SPACE)
 	{
@@ -62,7 +62,7 @@ void mower(char ** maze, int row, int column, int whitespace, int w, int h){
           printf("N 1\n");  
 	}
     }
-  if(column != w)
+  if(column != (w - 1))
     {
       if(maze[row][column + 1] == SPACE)
 	{
