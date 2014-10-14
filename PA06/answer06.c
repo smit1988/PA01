@@ -13,14 +13,19 @@
 void print_directions(char** maze, int w, int h) {
   //Count the initial whitespace
     int whitespace = 0;
-    int count, count_two;
-    for(count = 0; count < w; count++)
+    int count, count_two, entrance;
+    for(count = 0; count < h; count++)
     {
-      for(count_two = 0; count_two < h; count_two++)
+      for(count_two = 0; count_two < w; count_two++)
 	{
-	  if(maze[count_two][count] == SPACE)
-	    whitespace++;
+	  if(maze[count][count_two] == SPACE)
+	    {
+	      whitespace++;
+	      //Register entrance
+	      if(count == 0)
+		entrance = count_two;
+	    }
 	}
     }
-    printf("%d",whitespace);
+
 }
