@@ -10,7 +10,7 @@
 //Deadend, retrace steps to last crossroad
 //Determined there is no whitespace left, head towards the entrance
 
-void mower(char ** maze, int row, int column, int whitespace);
+void mower(char ** maze, int row, int column, int whitespace, int w, int h);
 
 void print_directions(char** maze, int w, int h) {
   //Count the initial whitespace
@@ -32,10 +32,10 @@ void print_directions(char** maze, int w, int h) {
     //Set mower to entrance
     row = 0;
     column = entrance;
-    mower(row, column, whitespace);
+    mower(maze, row, column, whitespace, w, h);
 }
 
-void mower(char ** maze, int row, int column, int whitespace){
+void mower(char ** maze, int row, int column, int whitespace, int w, int h){
   //Set current position to traveled
   maze[row][column] = TRACK;
   //Decrease number of whitespace
@@ -48,7 +48,7 @@ void mower(char ** maze, int row, int column, int whitespace){
 	{
 	  //There's a space to the left
 	  printf("W 1\n");
-	  mower(row,column - 1);
+	  mower(maze, row,column - 1, whitespace, w, h);
 	  printf("E 1\n");
 	}
     }
@@ -58,7 +58,7 @@ void mower(char ** maze, int row, int column, int whitespace){
 	{
 	  //There's a space down
 	  printf("S 1\n");
-          mower(row + 1,column);
+          mower(maze, row + 1,column, whitespace, w, h);
           printf("N 1\n");  
 	}
     }
@@ -68,7 +68,7 @@ void mower(char ** maze, int row, int column, int whitespace){
 	{
 	  //There's a space to the right
 	  printf("E 1\n");
-          mower(row,column + 1);
+          mower(maze, row,column + 1, whitespace, w, h);
           printf("W 1\n");
 	}
     }
@@ -78,7 +78,7 @@ void mower(char ** maze, int row, int column, int whitespace){
 	{
 	  //There's a space up
 	  printf("N 1\n");
-          mower(row - 1,column);
+          mower(maze, row - 1,column, whitespace, w, h);
           printf("S 1\n");
 	}
     }
