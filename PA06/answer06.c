@@ -11,5 +11,16 @@
 //Determined there is no whitespace left, head towards the entrance
 
 void print_directions(char** maze, int w, int h) {
-  
+  //Count the initial whitespace
+    int whitespace = 0;
+    int count, count_two;
+    for(count = 0; count < w; count++)
+    {
+      for(count_two = 0; count_two < h; count_two++)
+	{
+	  if(maze[count_two][count] == SPACE)
+	    whitespace++;
+	}
+    }
+    printf("%d",whitespace);
 }
