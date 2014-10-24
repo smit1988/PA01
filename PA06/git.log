@@ -1,0 +1,449 @@
+commit 59f3cd1071e48ef81beecbf4cd360859fad0e73e
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Tue Oct 14 19:24:46 2014 -0400
+
+    Fixed seg fault happening on edge of maze
+
+commit 725fc54f1a8276aa217edf8834a2c6048e9a1833
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Tue Oct 14 18:05:19 2014 -0400
+
+    Cleared syntax errors
+
+commit 976547e331806a7a93b0eb13ca2caa3fa6a54ce0
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Tue Oct 14 18:00:49 2014 -0400
+
+    Completed one step at a time solution
+
+commit 212452abfcacabb58733682a6c574302760d60da
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Tue Oct 14 17:23:32 2014 -0400
+
+    Register entrance to maze
+
+commit 19c4204ff25040e88e88167cc28e3c0a3c6e88ab
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Tue Oct 14 17:12:40 2014 -0400
+
+    Successfully created whitespace counting function
+
+commit 15a578363adb9cc26d840189f04d5a773e9a3cba
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Tue Oct 14 16:33:11 2014 -0400
+
+    Commented logic
+
+commit 8702fa2b68cf81ea4907a6b88402b5e22ab1c8e4
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Tue Oct 14 15:49:52 2014 -0400
+
+    Begin Homework
+
+commit 4bcb814c93401b377c3de2dab94662f67837e300
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Tue Oct 7 19:02:20 2014 -0400
+
+    Changed prime's infinite loop hopefully
+
+commit 0fa5442617bd058d90b1a4886b710b5f37c40217
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Tue Oct 7 18:35:01 2014 -0400
+
+    Corrected last digit printing for decreasing
+
+commit 29f465815fe1f6b46126a311618c32050910dcf8
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Tue Oct 7 18:29:06 2014 -0400
+
+    Added if statement
+
+commit eef32e3c05c9693921ff9890fd7f532744fff835
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Tue Oct 7 18:07:50 2014 -0400
+
+    Hopefully fixed decreasing
+
+commit 9897b8099f52bb48d6575e083b83c41905c7157e
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Mon Oct 6 22:00:17 2014 -0400
+
+    Prime and Decreasing need work
+
+commit 9e3bf7ab21192b7773233f65ec8f9f7ab3036167
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Mon Oct 6 17:34:57 2014 -0400
+
+    Successfully compiled with all functions
+
+commit b613beaedcf38d71caf815ff411cee6c12fde0e1
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Mon Oct 6 17:33:07 2014 -0400
+
+    Added prime, not yet compiled
+
+commit c29fe494532359ddf934b520bf8182ed85f03476
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Mon Oct 6 17:09:11 2014 -0400
+
+    Added decreasing
+
+commit 47df939510b563a3d685c75b57b8a3ac0b37f3d6
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Mon Oct 6 16:40:15 2014 -0400
+
+    another typo
+
+commit 337526f20ea1e81839f9063a920b4e4b2191b774
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Mon Oct 6 16:39:35 2014 -0400
+
+    typo
+
+commit cba90419dac839d7958eeac35d1a0b8442ffa3dc
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Mon Oct 6 16:38:34 2014 -0400
+
+    Added partitionOdd
+
+commit dca9904f6fee93ad7ec6f027bd23ceb600d496cf
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Mon Oct 6 16:32:35 2014 -0400
+
+    Initialized all memory allocating functions
+
+commit cc93584367ce397a466e94f0ecdf323958ecbeab
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Mon Oct 6 16:16:16 2014 -0400
+
+    Added empty functions (to use tester)
+
+commit c4373f59f48a346b0e9e04233087fc7f5418afba
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Mon Oct 6 16:13:47 2014 -0400
+
+    Added partitionAllMemory, to simulate main
+
+commit d3b5d27f6ddfdaa2175f6e298f4f5bc864a6aabd
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Mon Oct 6 15:50:34 2014 -0400
+
+    Added partitionAll
+
+commit 39f2e3a48196ba3c2887c489195e884a84817846
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Mon Oct 6 15:48:17 2014 -0400
+
+    Added printPartition
+
+commit 00867aaa33a00a69f46164bf546377d1407fa0ea
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Mon Oct 6 15:37:58 2014 -0400
+
+    Updated PA05 directory
+
+commit 1394a710fe0dc8b1bc101ac39728b5d47f1b9cdb
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Sun Oct 5 16:11:54 2014 -0400
+
+    Begin Homework
+
+commit 1d91f2837704d1ac5a548b18380d9c268ebb666e
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Mon Sep 29 19:27:43 2014 -0400
+
+    fixed typo in OPTIONS
+
+commit 9b248922b119bec1da5dd9923b54a024e6fa835d
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Mon Sep 29 19:14:20 2014 -0400
+
+    OPTIONS true when long options are typed
+
+commit 759645600d5e3708e81cefd42d23e0b1d15ebdfb
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Mon Sep 29 18:44:50 2014 -0400
+
+    initilized integers
+
+commit 530011c02b8173420e4756533989fa685e0e57d4
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Sun Sep 28 21:52:29 2014 -0400
+
+    changed cat from char reading to str reading
+
+commit d407b71dae3e0f16266b43ca3c1e77ca41aa05c7
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Sun Sep 28 21:25:49 2014 -0400
+
+    increased memory allocation
+
+commit b6a8b2d96a0c1332aaf2dcaf18b9c248072cba02
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Sun Sep 28 21:23:51 2014 -0400
+
+    added quiet, linenumber, and invertmatch cases
+
+commit dba5225931f83e5978d63b9ce6a3874a5a9543fe
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Sun Sep 28 21:13:59 2014 -0400
+
+    compiled grep
+
+commit 8882a5e896bb93df0fc910b286281796fc3bc1da
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Sun Sep 28 20:47:29 2014 -0400
+
+    Added functionality of OPTIONs
+
+commit 386d9e10cc9f35a90806b028ddbccbd66ff3b1f9
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Sun Sep 28 19:49:57 2014 -0400
+
+    filters out help and garbage input
+
+commit 8067436fbd9b4e37b144f9171ed8a2574bb235bb
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Sun Sep 28 18:52:54 2014 -0400
+
+    commented skeleton for grep
+
+commit cdaea2e465e78ac89b1ad4036aead7a6ed22fb63
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Sun Sep 28 18:21:59 2014 -0400
+
+    updated catching '-'
+
+commit 385587c462666aa60a5b837d1612d46b8d9d88eb
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Sun Sep 28 18:01:09 2014 -0400
+
+    completed stdin read and print
+
+commit d39e8ad4d64a5d082ddc8e0fd957fbf46a765f7a
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Sun Sep 28 17:29:42 2014 -0400
+
+    added stdin
+
+commit 5db5390747ed8fafc9da6765b3b90804462912ab
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Sun Sep 28 17:14:45 2014 -0400
+
+    successfully compiled (incomplete) cat
+
+commit 2efdb6938c22a9ace73b7159bbee56519ed2aeb3
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Sun Sep 28 17:09:37 2014 -0400
+
+    cleaned cat, should catch all errors
+
+commit 533d67177d5141f7c0f4b8fc22cb45d46a89d2ad
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Sun Sep 28 17:03:59 2014 -0400
+
+    added help and catch bad file to cat
+
+commit 8bd7a7ce68004ac18ceb6d1dcc5fdd1703cb497a
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Sun Sep 28 16:51:56 2014 -0400
+
+    modified example.c to cat
+
+commit 724a4e9ae3eb359c286d87a1fe2004be61f9a199
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Sun Sep 28 16:09:12 2014 -0400
+
+    Copied example.c to cat, changed help message
+
+commit 8b16c8d4506b657b73b4e2a2ce8fdad92217e657
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Sun Sep 28 15:44:24 2014 -0400
+
+    Created empty cat and grep
+
+commit 71e4371b3761e42e63443e458792845722534b7a
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Sun Sep 28 15:41:53 2014 -0400
+
+    Accounted for first string and spaces
+
+commit c45fe1287461bd271592c6106ed2a6da58f87220
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Sun Sep 28 15:33:42 2014 -0400
+
+    Started outline for echo-lite
+
+commit 5ff85cae06805c4bbb8f4324786ee21932d97511
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Sun Sep 28 14:51:55 2014 -0400
+
+    Begin Homework
+
+commit 40ee8b2ccf3c132c244dd49d381afa44d856d692
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Wed Sep 10 15:39:58 2014 -0400
+
+    added valgrind log
+
+commit 246bdaf06543b2bcba91c3ea42dd05d532c7f63d
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Wed Sep 10 15:39:35 2014 -0400
+
+    added functionality to pa02 for valgrind
+
+commit 71325282b448e5b060fb2e665915d5ff628627e4
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Tue Sep 9 23:48:00 2014 -0400
+
+    fixed seg fault in strcpy
+
+commit 1a5c86193d3675501496ee5d750818584df7acd2
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Tue Sep 9 22:58:02 2014 -0400
+
+    forgot to increase dest in strcat
+
+commit 43b6117c1b7280d84a6a0d165f57ef92dfe66236
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Tue Sep 9 22:49:41 2014 -0400
+
+    compiled atoi
+
+commit e7ece1f280345af63dbe56591c16e380d93b7674
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Tue Sep 9 22:33:38 2014 -0400
+
+    compiled isspace
+
+commit e06c9f9c631f487eddd7ec9bd230bc9d37064aea
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Tue Sep 9 22:24:47 2014 -0400
+
+    compiled strcat, commented pa02.c
+
+commit 27bf3da2416ce1b72b437efcc87ceae0b2253f07
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Tue Sep 9 22:00:25 2014 -0400
+
+    compiled strcpy, commented pa02.c
+
+commit cfd92ca7e941fcbf5ddc53f28cf7a8b0d42f1929
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Tue Sep 9 21:21:53 2014 -0400
+
+    changed comments on strstr
+
+commit 66733dcf9973acbd983ab7b7f6b6b4d701363b66
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Tue Sep 9 21:20:31 2014 -0400
+
+    compiled strstr, commented pa02.c
+
+commit a6d60d8369b87f2ec92bfd2ced1b86f4b61fce6b
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Tue Sep 9 20:30:32 2014 -0400
+
+    compiled strrchr, added strrchr to pa02.c
+
+commit 1df1eb2dc63daa247831f892c75916c26277a7d7
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Tue Sep 9 20:08:26 2014 -0400
+
+    compiled strchr, commented out pa02.c
+
+commit dcb7ab05c55e01dc83b6c46333fb032e30767ee6
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Tue Sep 9 19:48:24 2014 -0400
+
+    compiled countchar, commented out pa02.c
+
+commit 68b8884cab87ad69c7e90776fc61704bfdc92178
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Tue Sep 9 19:40:00 2014 -0400
+
+    compile strlen, commented out pa02 accordingly
+
+commit 343a200048d09d8d2c4785fe0db01702698853ec
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Tue Sep 9 19:14:21 2014 -0400
+
+    created answer02.c
+
+commit 63029cb257de0c96f017ea99c00b17918799853d
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Tue Sep 9 19:12:50 2014 -0400
+
+    added gitignore
+
+commit 98ededb4fc67b029cd534dd49e3c4c2d7c814cc0
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Tue Sep 9 18:32:35 2014 -0400
+
+    start homework
+
+commit 62d0ac53cd57f4a742922335c25ee57926a9e9c4
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Mon Sep 1 16:18:09 2014 -0400
+
+    Zipped
+
+commit 75dcd30bd589873bcf81a4b1e59879d8a79b3de5
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Mon Sep 1 16:10:00 2014 -0400
+
+    Gdb
+
+commit 92d868a912c4877b0122c1710715ed395713eaae
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Mon Sep 1 15:50:31 2014 -0400
+
+    Valgrinded
+
+commit dc4a0feaefa55593ad04f514b1fa8060cb0cde89
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Mon Sep 1 15:49:46 2014 -0400
+
+    Valgrinded
+
+commit 320327a2095b73a4f412ddf5388ce47f7088f299
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Mon Sep 1 15:18:26 2014 -0400
+
+    Compiled arrayFindSmallest
+
+commit cb84c813f8bf8a367bb7858f49daebc9d7a7bfa7
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Mon Sep 1 15:08:17 2014 -0400
+
+    Compiled needle in haystack
+
+commit e698e117471562cf7a6bce13c90655032e8e75bc
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Mon Sep 1 14:55:12 2014 -0400
+
+    Compiled arrayIsIncreasing
+
+commit ed65e941e5cc9b4c588706d08d07462813393c62
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Mon Sep 1 14:39:57 2014 -0400
+
+    Compiled arrayCountNegative
+
+commit 8aa65a0f02e70ae2b92dd7c9b31041cd4613f328
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Mon Sep 1 14:35:43 2014 -0400
+
+    Compiled arraySum
+
+commit 93f8f859b97758d01cc47f32d93723fde0f1f8b6
+Author: Noah Daniel Smith <smit1988@ecegrid-thin1.ecn.purdue.edu>
+Date:   Sun Aug 31 14:53:20 2014 -0400
+
+    start homework
+
+commit 78941bbb29d7858759062eead2750c1da8b7fea6
+Author: smit1988 <smit1988@purdue.edu>
+Date:   Sun Aug 31 14:43:51 2014 -0400
+
+    Initial commit
