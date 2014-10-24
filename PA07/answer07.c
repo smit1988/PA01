@@ -327,17 +327,17 @@ static void BMP_printHeader(BMP_Header * header)
 void print_usage(char * argv0)
 {
   printf("\n"
-	    "   Usage: %s <in-filename> <out-filename>\n"
-	    "\n"
-	    "      Reads bmp image file <in-filename> and then:\n"
-	    "      (1) Converts it to grayscale\n"
-	    "      (2) Inverts pixel intensity\n"
-	    "      (3) Writes inverted image to bmp file <out-filename>\n"
-	 "\n",
-	 basename(argv0));
+    "   Usage: %s <in-filename> <out-filename>\n"
+    "\n"
+    "      Reads bmp image file <in-filename> and then:\n"
+    "      (1) Converts it to grayscale\n"
+    "      (2) Inverts pixel intensity\n"
+    "      (3) Writes inverted image to bmp file <out-filename>\n"
+ "\n",
+ basename(argv0));
 }
 
-/**
+/*
  * Welcome to PA07.
  *
  * This file is an example to help you get started.
@@ -382,4 +382,22 @@ int main(int argc, char * * argv)
   // Image_free(im); // a memory leak until you write this function
   free(im);
   return ret;
+}
+
+Image * Image_load(const char * filename)
+{
+  return NULL;
+}
+
+int Image_save(const char * filename, Image * image)
+{
+  return FALSE;
+}
+
+void Image_free(Image * image)
+{
+}
+
+void linearNormalization(int width, int height, uint8_t * intensity)
+{
 }
