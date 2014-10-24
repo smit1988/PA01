@@ -379,7 +379,7 @@ int main(int argc, char * * argv)
     ret = EXIT_FAILURE;
   }
 
-  Image_free(im); // a memory leak until you write this function
-
+  // Image_free(im); // a memory leak until you write this function
+  free(im);
   return ret;
 }
