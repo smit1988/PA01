@@ -94,7 +94,12 @@ Image * Image_load(const char * filename)
     }
   }
 
-  //Leaving out seek the start of the pizel data
+  if(!err){ //Seek the start of the pixel data
+    if(fseek(fp,sizeof(ImageHeader),SEEK_SET) != 0){
+      fprintf(stderr, "Failed to seek %d, the data of the image data\n", sizeof(ImageHeader));
+      err = TRUE;
+    }
+  }
 
   if(!err){ //read pixel data
     uint8_t * raw264 = malloc(n_bytes);
@@ -156,7 +161,7 @@ int Image_save(const char * filename, Image * image)
   size_t bytes_per_row = ((24 * image->width + 31)/32) * 4;
 
   //Prepare the header
-  Imageheader header;
+  ImageHeader header;
   header.magic_number = ECE264_IMAGE_MAGIC_NUMBER;
   header.width = image->width;
   header.height = image->height;
