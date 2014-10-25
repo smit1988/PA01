@@ -15,13 +15,14 @@
 static int Header_checkValid(ImageHeader * header)
 {
   //Make sure that you can read all the bytes of the header
+
   //Make sure that the magic_number in the header is correct
   if(header->magic_number != ECE264_IMAGE_MAGIC_NUMBER) return FALSE;
   //Make sure that neither the width nor height is zero
   if(header->width == 0) return FALSE;
   if(header->height == 0) return FALSE;
   //Make sure that the comment length is not zero. (Remember, it includes the null-byte.)
-
+  if(header->comment_len == 0) return FALSE;
 }
 
 Image * Image_load(const char * filename)
@@ -56,6 +57,42 @@ Image * Image_load(const char * filename)
     }
   }
 
+  if(!err) { //Allocate Image struct
+    tmp_im = malloc(sizeof(Image));
+    if(tmp_im == NULL){
+      fprintf(stderr, "Failed to allocate im sturcture\n");
+      err = TRUE;
+    }
+  }
+
+  if(!err){ //Init the Image struct
+    tmp_im->width = header.width;
+    tmp_im->height = header.height;
+    
+    //Handle the comment
+    char * filename_cpy = strdup(filename); //we want to call basename
+    char * file_basename = basename(filename_cpy); //requires editable str
+    const char * prefix = "Original ece264 file: ";
+    n_bytes = sizeof(char) * (strlen(prefix) + strlen(file_basename) + 1);
+    tmp_im->comment = malloc(n_bytes);
+    if(tmp_im->comment == NULL){
+      fprintf(stderr, "Failed to allocate %zd bytes for comment\n", n_bytes);
+      err = TRUE;
+    } else {
+      sprintf(tmp_im->comment, "%s%s", prefix, file_basename);
+    }
+    free(filename_cpy); //this also takes care of file_basename
+
+    //Handle image data
+    n_bytes = sizeof(uint8_t) * header.width * header.height;
+    tmp_im->data = malloc(n_bytes);
+    if(tmp_im->data == NULL){
+      fprintf(stderr, "Failed to allocate %zd bytes for image data\n", n_bytes);
+      err = TRUE;
+    }
+  }
+
+  
 }
 
 int Image_save(const char * filename, Image * image)
