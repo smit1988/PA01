@@ -98,11 +98,11 @@ Image * Image_load(const char * filename)
 
   if(!err){ //read pixel data
     uint8_t * raw264 = malloc(n_bytes);
-    if(rawbmp == NULL){
+    if(raw264 == NULL){
       fprintf(stderr, "Could not allocate %zd bytes of image data\n", n_bytes);
       err = TRUE;
     } else {
-      read = fread(rawbmp, sizeof(uint8_t), n_bytes, fp);
+      read = fread(raw264, sizeof(uint8_t), n_bytes, fp);
       if(n_bytes != read){
 	fprintf(stderr, "Only read %zd of %zd bytes of image data\n", read, n_bytes);
 	err=TRUE;
@@ -111,6 +111,31 @@ Image * Image_load(const char * filename)
     free(raw264);
   }
 
+  if(!err) { //We should be at the end of the file now
+    uint8_t byte;
+    read = fread(&byte, sizeof(uint8_t), 1, fp);
+    if(read != 0) {
+      fprintf(stderr, "Stray bytes at the end of bmp file '%s'\n", filename);
+      err = TRUE;
+    }
+  }
+
+  if(!err){ //We're winners...
+    im = tmp_im; //264 will be returned
+    tmp_im = NULL; //and not cleaned up
+  }
+
+  //Cleanup
+  if(tmp_im != NULL){
+    free(tmp_im->comment); //Remember, you can always free(NULL)
+    free(tmp_im->data);
+    free(tmp_im);
+  }
+  if(fp){
+    fclose(fp);
+  }
+
+  return im;
 }
 
 int Image_save(const char * filename, Image * image)
