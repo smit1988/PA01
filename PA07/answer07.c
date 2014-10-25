@@ -23,6 +23,8 @@ static int Header_checkValid(ImageHeader * header)
   if(header->height == 0) return FALSE;
   //Make sure that the comment length is not zero. (Remember, it includes the null-byte.)
   if(header->comment_len == 0) return FALSE;
+  //We're winners
+  return TRUE;
 }
 
 Image * Image_load(const char * filename)
@@ -72,7 +74,7 @@ Image * Image_load(const char * filename)
     //Handle the comment
     char * filename_cpy = strdup(filename); //we want to call basename
     char * file_basename = basename(filename_cpy); //requires editable str
-    const char * prefix = "Original ece264 file: ";
+    const char * prefix = "Original BMP file: ";
     n_bytes = sizeof(char) * (strlen(prefix) + strlen(file_basename) + 1);
     tmp_im->comment = malloc(n_bytes);
     if(tmp_im->comment == NULL){
@@ -92,7 +94,23 @@ Image * Image_load(const char * filename)
     }
   }
 
-  
+  //Leaving out seek the start of the pizel data
+
+  if(!err){ //read pixel data
+    uint8_t * raw264 = malloc(n_bytes);
+    if(rawbmp == NULL){
+      fprintf(stderr, "Could not allocate %zd bytes of image data\n", n_bytes);
+      err = TRUE;
+    } else {
+      read = fread(rawbmp, sizeof(uint8_t), n_bytes, fp);
+      if(n_bytes != read){
+	fprintf(stderr, "Only read %zd of %zd bytes of image data\n", read, n_bytes);
+	err=TRUE;
+      }
+    }
+    free(raw264);
+  }
+
 }
 
 int Image_save(const char * filename, Image * image)
