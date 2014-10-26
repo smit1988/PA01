@@ -32,12 +32,12 @@ static int checkHeader(ImageHeader * hdr)
   return 1;
 }
 
-Image * cleanUp(FILE * fptr, Image * img)
+/*Image * cleanUp(FILE * fptr, Image * img)
 {
-  /*if(fptr != NULL)
+  if(fptr != NULL)
     {
       fclose(fptr);
-      }*/
+      }
   if(img != NULL)
     {
       if(img->data != NULL)
@@ -48,7 +48,7 @@ Image * cleanUp(FILE * fptr, Image * img)
     }
   fclose(fptr);
   return NULL;
-}
+  }*/
 
 //Get Cleaup and checkHeader code
 Image * Image_load(const char * filename){
@@ -59,58 +59,81 @@ Image * Image_load(const char * filename){
   fptr = fopen(filename, "rb"); //"rb" unnecessary in Linux
   if(fptr == NULL)
     {
-      return cleanUp(fptr, img);
+      fclose(fptr);
+      return NULL;
+      //return cleanUp(fptr, img);
     }
   img =  malloc(sizeof(Image));
   if(img == NULL)
     {
-      return cleanUp(fptr, img);
+      free(img);
+      fclose(fptr);
+      return NULL;
+      //return cleanUp(fptr, img);
     }
   //read the header
   if(fread(&header, sizeof(ImageHeader), 1, fptr) != 1)
     {
       //fread fails
-      return cleanUp(fptr, img);
+      free(img);
+      fclose(fptr);
+      return NULL;
+      //return cleanUp(fptr, img);
     }
   //checkHeader and cleanUp may not be things
   if(checkHeader(&header) == 0)
     {
-      return cleanUp(fptr, img);
+      free(img);
+      fclose(fptr);
+      return NULL;
+      //return cleanUp(fptr, img);
     }
   //Allocate space for the image, comment, and pixels
   //data_size is width*height
   img->data = malloc(header.width * header.height * sizeof(uint8_t));
+  if((img->data) == NULL)
+    {
+      free(img->data);
+      free(img);
+      fclose(fptr);
+      return NULL;
+    }
   img->comment = malloc(header.comment_len * sizeof(char));
+  if((img->comment) == NULL)
+    {
+      free(img->comment);
+      free(img->data);
+      free(img);
+      fclose(fptr);
+      return NULL;
+    }
   img->width = header.width;
   img->height = header.height;
   //Read the comment
-  if((img->comment) == NULL)
+  if(fread(img->comment, header.comment_len, 1, fptr) != 1)
     {
-      return cleanUp(fptr, img);
-    } else {
-    if(fread(img->comment, header.comment_len, 1, fptr) != 1)
-      {
-	free(img->comment);
-	return cleanUp(fptr, img);
-      }
-  }
+      free(img->comment);
+      free(img->data);
+      free(img);
+      fclose(fptr);
+      return NULL;
+      //return cleanUp(fptr, img);
+    }
   //Make sure you read the entire comment
   //Make sure the comment ends in a null-byte
   /*  if(img->comment[header.comment_len] != '\0')
     return cleanUp(fptr, img);
   */
   //Read the pixels
-  if((img->data) == NULL)
+  if(fread(img->data, sizeof(img->data), 1, fptr) != 1)
     {
-      return cleanUp(fptr, img);
-    } else {
-    if(fread(img->data, sizeof(img->data), 1, fptr) != 1)
-      {
-	free(img->data);
-	free(img->comment);
-        return cleanUp(fptr, img);
-      }
-  }
+      free(img->data);
+      free(img->comment);
+      free(img);
+      fclose(fptr);
+      //return cleanUp(fptr, img);
+    }
+  
 
   //Make sure you read *all* width*height pixels
   //Make sure you've reached the end of the file
