@@ -34,10 +34,10 @@ static int checkHeader(ImageHeader * hdr)
 
 Image * cleanUp(FILE * fptr, Image * img)
 {
-  if(fptr != NULL)
+  /*if(fptr != NULL)
     {
       fclose(fptr);
-    }
+      }*/
   if(img != NULL)
     {
       if(img->data != NULL)
@@ -46,6 +46,7 @@ Image * cleanUp(FILE * fptr, Image * img)
 	}
       free(img);
     }
+  fclose(fptr);
   return NULL;
 }
 
@@ -87,8 +88,9 @@ Image * Image_load(const char * filename){
     {
       return cleanUp(fptr, img);
     } else {
-    if(fread(&(img->comment), header.comment_len, 1, fptr) != 1)
+    if(fread(img->comment, header.comment_len, 1, fptr) != 1)
       {
+	free(img->comment);
 	return cleanUp(fptr, img);
       }
   }
@@ -102,8 +104,10 @@ Image * Image_load(const char * filename){
     {
       return cleanUp(fptr, img);
     } else {
-    if(fread(&(img->data), sizeof(img->data), 1, fptr) != 1)
+    if(fread(img->data, sizeof(img->data), 1, fptr) != 1)
       {
+	free(img->data);
+	free(img->comment);
         return cleanUp(fptr, img);
       }
   }
@@ -117,6 +121,7 @@ Image * Image_load(const char * filename){
 void Image_free(Image * image)
 {
   free(image->data);
+  free(image->comment);
   free(image);
 }
 
@@ -165,14 +170,14 @@ void linearNormalization(int width, int height, uint8_t * intensity)
   uint8_t max = intensity[0];
   uint8_t min = intensity[0];
   int i;
-  for(i=0; i<=(width * height); i++)
+  for(i=0; i<(width * height); i++)
     {
       if(intensity[i] > max)
 	max = intensity[i];
       if(intensity[i] < min)
 	min = intensity[i];
     }
-  for(i = 0; i<=(width * height); i++)
+  for(i = 0; i<(width * height); i++)
     {
       intensity[i] = (intensity[i] - min) * 255.0 / (max - min);
     }
