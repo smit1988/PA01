@@ -4,6 +4,43 @@
 
 //Much of the structure of this code is taking from page 389 from the book
 
+static int checkHeader(ImageHeader * hdr)
+{
+  if((hdr->magic_number) != ECE264_IMAGE_MAGIC_NUMBER)
+    {
+      return 0;
+    }
+  if((hdr->height) == 0)
+    {
+      return 0;
+    }
+  if((hdr->width) == 0)
+    {
+      return 0;
+    }
+  if((hdr->comment_len) == 0)
+    {
+      return 0;
+    }
+}
+
+Image * cleanUp(FILE * fptr, Image * img)
+{
+  if(fptr != NULL)
+    {
+      fclose(fptr);
+    }
+  if(img != NULL)
+    {
+      if(img->data != NULL)
+	{
+	  free(img->data);
+	}
+      free(img);
+    }
+  return NULL;
+}
+
 //Get Cleaup and checkHeader code
 Image * Image_load(const char * filename){
   FILE * fptr = NULL;
@@ -62,4 +99,7 @@ Image * Image_load(const char * filename){
         return cleanUp(fptr, img);
       }
   }
+
+  //Make sure you read *all* width*height pixels
+  //Make sure you've reached the end of the file
 }
