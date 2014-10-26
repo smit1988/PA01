@@ -9,6 +9,7 @@ Image * Image_load(const char * filename){
   FILE * fptr = NULL;
   ImageHeader header;
   Image * img = NULL;
+  //Make sure you can open the file
   fptr = fopen(filename, "r"); //"rb" unnecessary in Linux
   if(fptr == NULL)
     {
@@ -30,7 +31,20 @@ Image * Image_load(const char * filename){
     {
       return cleanUp(fptr, img);
     }
+  //Allocate space for the image, comment, and pixels
   //data_size is width*height
+  img->data = malloc(header.width * header.height);
+  img->comment = malloc(header.comment_len + 1);
   img->width = header.width;
   img->height = header.height;
+  //Read the comment
+  if(img-> NULL)
+  {
+    return cleanUp(fptr, img);
+  } else {
+    if(fread(&(img->comment), sizeof(img->comment), 1, fptr) != 1)
+      {
+	return cleanUp(fptr, img);
+      }
+  }
 }
