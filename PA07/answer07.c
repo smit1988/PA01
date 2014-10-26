@@ -55,7 +55,7 @@ Image * Image_load(const char * filename){
   ImageHeader header;
   Image * img = NULL;
   //Make sure you can open the file
-  fptr = fopen(filename, "r"); //"rb" unnecessary in Linux
+  fptr = fopen(filename, "rb"); //"rb" unnecessary in Linux
   if(fptr == NULL)
     {
       return cleanUp(fptr, img);
@@ -78,8 +78,8 @@ Image * Image_load(const char * filename){
     }
   //Allocate space for the image, comment, and pixels
   //data_size is width*height
-  img->data = malloc(header.width * header.height);
-  img->comment = malloc(header.comment_len + 1);
+  img->data = malloc(header.width * header.height * sizeof(uint8_t));
+  img->comment = malloc(header.comment_len * sizeof(char));
   img->width = header.width;
   img->height = header.height;
   //Read the comment
@@ -87,7 +87,7 @@ Image * Image_load(const char * filename){
     {
       return cleanUp(fptr, img);
     } else {
-    if(fread(&(img->comment), sizeof(img->comment), 1, fptr) != 1)
+    if(fread(&(img->comment), header.comment_len, 1, fptr) != 1)
       {
 	return cleanUp(fptr, img);
       }
@@ -124,7 +124,7 @@ int Image_save(const char * filename, Image * image)
 {
   FILE * fptr = NULL;
   ImageHeader header;
-  fptr = fopen(filename, "w");
+  fptr = fopen(filename, "wb");
   if(fptr == NULL)
     {
       return 0;
@@ -162,5 +162,18 @@ int Image_save(const char * filename, Image * image)
 
 void linearNormalization(int width, int height, uint8_t * intensity)
 {
-  
+  uint8_t max = intensity[0];
+  uint8_t min = intensity[0];
+  int i;
+  for(i=0; i<=(width * height); i++)
+    {
+      if(intensity[i] > max)
+	max = intensity[i];
+      if(intensity[i] < min)
+	min = intensity[i];
+    }
+  for(i = 0; i<=(width * height); i++)
+    {
+      intensity[i] = (intensity[i] - min) * 255.0 / (max - min);
+    }
 }
