@@ -131,19 +131,19 @@ int Image_save(const char * filename, Image * image)
     }
   //write the header first
   fread(&header, sizeof(ImageHeader), 1, fptr);
-  if(fwrite(&(image->width), sizeof(header.width), 1, fptr != 1))
+  if(fwrite(&(image->width), sizeof(header.width), 1, fptr) != 1)
     {
       //fwrite fails
       fclose(fptr);
       return 0;
     }
-  if(fwrite(&(image->height), sizeof(header.height), 1, fptr != 1))
+  if(fwrite(&(image->height), sizeof(header.height), 1, fptr) != 1)
     {
       //fwrite fails
       fclose(fptr);
       return 0;
     }
-  if(fwrite(&(image->comment), sizeof(header.comment_len), 1, fptr != 1))
+  if(fwrite(&(image->comment), sizeof(header.comment_len), 1, fptr) != 1)
     {
       //fwrite fails
       fclose(fptr);
