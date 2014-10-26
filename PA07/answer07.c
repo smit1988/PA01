@@ -2,6 +2,13 @@
 //ece264
 //October 26,2014
 
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <libgen.h>
+#include "answer07.h"
+
+
 //Much of the structure of this code is taking from page 389 from the book
 
 static int checkHeader(ImageHeader * hdr)
@@ -22,6 +29,7 @@ static int checkHeader(ImageHeader * hdr)
     {
       return 0;
     }
+  return 1;
 }
 
 Image * cleanUp(FILE * fptr, Image * img)
@@ -86,9 +94,9 @@ Image * Image_load(const char * filename){
   }
   //Make sure you read the entire comment
   //Make sure the comment ends in a null-byte
-  if(img->comment[header.comment_len] != '\0')
+  /*  if(img->comment[header.comment_len] != '\0')
     return cleanUp(fptr, img);
-
+  */
   //Read the pixels
   if((img->data) == NULL)
     {
@@ -102,4 +110,57 @@ Image * Image_load(const char * filename){
 
   //Make sure you read *all* width*height pixels
   //Make sure you've reached the end of the file
+  fclose(fptr);
+  return img;
+}
+
+void Image_free(Image * image)
+{
+  free(image->data);
+  free(image);
+}
+
+int Image_save(const char * filename, Image * image)
+{
+  FILE * fptr = NULL;
+  ImageHeader header;
+  fptr = fopen(filename, "w");
+  if(fptr == NULL)
+    {
+      return 0;
+    }
+  //write the header first
+  fread(&header, sizeof(ImageHeader), 1, fptr);
+  if(fwrite(&(image->width), sizeof(header.width), 1, fptr != 1))
+    {
+      //fwrite fails
+      fclose(fptr);
+      return 0;
+    }
+  if(fwrite(&(image->height), sizeof(header.height), 1, fptr != 1))
+    {
+      //fwrite fails
+      fclose(fptr);
+      return 0;
+    }
+  if(fwrite(&(image->comment), sizeof(header.comment_len), 1, fptr != 1))
+    {
+      //fwrite fails
+      fclose(fptr);
+      return 0;
+    }
+  if(fwrite(&(image->data), sizeof(char), 8, fptr) != 8)
+    {
+      //fwrite fails
+      fclose(fptr);
+      return 0;
+    }
+  //everything successful
+  fclose(fptr);
+  return 1;
+}
+
+void linearNormalization(int width, int height, uint8_t * intensity)
+{
+  
 }
