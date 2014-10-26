@@ -156,27 +156,24 @@ int Image_save(const char * filename, Image * image)
     {
       return 0;
     }
+  header.width = image->width;
+  header.height = image->height;
+  header.magic_number = ECE264_IMAGE_MAGIC_NUMBER;
+  header.comment_len = strlen(image->comment) + 1;
   //write the header first
-  fread(&header, sizeof(ImageHeader), 1, fptr);
-  if(fwrite(&(image->width), sizeof(header.width), 1, fptr) != 1)
+  if(fwrite(&header, sizeof(ImageHeader), 1, fptr) != 1)
     {
       //fwrite fails
       fclose(fptr);
       return 0;
     }
-  if(fwrite(&(image->height), sizeof(header.height), 1, fptr) != 1)
+  if(fwrite(&(image->comment), sizeof(image->comment), 1, fptr) != 1)
     {
       //fwrite fails
       fclose(fptr);
       return 0;
     }
-  if(fwrite(&(image->comment), sizeof(header.comment_len), 1, fptr) != 1)
-    {
-      //fwrite fails
-      fclose(fptr);
-      return 0;
-    }
-  if(fwrite(&(image->data), sizeof(char), 8, fptr) != 8)
+  if(fwrite(&(image->data), sizeof(image->data), 8, fptr) != 8)
     {
       //fwrite fails
       fclose(fptr);
