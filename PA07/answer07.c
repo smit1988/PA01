@@ -32,24 +32,6 @@ static int checkHeader(ImageHeader * hdr)
   return 1;
 }
 
-/*Image * cleanUp(FILE * fptr, Image * img)
-{
-  if(fptr != NULL)
-    {
-      fclose(fptr);
-      }
-  if(img != NULL)
-    {
-      if(img->data != NULL)
-	{
-	  free(img->data);
-	}
-      free(img);
-    }
-  fclose(fptr);
-  return NULL;
-  }*/
-
 //Get Cleaup and checkHeader code
 Image * Image_load(const char * filename){
   FILE * fptr = NULL;
@@ -121,19 +103,36 @@ Image * Image_load(const char * filename){
     }
   //Make sure you read the entire comment
   //Make sure the comment ends in a null-byte
-  /*  if(img->comment[header.comment_len] != '\0')
-    return cleanUp(fptr, img);
-  */
+  if(img->comment[header.comment_len - 1] != '\0')
+    {
+      free(img->comment);
+      free(img->data);
+      free(img);
+      fclose(fptr);
+      return NULL;
+    }
+  
   //Read the pixels
-  if(fread(img->data, sizeof(img->data), 1, fptr) != 1)
+  if(fread(img->data, (header.width * header.height), 1, fptr) != 1)
     {
       free(img->data);
       free(img->comment);
       free(img);
       fclose(fptr);
+      return NULL;
       //return cleanUp(fptr, img);
     }
   
+  //Check end
+  size_t endOfFile;
+  if(fread(&endOfFile,sizeof(uint8_t), 1, fptr) != 0)
+    {
+      free(img->data);
+      free(img->comment);
+      free(img);
+      fclose(fptr);
+      return NULL;
+    }
 
   //Make sure you read *all* width*height pixels
   //Make sure you've reached the end of the file
