@@ -71,6 +71,8 @@ Image * Image_load(const char * filename){
       //return cleanUp(fptr, img);
     }
   //Allocate space for the image, comment, and pixels
+  if((header.width*header.height) > 999*sizeof(ImageHeader))
+    return NULL;
   //data_size is width*height
   img->data = malloc(header.width * header.height * sizeof(uint8_t));
   /*if((img->data) == NULL)
