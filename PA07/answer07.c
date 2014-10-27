@@ -73,22 +73,22 @@ Image * Image_load(const char * filename){
   //Allocate space for the image, comment, and pixels
   //data_size is width*height
   img->data = malloc(header.width * header.height * sizeof(uint8_t));
-  if((img->data) == NULL)
+  /*if((img->data) == NULL)
     {
       free(img->data);
       free(img);
       fclose(fptr);
       return NULL;
-    }
+      }*/
   img->comment = malloc(header.comment_len * sizeof(char));
-  if((img->comment) == NULL)
+  /*if((img->comment) == NULL)
     {
       free(img->comment);
       free(img->data);
       free(img);
       fclose(fptr);
       return NULL;
-    }
+      }*/
   img->width = header.width;
   img->height = header.height;
   //Read the comment
@@ -99,9 +99,10 @@ Image * Image_load(const char * filename){
       free(img);
       fclose(fptr);
       return NULL;
-      //return cleanUp(fptr, img);
     }
   //Make sure you read the entire comment
+  if((header.width*header.height) > 999*sizeof(ImageHeader))
+    return NULL;
   //Make sure the comment ends in a null-byte
   if(img->comment[header.comment_len - 1] != '\0')
     {
@@ -167,13 +168,13 @@ int Image_save(const char * filename, Image * image)
       fclose(fptr);
       return 0;
     }
-  if(fwrite(&(image->comment), sizeof(image->comment), 1, fptr) != 1)
+  if(fwrite((image->comment), header.comment_len, 1, fptr) != 1)
     {
       //fwrite fails
       fclose(fptr);
       return 0;
     }
-  if(fwrite(&(image->data), sizeof(image->data), 8, fptr) != 8)
+  if(fwrite((image->data), (header.width * header.height), 1, fptr) != 1)
     {
       //fwrite fails
       fclose(fptr);
