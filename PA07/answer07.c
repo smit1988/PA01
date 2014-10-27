@@ -71,7 +71,7 @@ Image * Image_load(const char * filename){
       //return cleanUp(fptr, img);
     }
   //Allocate space for the image, comment, and pixels
-  if((header.width*header.height) > 999*sizeof(ImageHeader))
+  if((header.width*header.height) > (999*999*999))
     return NULL;
   //data_size is width*height
   img->data = malloc(header.width * header.height * sizeof(uint8_t));
@@ -103,7 +103,7 @@ Image * Image_load(const char * filename){
       return NULL;
     }
   //Make sure you read the entire comment
-  if((header.width*header.height) > 999*sizeof(ImageHeader))
+  if((header.width*header.height) > (999*999*999))
     return NULL;
   //Make sure the comment ends in a null-byte
   if(img->comment[header.comment_len - 1] != '\0')
