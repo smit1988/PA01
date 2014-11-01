@@ -41,38 +41,39 @@ int List_length(List * list)
 
 List * List_merge(List * lhs, List * rhs, int (*compar)(const char *, const char*))
 {
-  List * left = lhs;
-  List * right = rhs;
   //new list
   List * new = NULL;
   //keep track of head
   List * start = new;
+  //if lhs is null, the remaining is rhs
+  //if rhs is null, the remaining is lhs
+  //if neither are null, the next element is the greater of the two
   //if at least one of the elements is left
-  while((left != NULL) || (right != NULL))
+  while((lhs != NULL) || (rhs != NULL))
     {
-      if(right == NULL)
+      if(rhs == NULL)
 	{
-	  new = left;
-	  left = left->next;
+	  new = lhs;
+	  lhs = lhs->next;
 	}
-      else if(left == NULL)
+      else if(lhs == NULL)
 	{
-	  new = right;
-	  right = right->next;
+	  new = rhs;
+	  rhs = rhs->next;
 	}
       else
 	{
 	  //if lhs is greater
-	  if(compar(left->str,right->str) > 0)
+	  if(strcmp(lhs->str,rhs->str) > 0)
 	    {
-	      new = left;
-	      left = left->next;
+	      new = lhs;
+	      lhs = lhs->next;
 	    }
 	  //if rhs is greater or equal
 	  else
 	    {
-	      new = right;
-	      right = right->next;
+	      new = rhs;
+	      rhs = rhs->next;
 	    }
 	}
       new = new->next;
