@@ -1,0 +1,87 @@
+==19473== Memcheck, a memory error detector
+==19473== Copyright (C) 2002-2012, and GNU GPL'd, by Julian Seward et al.
+==19473== Using Valgrind-3.8.1 and LibVEX; rerun with -h for copyright info
+==19473== Command: ./a.out images/bmps/01-smile.bmp student-out-05_01-smile.ee264
+==19473== Parent PID: 19472
+==19473== 
+--19473-- 
+--19473-- Valgrind options:
+--19473--    --tool=memcheck
+--19473--    --leak-check=full
+--19473--    --verbose
+--19473--    --log-file=memcheck-05.log
+--19473-- Contents of /proc/version:
+--19473--   Linux version 2.6.32-431.29.2.el6.x86_64 (mockbuild@x86-026.build.eng.bos.redhat.com) (gcc version 4.4.7 20120313 (Red Hat 4.4.7-4) (GCC) ) #1 SMP Sun Jul 27 15:55:46 EDT 2014
+--19473-- Arch and hwcaps: AMD64, amd64-sse3-cx16
+--19473-- Page sizes: currently 4096, max supported 4096
+--19473-- Valgrind library directory: /usr/lib64/valgrind
+--19473-- Reading syms from /tmp/.NrO7GT/a.out
+--19473-- Reading syms from /usr/lib64/valgrind/memcheck-amd64-linux
+--19473--    object doesn't have a dynamic symbol table
+--19473-- Reading syms from /lib64/ld-2.12.so
+--19473--   Considering /usr/lib/debug/.build-id/3b/fa45bce0e82e1d90d37a0cc8630f97f2003bf5.debug ..
+--19473--   .. build-id is valid
+--19473-- Scheduler: using generic scheduler lock implementation.
+--19473-- Reading suppressions file: /usr/lib64/valgrind/default.supp
+==19473== embedded gdbserver: reading from /tmp/vgdb-pipe-from-vgdb-to-19473-by-smit1988-on-ecegrid-thin1.ecn.purdue.edu
+==19473== embedded gdbserver: writing to   /tmp/vgdb-pipe-to-vgdb-from-19473-by-smit1988-on-ecegrid-thin1.ecn.purdue.edu
+==19473== embedded gdbserver: shared mem   /tmp/vgdb-pipe-shared-mem-vgdb-19473-by-smit1988-on-ecegrid-thin1.ecn.purdue.edu
+==19473== 
+==19473== TO CONTROL THIS PROCESS USING vgdb (which you probably
+==19473== don't want to do, unless you know exactly what you're doing,
+==19473== or are doing some strange experiment):
+==19473==   /usr/lib64/valgrind/../../bin/vgdb --pid=19473 ...command...
+==19473== 
+==19473== TO DEBUG THIS PROCESS USING GDB: start GDB like this
+==19473==   /path/to/gdb ./a.out
+==19473== and then give GDB the following command
+==19473==   target remote | /usr/lib64/valgrind/../../bin/vgdb --pid=19473
+==19473== --pid is optional if only one valgrind process is running
+==19473== 
+--19473-- REDIR: 0x35ff417610 (strlen) redirected to 0x38049551 (vgPlain_amd64_linux_REDIR_FOR_strlen)
+--19473-- Reading syms from /usr/lib64/valgrind/vgpreload_core-amd64-linux.so
+--19473-- Reading syms from /usr/lib64/valgrind/vgpreload_memcheck-amd64-linux.so
+--19473-- REDIR: 0x35ff417480 (index) redirected to 0x4a07c30 (index)
+--19473-- REDIR: 0x35ff417500 (strcmp) redirected to 0x4a08570 (strcmp)
+--19473-- Reading syms from /lib64/libc-2.12.so
+--19473--   Considering /usr/lib/debug/.build-id/73/3ad3a438b5a695f7a63a77413f9b2c8c94e8e6.debug ..
+--19473--   .. build-id is valid
+--19473-- REDIR: 0x35ff884cd0 (strcasecmp) redirected to 0x480155c (_vgnU_ifunc_wrapper)
+--19473-- REDIR: 0x35ff886f90 (strncasecmp) redirected to 0x480155c (_vgnU_ifunc_wrapper)
+--19473-- REDIR: 0x35ff882c40 (__GI_strrchr) redirected to 0x4a07ab0 (__GI_strrchr)
+--19473-- REDIR: 0x35ff87f6e0 (strcmp) redirected to 0x480155c (_vgnU_ifunc_wrapper)
+--19473-- REDIR: 0x35ff928420 (__strcmp_sse42) redirected to 0x4a084d0 (strcmp)
+--19473-- REDIR: 0x35ff881120 (strlen) redirected to 0x480155c (_vgnU_ifunc_wrapper)
+--19473-- REDIR: 0x35ff9336f0 (__strlen_sse42) redirected to 0x4a07f90 (strlen)
+--19473-- REDIR: 0x35ff88aaf0 (strchrnul) redirected to 0x4a09fb0 (strchrnul)
+--19473-- REDIR: 0x35ff884500 (mempcpy) redirected to 0x4a0a020 (mempcpy)
+--19473-- REDIR: 0x35ff87b520 (free) redirected to 0x4a063a9 (free)
+--19473-- REDIR: 0x35ff87a640 (malloc) redirected to 0x4a069ac (malloc)
+--19473-- REDIR: 0x35ff889670 (memcpy) redirected to 0x4a08b60 (memcpy)
+--19473-- REDIR: 0x35ff881160 (__GI_strlen) redirected to 0x4a07fb0 (__GI_strlen)
+==19473== 
+==19473== HEAP SUMMARY:
+==19473==     in use at exit: 67,032 bytes in 3 blocks
+==19473==   total heap usage: 7 allocs, 4 frees, 269,121 bytes allocated
+==19473== 
+==19473== Searching for pointers to 3 not-freed blocks
+==19473== Checked 64,632 bytes
+==19473== 
+==19473== 67,032 (24 direct, 67,008 indirect) bytes in 1 blocks are definitely lost in loss record 3 of 3
+==19473==    at 0x4A06A2E: malloc (vg_replace_malloc.c:270)
+==19473==    by 0x4010E6: Image_loadbmp (<stdin>:101)
+==19473==    by 0x401C0D: main (<stdin>:65)
+==19473== 
+==19473== LEAK SUMMARY:
+==19473==    definitely lost: 24 bytes in 1 blocks
+==19473==    indirectly lost: 67,008 bytes in 2 blocks
+==19473==      possibly lost: 0 bytes in 0 blocks
+==19473==    still reachable: 0 bytes in 0 blocks
+==19473==         suppressed: 0 bytes in 0 blocks
+==19473== 
+==19473== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 6 from 6)
+--19473-- 
+--19473-- used_suppression:      4 U1004-ARM-_dl_relocate_object
+--19473-- used_suppression:      2 glibc-2.5.x-on-SUSE-10.2-(PPC)-2a
+==19473== 
+==19473== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 6 from 6)

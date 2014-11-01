@@ -1,0 +1,85 @@
+==5646== Memcheck, a memory error detector
+==5646== Copyright (C) 2002-2012, and GNU GPL'd, by Julian Seward et al.
+==5646== Using Valgrind-3.8.1 and LibVEX; rerun with -h for copyright info
+==5646== Command: ./a.out images/corrupt-testcases/01-incomplete-header.ee264 student-out-15_-
+==5646== Parent PID: 5645
+==5646== 
+--5646-- 
+--5646-- Valgrind options:
+--5646--    --tool=memcheck
+--5646--    --leak-check=full
+--5646--    --verbose
+--5646--    --log-file=memcheck-15.log
+--5646-- Contents of /proc/version:
+--5646--   Linux version 2.6.32-431.29.2.el6.x86_64 (mockbuild@x86-026.build.eng.bos.redhat.com) (gcc version 4.4.7 20120313 (Red Hat 4.4.7-4) (GCC) ) #1 SMP Sun Jul 27 15:55:46 EDT 2014
+--5646-- Arch and hwcaps: AMD64, amd64-sse3-cx16
+--5646-- Page sizes: currently 4096, max supported 4096
+--5646-- Valgrind library directory: /usr/lib64/valgrind
+--5646-- Reading syms from /tmp/.vVSGj0/a.out
+--5646-- Reading syms from /usr/lib64/valgrind/memcheck-amd64-linux
+--5646--    object doesn't have a dynamic symbol table
+--5646-- Reading syms from /lib64/ld-2.12.so
+--5646--   Considering /usr/lib/debug/.build-id/3b/fa45bce0e82e1d90d37a0cc8630f97f2003bf5.debug ..
+--5646--   .. build-id is valid
+--5646-- Scheduler: using generic scheduler lock implementation.
+--5646-- Reading suppressions file: /usr/lib64/valgrind/default.supp
+==5646== embedded gdbserver: reading from /tmp/vgdb-pipe-from-vgdb-to-5646-by-smit1988-on-ecegrid-thin1.ecn.purdue.edu
+==5646== embedded gdbserver: writing to   /tmp/vgdb-pipe-to-vgdb-from-5646-by-smit1988-on-ecegrid-thin1.ecn.purdue.edu
+==5646== embedded gdbserver: shared mem   /tmp/vgdb-pipe-shared-mem-vgdb-5646-by-smit1988-on-ecegrid-thin1.ecn.purdue.edu
+==5646== 
+==5646== TO CONTROL THIS PROCESS USING vgdb (which you probably
+==5646== don't want to do, unless you know exactly what you're doing,
+==5646== or are doing some strange experiment):
+==5646==   /usr/lib64/valgrind/../../bin/vgdb --pid=5646 ...command...
+==5646== 
+==5646== TO DEBUG THIS PROCESS USING GDB: start GDB like this
+==5646==   /path/to/gdb ./a.out
+==5646== and then give GDB the following command
+==5646==   target remote | /usr/lib64/valgrind/../../bin/vgdb --pid=5646
+==5646== --pid is optional if only one valgrind process is running
+==5646== 
+--5646-- REDIR: 0x35ff417610 (strlen) redirected to 0x38049551 (vgPlain_amd64_linux_REDIR_FOR_strlen)
+--5646-- Reading syms from /usr/lib64/valgrind/vgpreload_core-amd64-linux.so
+--5646-- Reading syms from /usr/lib64/valgrind/vgpreload_memcheck-amd64-linux.so
+--5646-- REDIR: 0x35ff417480 (index) redirected to 0x4a07c30 (index)
+--5646-- REDIR: 0x35ff417500 (strcmp) redirected to 0x4a08570 (strcmp)
+--5646-- Reading syms from /lib64/libc-2.12.so
+--5646--   Considering /usr/lib/debug/.build-id/73/3ad3a438b5a695f7a63a77413f9b2c8c94e8e6.debug ..
+--5646--   .. build-id is valid
+--5646-- REDIR: 0x35ff884cd0 (strcasecmp) redirected to 0x480155c (_vgnU_ifunc_wrapper)
+--5646-- REDIR: 0x35ff886f90 (strncasecmp) redirected to 0x480155c (_vgnU_ifunc_wrapper)
+--5646-- REDIR: 0x35ff882c40 (__GI_strrchr) redirected to 0x4a07ab0 (__GI_strrchr)
+--5646-- REDIR: 0x35ff87f6e0 (strcmp) redirected to 0x480155c (_vgnU_ifunc_wrapper)
+--5646-- REDIR: 0x35ff928420 (__strcmp_sse42) redirected to 0x4a084d0 (strcmp)
+--5646-- REDIR: 0x35ff881120 (strlen) redirected to 0x480155c (_vgnU_ifunc_wrapper)
+--5646-- REDIR: 0x35ff9336f0 (__strlen_sse42) redirected to 0x4a07f90 (strlen)
+--5646-- REDIR: 0x35ff88aaf0 (strchrnul) redirected to 0x4a09fb0 (strchrnul)
+--5646-- REDIR: 0x35ff884500 (mempcpy) redirected to 0x4a0a020 (mempcpy)
+--5646-- REDIR: 0x35ff87b520 (free) redirected to 0x4a063a9 (free)
+--5646-- REDIR: 0x35ff87a640 (malloc) redirected to 0x4a069ac (malloc)
+==5646== Conditional jump or move depends on uninitialised value(s)
+==5646==    at 0x4009BF: cleanUp (answer07.c:43)
+==5646==    by 0x400AA6: Image_load (answer07.c:73)
+==5646==    by 0x401AF8: main (<stdin>:61)
+==5646== 
+==5646== 
+==5646== HEAP SUMMARY:
+==5646==     in use at exit: 0 bytes in 0 blocks
+==5646==   total heap usage: 2 allocs, 2 frees, 592 bytes allocated
+==5646== 
+==5646== All heap blocks were freed -- no leaks are possible
+==5646== 
+==5646== Use --track-origins=yes to see where uninitialised values come from
+==5646== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 6 from 6)
+==5646== 
+==5646== 1 errors in context 1 of 1:
+==5646== Conditional jump or move depends on uninitialised value(s)
+==5646==    at 0x4009BF: cleanUp (answer07.c:43)
+==5646==    by 0x400AA6: Image_load (answer07.c:73)
+==5646==    by 0x401AF8: main (<stdin>:61)
+==5646== 
+--5646-- 
+--5646-- used_suppression:      4 U1004-ARM-_dl_relocate_object
+--5646-- used_suppression:      2 glibc-2.5.x-on-SUSE-10.2-(PPC)-2a
+==5646== 
+==5646== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 6 from 6)

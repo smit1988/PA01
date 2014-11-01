@@ -1,0 +1,121 @@
+==29607== Memcheck, a memory error detector
+==29607== Copyright (C) 2002-2012, and GNU GPL'd, by Julian Seward et al.
+==29607== Using Valgrind-3.8.1 and LibVEX; rerun with -h for copyright info
+==29607== Command: ./a.out images/04-nelsonmandela.ee264 student-out-13_04-nelsonmandela.bmp
+==29607== Parent PID: 29606
+==29607== 
+--29607-- 
+--29607-- Valgrind options:
+--29607--    --tool=memcheck
+--29607--    --leak-check=full
+--29607--    --verbose
+--29607--    --log-file=memcheck-13.log
+--29607-- Contents of /proc/version:
+--29607--   Linux version 2.6.32-431.29.2.el6.x86_64 (mockbuild@x86-026.build.eng.bos.redhat.com) (gcc version 4.4.7 20120313 (Red Hat 4.4.7-4) (GCC) ) #1 SMP Sun Jul 27 15:55:46 EDT 2014
+--29607-- Arch and hwcaps: AMD64, amd64-sse3-cx16
+--29607-- Page sizes: currently 4096, max supported 4096
+--29607-- Valgrind library directory: /usr/lib64/valgrind
+--29607-- Reading syms from /tmp/.vVSGj0/a.out
+--29607-- Reading syms from /usr/lib64/valgrind/memcheck-amd64-linux
+--29607--    object doesn't have a dynamic symbol table
+--29607-- Reading syms from /lib64/ld-2.12.so
+--29607--   Considering /usr/lib/debug/.build-id/3b/fa45bce0e82e1d90d37a0cc8630f97f2003bf5.debug ..
+--29607--   .. build-id is valid
+--29607-- Scheduler: using generic scheduler lock implementation.
+--29607-- Reading suppressions file: /usr/lib64/valgrind/default.supp
+==29607== embedded gdbserver: reading from /tmp/vgdb-pipe-from-vgdb-to-29607-by-smit1988-on-ecegrid-thin1.ecn.purdue.edu
+==29607== embedded gdbserver: writing to   /tmp/vgdb-pipe-to-vgdb-from-29607-by-smit1988-on-ecegrid-thin1.ecn.purdue.edu
+==29607== embedded gdbserver: shared mem   /tmp/vgdb-pipe-shared-mem-vgdb-29607-by-smit1988-on-ecegrid-thin1.ecn.purdue.edu
+==29607== 
+==29607== TO CONTROL THIS PROCESS USING vgdb (which you probably
+==29607== don't want to do, unless you know exactly what you're doing,
+==29607== or are doing some strange experiment):
+==29607==   /usr/lib64/valgrind/../../bin/vgdb --pid=29607 ...command...
+==29607== 
+==29607== TO DEBUG THIS PROCESS USING GDB: start GDB like this
+==29607==   /path/to/gdb ./a.out
+==29607== and then give GDB the following command
+==29607==   target remote | /usr/lib64/valgrind/../../bin/vgdb --pid=29607
+==29607== --pid is optional if only one valgrind process is running
+==29607== 
+--29607-- REDIR: 0x35ff417610 (strlen) redirected to 0x38049551 (vgPlain_amd64_linux_REDIR_FOR_strlen)
+--29607-- Reading syms from /usr/lib64/valgrind/vgpreload_core-amd64-linux.so
+--29607-- Reading syms from /usr/lib64/valgrind/vgpreload_memcheck-amd64-linux.so
+--29607-- REDIR: 0x35ff417480 (index) redirected to 0x4a07c30 (index)
+--29607-- REDIR: 0x35ff417500 (strcmp) redirected to 0x4a08570 (strcmp)
+--29607-- Reading syms from /lib64/libc-2.12.so
+--29607--   Considering /usr/lib/debug/.build-id/73/3ad3a438b5a695f7a63a77413f9b2c8c94e8e6.debug ..
+--29607--   .. build-id is valid
+--29607-- REDIR: 0x35ff884cd0 (strcasecmp) redirected to 0x480155c (_vgnU_ifunc_wrapper)
+--29607-- REDIR: 0x35ff886f90 (strncasecmp) redirected to 0x480155c (_vgnU_ifunc_wrapper)
+--29607-- REDIR: 0x35ff882c40 (__GI_strrchr) redirected to 0x4a07ab0 (__GI_strrchr)
+--29607-- REDIR: 0x35ff87f6e0 (strcmp) redirected to 0x480155c (_vgnU_ifunc_wrapper)
+--29607-- REDIR: 0x35ff928420 (__strcmp_sse42) redirected to 0x4a084d0 (strcmp)
+--29607-- REDIR: 0x35ff881120 (strlen) redirected to 0x480155c (_vgnU_ifunc_wrapper)
+--29607-- REDIR: 0x35ff9336f0 (__strlen_sse42) redirected to 0x4a07f90 (strlen)
+--29607-- REDIR: 0x35ff88aaf0 (strchrnul) redirected to 0x4a09fb0 (strchrnul)
+--29607-- REDIR: 0x35ff884500 (mempcpy) redirected to 0x4a0a020 (mempcpy)
+--29607-- REDIR: 0x35ff87b520 (free) redirected to 0x4a063a9 (free)
+--29607-- REDIR: 0x35ff87a640 (malloc) redirected to 0x4a069ac (malloc)
+--29607-- REDIR: 0x35ff889670 (memcpy) redirected to 0x4a08b60 (memcpy)
+--29607-- REDIR: 0x35ff881160 (__GI_strlen) redirected to 0x4a07fb0 (__GI_strlen)
+--29607-- REDIR: 0x35ff8839a0 (memset) redirected to 0x480155c (_vgnU_ifunc_wrapper)
+--29607-- REDIR: 0x35ff8839e0 (__GI_memset) redirected to 0x4a09a50 (memset)
+==29607== Syscall param write(buf) points to uninitialised byte(s)
+==29607==    at 0x35FF8DB600: __write_nocancel (syscall-template.S:82)
+==29607==    by 0x35FF871AD2: _IO_file_write@@GLIBC_2.2.5 (fileops.c:1268)
+==29607==    by 0x35FF873084: _IO_do_write@@GLIBC_2.2.5 (fileops.c:522)
+==29607==    by 0x35FF87174C: _IO_file_xsputn@@GLIBC_2.2.5 (fileops.c:1350)
+==29607==    by 0x35FF867A4C: fwrite (iofwrite.c:45)
+==29607==    by 0x40171E: Image_savebmp (<stdin>:278)
+==29607==    by 0x401C38: main (<stdin>:92)
+==29607==  Address 0x4c0f04e is not stack'd, malloc'd or (recently) free'd
+==29607== 
+==29607== Syscall param write(buf) points to uninitialised byte(s)
+==29607==    at 0x35FF8DB600: __write_nocancel (syscall-template.S:82)
+==29607==    by 0x35FF871AD2: _IO_file_write@@GLIBC_2.2.5 (fileops.c:1268)
+==29607==    by 0x35FF873084: _IO_do_write@@GLIBC_2.2.5 (fileops.c:522)
+==29607==    by 0x35FF87285F: _IO_file_close_it@@GLIBC_2.2.5 (fileops.c:169)
+==29607==    by 0x35FF8664F7: fclose@@GLIBC_2.2.5 (iofclose.c:62)
+==29607==    by 0x40178C: Image_savebmp (<stdin>:289)
+==29607==    by 0x401C38: main (<stdin>:92)
+==29607==  Address 0x4c0f000 is not stack'd, malloc'd or (recently) free'd
+==29607== 
+==29607== 
+==29607== HEAP SUMMARY:
+==29607==     in use at exit: 0 bytes in 0 blocks
+==29607==   total heap usage: 6 allocs, 6 frees, 100,800 bytes allocated
+==29607== 
+==29607== All heap blocks were freed -- no leaks are possible
+==29607== 
+==29607== Use --track-origins=yes to see where uninitialised values come from
+==29607== ERROR SUMMARY: 73 errors from 2 contexts (suppressed: 6 from 6)
+==29607== 
+==29607== 1 errors in context 1 of 2:
+==29607== Syscall param write(buf) points to uninitialised byte(s)
+==29607==    at 0x35FF8DB600: __write_nocancel (syscall-template.S:82)
+==29607==    by 0x35FF871AD2: _IO_file_write@@GLIBC_2.2.5 (fileops.c:1268)
+==29607==    by 0x35FF873084: _IO_do_write@@GLIBC_2.2.5 (fileops.c:522)
+==29607==    by 0x35FF87285F: _IO_file_close_it@@GLIBC_2.2.5 (fileops.c:169)
+==29607==    by 0x35FF8664F7: fclose@@GLIBC_2.2.5 (iofclose.c:62)
+==29607==    by 0x40178C: Image_savebmp (<stdin>:289)
+==29607==    by 0x401C38: main (<stdin>:92)
+==29607==  Address 0x4c0f000 is not stack'd, malloc'd or (recently) free'd
+==29607== 
+==29607== 
+==29607== 72 errors in context 2 of 2:
+==29607== Syscall param write(buf) points to uninitialised byte(s)
+==29607==    at 0x35FF8DB600: __write_nocancel (syscall-template.S:82)
+==29607==    by 0x35FF871AD2: _IO_file_write@@GLIBC_2.2.5 (fileops.c:1268)
+==29607==    by 0x35FF873084: _IO_do_write@@GLIBC_2.2.5 (fileops.c:522)
+==29607==    by 0x35FF87174C: _IO_file_xsputn@@GLIBC_2.2.5 (fileops.c:1350)
+==29607==    by 0x35FF867A4C: fwrite (iofwrite.c:45)
+==29607==    by 0x40171E: Image_savebmp (<stdin>:278)
+==29607==    by 0x401C38: main (<stdin>:92)
+==29607==  Address 0x4c0f04e is not stack'd, malloc'd or (recently) free'd
+==29607== 
+--29607-- 
+--29607-- used_suppression:      4 U1004-ARM-_dl_relocate_object
+--29607-- used_suppression:      2 glibc-2.5.x-on-SUSE-10.2-(PPC)-2a
+==29607== 
+==29607== ERROR SUMMARY: 73 errors from 2 contexts (suppressed: 6 from 6)

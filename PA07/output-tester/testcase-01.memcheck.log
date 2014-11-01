@@ -1,0 +1,179 @@
+==31561== Memcheck, a memory error detector
+==31561== Copyright (C) 2002-2012, and GNU GPL'd, by Julian Seward et al.
+==31561== Using Valgrind-3.8.1 and LibVEX; rerun with -h for copyright info
+==31561== Command: ./a.out images/bmps/01-unnormalized-smile.bmp --normalize student-out-00_01-smile.bmp
+==31561== Parent PID: 31558
+==31561== 
+--31561-- 
+--31561-- Valgrind options:
+--31561--    --tool=memcheck
+--31561--    --leak-check=full
+--31561--    --verbose
+--31561--    --log-file=memcheck-00.log
+--31561-- Contents of /proc/version:
+--31561--   Linux version 2.6.32-431.29.2.el6.x86_64 (mockbuild@x86-026.build.eng.bos.redhat.com) (gcc version 4.4.7 20120313 (Red Hat 4.4.7-4) (GCC) ) #1 SMP Sun Jul 27 15:55:46 EDT 2014
+--31561-- Arch and hwcaps: AMD64, amd64-sse3-cx16
+--31561-- Page sizes: currently 4096, max supported 4096
+--31561-- Valgrind library directory: /usr/lib64/valgrind
+--31561-- Reading syms from /tmp/.Kzkr5E/a.out
+--31561-- Reading syms from /usr/lib64/valgrind/memcheck-amd64-linux
+--31561--    object doesn't have a dynamic symbol table
+--31561-- Reading syms from /lib64/ld-2.12.so
+--31561--   Considering /usr/lib/debug/.build-id/3b/fa45bce0e82e1d90d37a0cc8630f97f2003bf5.debug ..
+--31561--   .. build-id is valid
+--31561-- Scheduler: using generic scheduler lock implementation.
+--31561-- Reading suppressions file: /usr/lib64/valgrind/default.supp
+==31561== embedded gdbserver: reading from /tmp/vgdb-pipe-from-vgdb-to-31561-by-smit1988-on-ecegrid-thin1.ecn.purdue.edu
+==31561== embedded gdbserver: writing to   /tmp/vgdb-pipe-to-vgdb-from-31561-by-smit1988-on-ecegrid-thin1.ecn.purdue.edu
+==31561== embedded gdbserver: shared mem   /tmp/vgdb-pipe-shared-mem-vgdb-31561-by-smit1988-on-ecegrid-thin1.ecn.purdue.edu
+==31561== 
+==31561== TO CONTROL THIS PROCESS USING vgdb (which you probably
+==31561== don't want to do, unless you know exactly what you're doing,
+==31561== or are doing some strange experiment):
+==31561==   /usr/lib64/valgrind/../../bin/vgdb --pid=31561 ...command...
+==31561== 
+==31561== TO DEBUG THIS PROCESS USING GDB: start GDB like this
+==31561==   /path/to/gdb ./a.out
+==31561== and then give GDB the following command
+==31561==   target remote | /usr/lib64/valgrind/../../bin/vgdb --pid=31561
+==31561== --pid is optional if only one valgrind process is running
+==31561== 
+--31561-- REDIR: 0x35ff417610 (strlen) redirected to 0x38049551 (vgPlain_amd64_linux_REDIR_FOR_strlen)
+--31561-- Reading syms from /usr/lib64/valgrind/vgpreload_core-amd64-linux.so
+--31561-- Reading syms from /usr/lib64/valgrind/vgpreload_memcheck-amd64-linux.so
+--31561-- REDIR: 0x35ff417480 (index) redirected to 0x4a07c30 (index)
+--31561-- REDIR: 0x35ff417500 (strcmp) redirected to 0x4a08570 (strcmp)
+--31561-- Reading syms from /lib64/libc-2.12.so
+--31561--   Considering /usr/lib/debug/.build-id/73/3ad3a438b5a695f7a63a77413f9b2c8c94e8e6.debug ..
+--31561--   .. build-id is valid
+--31561-- REDIR: 0x35ff884cd0 (strcasecmp) redirected to 0x480155c (_vgnU_ifunc_wrapper)
+--31561-- REDIR: 0x35ff886f90 (strncasecmp) redirected to 0x480155c (_vgnU_ifunc_wrapper)
+--31561-- REDIR: 0x35ff882c40 (__GI_strrchr) redirected to 0x4a07ab0 (__GI_strrchr)
+--31561-- REDIR: 0x35ff87f6e0 (strcmp) redirected to 0x480155c (_vgnU_ifunc_wrapper)
+--31561-- REDIR: 0x35ff928420 (__strcmp_sse42) redirected to 0x4a084d0 (strcmp)
+--31561-- REDIR: 0x35ff881120 (strlen) redirected to 0x480155c (_vgnU_ifunc_wrapper)
+--31561-- REDIR: 0x35ff9336f0 (__strlen_sse42) redirected to 0x4a07f90 (strlen)
+--31561-- REDIR: 0x35ff88aaf0 (strchrnul) redirected to 0x4a09fb0 (strchrnul)
+--31561-- REDIR: 0x35ff884500 (mempcpy) redirected to 0x4a0a020 (mempcpy)
+--31561-- REDIR: 0x35ff87b520 (free) redirected to 0x4a063a9 (free)
+--31561-- REDIR: 0x35ff87a640 (malloc) redirected to 0x4a069ac (malloc)
+--31561-- REDIR: 0x35ff889670 (memcpy) redirected to 0x4a08b60 (memcpy)
+--31561-- REDIR: 0x35ff881160 (__GI_strlen) redirected to 0x4a07fb0 (__GI_strlen)
+==31561== Invalid read of size 1
+==31561==    at 0x400DBA: linearNormalization (answer07.c:171)
+==31561==    by 0x401B5A: main (<stdin>:79)
+==31561==  Address 0x4c4b9a0 is 0 bytes after a block of size 66,976 alloc'd
+==31561==    at 0x4A06A2E: malloc (vg_replace_malloc.c:270)
+==31561==    by 0x401114: Image_loadbmp (<stdin>:129)
+==31561==    by 0x401AED: main (<stdin>:65)
+==31561== 
+==31561== Invalid read of size 1
+==31561==    at 0x400DDA: linearNormalization (answer07.c:173)
+==31561==    by 0x401B5A: main (<stdin>:79)
+==31561==  Address 0x4c4b9a0 is 0 bytes after a block of size 66,976 alloc'd
+==31561==    at 0x4A06A2E: malloc (vg_replace_malloc.c:270)
+==31561==    by 0x401114: Image_loadbmp (<stdin>:129)
+==31561==    by 0x401AED: main (<stdin>:65)
+==31561== 
+==31561== Invalid read of size 1
+==31561==    at 0x400DEB: linearNormalization (answer07.c:174)
+==31561==    by 0x401B5A: main (<stdin>:79)
+==31561==  Address 0x4c4b9a0 is 0 bytes after a block of size 66,976 alloc'd
+==31561==    at 0x4A06A2E: malloc (vg_replace_malloc.c:270)
+==31561==    by 0x401114: Image_loadbmp (<stdin>:129)
+==31561==    by 0x401AED: main (<stdin>:65)
+==31561== 
+==31561== Invalid read of size 1
+==31561==    at 0x400E1D: linearNormalization (answer07.c:178)
+==31561==    by 0x401B5A: main (<stdin>:79)
+==31561==  Address 0x4c4b9a0 is 0 bytes after a block of size 66,976 alloc'd
+==31561==    at 0x4A06A2E: malloc (vg_replace_malloc.c:270)
+==31561==    by 0x401114: Image_loadbmp (<stdin>:129)
+==31561==    by 0x401AED: main (<stdin>:65)
+==31561== 
+==31561== Invalid write of size 1
+==31561==    at 0x400E57: linearNormalization (answer07.c:178)
+==31561==    by 0x401B5A: main (<stdin>:79)
+==31561==  Address 0x4c4b9a0 is 0 bytes after a block of size 66,976 alloc'd
+==31561==    at 0x4A06A2E: malloc (vg_replace_malloc.c:270)
+==31561==    by 0x401114: Image_loadbmp (<stdin>:129)
+==31561==    by 0x401AED: main (<stdin>:65)
+==31561== 
+--31561-- REDIR: 0x35ff8839a0 (memset) redirected to 0x480155c (_vgnU_ifunc_wrapper)
+--31561-- REDIR: 0x35ff8839e0 (__GI_memset) redirected to 0x4a09a50 (memset)
+==31561== 
+==31561== HEAP SUMMARY:
+==31561==     in use at exit: 45 bytes in 1 blocks
+==31561==   total heap usage: 8 allocs, 7 frees, 269,819 bytes allocated
+==31561== 
+==31561== Searching for pointers to 1 not-freed blocks
+==31561== Checked 64,664 bytes
+==31561== 
+==31561== 45 bytes in 1 blocks are definitely lost in loss record 1 of 1
+==31561==    at 0x4A06A2E: malloc (vg_replace_malloc.c:270)
+==31561==    by 0x40107D: Image_loadbmp (<stdin>:117)
+==31561==    by 0x401AED: main (<stdin>:65)
+==31561== 
+==31561== LEAK SUMMARY:
+==31561==    definitely lost: 45 bytes in 1 blocks
+==31561==    indirectly lost: 0 bytes in 0 blocks
+==31561==      possibly lost: 0 bytes in 0 blocks
+==31561==    still reachable: 0 bytes in 0 blocks
+==31561==         suppressed: 0 bytes in 0 blocks
+==31561== 
+==31561== ERROR SUMMARY: 6 errors from 6 contexts (suppressed: 6 from 6)
+==31561== 
+==31561== 1 errors in context 1 of 6:
+==31561== Invalid write of size 1
+==31561==    at 0x400E57: linearNormalization (answer07.c:178)
+==31561==    by 0x401B5A: main (<stdin>:79)
+==31561==  Address 0x4c4b9a0 is 0 bytes after a block of size 66,976 alloc'd
+==31561==    at 0x4A06A2E: malloc (vg_replace_malloc.c:270)
+==31561==    by 0x401114: Image_loadbmp (<stdin>:129)
+==31561==    by 0x401AED: main (<stdin>:65)
+==31561== 
+==31561== 
+==31561== 1 errors in context 2 of 6:
+==31561== Invalid read of size 1
+==31561==    at 0x400E1D: linearNormalization (answer07.c:178)
+==31561==    by 0x401B5A: main (<stdin>:79)
+==31561==  Address 0x4c4b9a0 is 0 bytes after a block of size 66,976 alloc'd
+==31561==    at 0x4A06A2E: malloc (vg_replace_malloc.c:270)
+==31561==    by 0x401114: Image_loadbmp (<stdin>:129)
+==31561==    by 0x401AED: main (<stdin>:65)
+==31561== 
+==31561== 
+==31561== 1 errors in context 3 of 6:
+==31561== Invalid read of size 1
+==31561==    at 0x400DEB: linearNormalization (answer07.c:174)
+==31561==    by 0x401B5A: main (<stdin>:79)
+==31561==  Address 0x4c4b9a0 is 0 bytes after a block of size 66,976 alloc'd
+==31561==    at 0x4A06A2E: malloc (vg_replace_malloc.c:270)
+==31561==    by 0x401114: Image_loadbmp (<stdin>:129)
+==31561==    by 0x401AED: main (<stdin>:65)
+==31561== 
+==31561== 
+==31561== 1 errors in context 4 of 6:
+==31561== Invalid read of size 1
+==31561==    at 0x400DDA: linearNormalization (answer07.c:173)
+==31561==    by 0x401B5A: main (<stdin>:79)
+==31561==  Address 0x4c4b9a0 is 0 bytes after a block of size 66,976 alloc'd
+==31561==    at 0x4A06A2E: malloc (vg_replace_malloc.c:270)
+==31561==    by 0x401114: Image_loadbmp (<stdin>:129)
+==31561==    by 0x401AED: main (<stdin>:65)
+==31561== 
+==31561== 
+==31561== 1 errors in context 5 of 6:
+==31561== Invalid read of size 1
+==31561==    at 0x400DBA: linearNormalization (answer07.c:171)
+==31561==    by 0x401B5A: main (<stdin>:79)
+==31561==  Address 0x4c4b9a0 is 0 bytes after a block of size 66,976 alloc'd
+==31561==    at 0x4A06A2E: malloc (vg_replace_malloc.c:270)
+==31561==    by 0x401114: Image_loadbmp (<stdin>:129)
+==31561==    by 0x401AED: main (<stdin>:65)
+==31561== 
+--31561-- 
+--31561-- used_suppression:      4 U1004-ARM-_dl_relocate_object
+--31561-- used_suppression:      2 glibc-2.5.x-on-SUSE-10.2-(PPC)-2a
+==31561== 
+==31561== ERROR SUMMARY: 6 errors from 6 contexts (suppressed: 6 from 6)

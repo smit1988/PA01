@@ -1,0 +1,88 @@
+==11712== Memcheck, a memory error detector
+==11712== Copyright (C) 2002-2012, and GNU GPL'd, by Julian Seward et al.
+==11712== Using Valgrind-3.8.1 and LibVEX; rerun with -h for copyright info
+==11712== Command: ./a.out images/02-cat-chess.ee264 student-out-11_02-cat-chess.bmp
+==11712== Parent PID: 11711
+==11712== 
+--11712-- 
+--11712-- Valgrind options:
+--11712--    --tool=memcheck
+--11712--    --leak-check=full
+--11712--    --verbose
+--11712--    --log-file=memcheck-11.log
+--11712-- Contents of /proc/version:
+--11712--   Linux version 2.6.32-431.29.2.el6.x86_64 (mockbuild@x86-026.build.eng.bos.redhat.com) (gcc version 4.4.7 20120313 (Red Hat 4.4.7-4) (GCC) ) #1 SMP Sun Jul 27 15:55:46 EDT 2014
+--11712-- Arch and hwcaps: AMD64, amd64-sse3-cx16
+--11712-- Page sizes: currently 4096, max supported 4096
+--11712-- Valgrind library directory: /usr/lib64/valgrind
+--11712-- Reading syms from /tmp/.tdlXq7/a.out
+--11712-- Reading syms from /usr/lib64/valgrind/memcheck-amd64-linux
+--11712--    object doesn't have a dynamic symbol table
+--11712-- Reading syms from /lib64/ld-2.12.so
+--11712--   Considering /usr/lib/debug/.build-id/3b/fa45bce0e82e1d90d37a0cc8630f97f2003bf5.debug ..
+--11712--   .. build-id is valid
+--11712-- Scheduler: using generic scheduler lock implementation.
+--11712-- Reading suppressions file: /usr/lib64/valgrind/default.supp
+==11712== embedded gdbserver: reading from /tmp/vgdb-pipe-from-vgdb-to-11712-by-smit1988-on-ecegrid-thin1.ecn.purdue.edu
+==11712== embedded gdbserver: writing to   /tmp/vgdb-pipe-to-vgdb-from-11712-by-smit1988-on-ecegrid-thin1.ecn.purdue.edu
+==11712== embedded gdbserver: shared mem   /tmp/vgdb-pipe-shared-mem-vgdb-11712-by-smit1988-on-ecegrid-thin1.ecn.purdue.edu
+==11712== 
+==11712== TO CONTROL THIS PROCESS USING vgdb (which you probably
+==11712== don't want to do, unless you know exactly what you're doing,
+==11712== or are doing some strange experiment):
+==11712==   /usr/lib64/valgrind/../../bin/vgdb --pid=11712 ...command...
+==11712== 
+==11712== TO DEBUG THIS PROCESS USING GDB: start GDB like this
+==11712==   /path/to/gdb ./a.out
+==11712== and then give GDB the following command
+==11712==   target remote | /usr/lib64/valgrind/../../bin/vgdb --pid=11712
+==11712== --pid is optional if only one valgrind process is running
+==11712== 
+--11712-- REDIR: 0x35ff417610 (strlen) redirected to 0x38049551 (vgPlain_amd64_linux_REDIR_FOR_strlen)
+--11712-- Reading syms from /usr/lib64/valgrind/vgpreload_core-amd64-linux.so
+--11712-- Reading syms from /usr/lib64/valgrind/vgpreload_memcheck-amd64-linux.so
+--11712-- REDIR: 0x35ff417480 (index) redirected to 0x4a07c30 (index)
+--11712-- REDIR: 0x35ff417500 (strcmp) redirected to 0x4a08570 (strcmp)
+--11712-- Reading syms from /lib64/libc-2.12.so
+--11712--   Considering /usr/lib/debug/.build-id/73/3ad3a438b5a695f7a63a77413f9b2c8c94e8e6.debug ..
+--11712--   .. build-id is valid
+--11712-- REDIR: 0x35ff884cd0 (strcasecmp) redirected to 0x480155c (_vgnU_ifunc_wrapper)
+--11712-- REDIR: 0x35ff886f90 (strncasecmp) redirected to 0x480155c (_vgnU_ifunc_wrapper)
+--11712-- REDIR: 0x35ff882c40 (__GI_strrchr) redirected to 0x4a07ab0 (__GI_strrchr)
+--11712-- REDIR: 0x35ff87f6e0 (strcmp) redirected to 0x480155c (_vgnU_ifunc_wrapper)
+--11712-- REDIR: 0x35ff928420 (__strcmp_sse42) redirected to 0x4a084d0 (strcmp)
+--11712-- REDIR: 0x35ff881120 (strlen) redirected to 0x480155c (_vgnU_ifunc_wrapper)
+--11712-- REDIR: 0x35ff9336f0 (__strlen_sse42) redirected to 0x4a07f90 (strlen)
+--11712-- REDIR: 0x35ff88aaf0 (strchrnul) redirected to 0x4a09fb0 (strchrnul)
+--11712-- REDIR: 0x35ff884500 (mempcpy) redirected to 0x4a0a020 (mempcpy)
+--11712-- REDIR: 0x35ff87b520 (free) redirected to 0x4a063a9 (free)
+--11712-- REDIR: 0x35ff87a640 (malloc) redirected to 0x4a069ac (malloc)
+--11712-- REDIR: 0x35ff889670 (memcpy) redirected to 0x4a08b60 (memcpy)
+==11712== 
+==11712== HEAP SUMMARY:
+==11712==     in use at exit: 592 bytes in 2 blocks
+==11712==   total heap usage: 2 allocs, 0 frees, 592 bytes allocated
+==11712== 
+==11712== Searching for pointers to 2 not-freed blocks
+==11712== Checked 68,992 bytes
+==11712== 
+==11712== 24 bytes in 1 blocks are definitely lost in loss record 1 of 2
+==11712==    at 0x4A06A2E: malloc (vg_replace_malloc.c:270)
+==11712==    by 0x4009F8: Image_load (answer07.c:48)
+==11712==    by 0x401B7C: main (<stdin>:61)
+==11712== 
+==11712== LEAK SUMMARY:
+==11712==    definitely lost: 24 bytes in 1 blocks
+==11712==    indirectly lost: 0 bytes in 0 blocks
+==11712==      possibly lost: 0 bytes in 0 blocks
+==11712==    still reachable: 568 bytes in 1 blocks
+==11712==         suppressed: 0 bytes in 0 blocks
+==11712== Reachable blocks (those to which a pointer was found) are not shown.
+==11712== To see them, rerun with: --leak-check=full --show-reachable=yes
+==11712== 
+==11712== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 6 from 6)
+--11712-- 
+--11712-- used_suppression:      4 U1004-ARM-_dl_relocate_object
+--11712-- used_suppression:      2 glibc-2.5.x-on-SUSE-10.2-(PPC)-2a
+==11712== 
+==11712== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 6 from 6)

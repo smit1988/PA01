@@ -1,0 +1,74 @@
+==2414== Memcheck, a memory error detector
+==2414== Copyright (C) 2002-2012, and GNU GPL'd, by Julian Seward et al.
+==2414== Using Valgrind-3.8.1 and LibVEX; rerun with -h for copyright info
+==2414== Command: ./a.out images/bmps/02-cat-chess.bmp student-out-06_02-cat-chess.ee264
+==2414== Parent PID: 2413
+==2414== 
+--2414-- 
+--2414-- Valgrind options:
+--2414--    --tool=memcheck
+--2414--    --leak-check=full
+--2414--    --verbose
+--2414--    --log-file=memcheck-06.log
+--2414-- Contents of /proc/version:
+--2414--   Linux version 2.6.32-431.29.2.el6.x86_64 (mockbuild@x86-026.build.eng.bos.redhat.com) (gcc version 4.4.7 20120313 (Red Hat 4.4.7-4) (GCC) ) #1 SMP Sun Jul 27 15:55:46 EDT 2014
+--2414-- Arch and hwcaps: AMD64, amd64-sse3-cx16
+--2414-- Page sizes: currently 4096, max supported 4096
+--2414-- Valgrind library directory: /usr/lib64/valgrind
+--2414-- Reading syms from /tmp/.K8AfV8/a.out
+--2414-- Reading syms from /usr/lib64/valgrind/memcheck-amd64-linux
+--2414--    object doesn't have a dynamic symbol table
+--2414-- Reading syms from /lib64/ld-2.12.so
+--2414--   Considering /usr/lib/debug/.build-id/3b/fa45bce0e82e1d90d37a0cc8630f97f2003bf5.debug ..
+--2414--   .. build-id is valid
+--2414-- Scheduler: using generic scheduler lock implementation.
+--2414-- Reading suppressions file: /usr/lib64/valgrind/default.supp
+==2414== embedded gdbserver: reading from /tmp/vgdb-pipe-from-vgdb-to-2414-by-smit1988-on-ecegrid-thin1.ecn.purdue.edu
+==2414== embedded gdbserver: writing to   /tmp/vgdb-pipe-to-vgdb-from-2414-by-smit1988-on-ecegrid-thin1.ecn.purdue.edu
+==2414== embedded gdbserver: shared mem   /tmp/vgdb-pipe-shared-mem-vgdb-2414-by-smit1988-on-ecegrid-thin1.ecn.purdue.edu
+==2414== 
+==2414== TO CONTROL THIS PROCESS USING vgdb (which you probably
+==2414== don't want to do, unless you know exactly what you're doing,
+==2414== or are doing some strange experiment):
+==2414==   /usr/lib64/valgrind/../../bin/vgdb --pid=2414 ...command...
+==2414== 
+==2414== TO DEBUG THIS PROCESS USING GDB: start GDB like this
+==2414==   /path/to/gdb ./a.out
+==2414== and then give GDB the following command
+==2414==   target remote | /usr/lib64/valgrind/../../bin/vgdb --pid=2414
+==2414== --pid is optional if only one valgrind process is running
+==2414== 
+--2414-- REDIR: 0x35ff417610 (strlen) redirected to 0x38049551 (vgPlain_amd64_linux_REDIR_FOR_strlen)
+--2414-- Reading syms from /usr/lib64/valgrind/vgpreload_core-amd64-linux.so
+--2414-- Reading syms from /usr/lib64/valgrind/vgpreload_memcheck-amd64-linux.so
+--2414-- REDIR: 0x35ff417480 (index) redirected to 0x4a07c30 (index)
+--2414-- REDIR: 0x35ff417500 (strcmp) redirected to 0x4a08570 (strcmp)
+--2414-- Reading syms from /lib64/libc-2.12.so
+--2414--   Considering /usr/lib/debug/.build-id/73/3ad3a438b5a695f7a63a77413f9b2c8c94e8e6.debug ..
+--2414--   .. build-id is valid
+--2414-- REDIR: 0x35ff884cd0 (strcasecmp) redirected to 0x480155c (_vgnU_ifunc_wrapper)
+--2414-- REDIR: 0x35ff886f90 (strncasecmp) redirected to 0x480155c (_vgnU_ifunc_wrapper)
+--2414-- REDIR: 0x35ff882c40 (__GI_strrchr) redirected to 0x4a07ab0 (__GI_strrchr)
+--2414-- REDIR: 0x35ff87f6e0 (strcmp) redirected to 0x480155c (_vgnU_ifunc_wrapper)
+--2414-- REDIR: 0x35ff928420 (__strcmp_sse42) redirected to 0x4a084d0 (strcmp)
+--2414-- REDIR: 0x35ff881120 (strlen) redirected to 0x480155c (_vgnU_ifunc_wrapper)
+--2414-- REDIR: 0x35ff9336f0 (__strlen_sse42) redirected to 0x4a07f90 (strlen)
+--2414-- REDIR: 0x35ff88aaf0 (strchrnul) redirected to 0x4a09fb0 (strchrnul)
+--2414-- REDIR: 0x35ff884500 (mempcpy) redirected to 0x4a0a020 (mempcpy)
+--2414-- REDIR: 0x35ff87b520 (free) redirected to 0x4a063a9 (free)
+--2414-- REDIR: 0x35ff87a640 (malloc) redirected to 0x4a069ac (malloc)
+--2414-- REDIR: 0x35ff889670 (memcpy) redirected to 0x4a08b60 (memcpy)
+--2414-- REDIR: 0x35ff881160 (__GI_strlen) redirected to 0x4a07fb0 (__GI_strlen)
+==2414== 
+==2414== HEAP SUMMARY:
+==2414==     in use at exit: 0 bytes in 0 blocks
+==2414==   total heap usage: 7 allocs, 7 frees, 271,225 bytes allocated
+==2414== 
+==2414== All heap blocks were freed -- no leaks are possible
+==2414== 
+==2414== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 6 from 6)
+--2414-- 
+--2414-- used_suppression:      4 U1004-ARM-_dl_relocate_object
+--2414-- used_suppression:      2 glibc-2.5.x-on-SUSE-10.2-(PPC)-2a
+==2414== 
+==2414== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 6 from 6)

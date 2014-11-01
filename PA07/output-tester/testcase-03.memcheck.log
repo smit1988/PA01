@@ -1,0 +1,179 @@
+==8535== Memcheck, a memory error detector
+==8535== Copyright (C) 2002-2012, and GNU GPL'd, by Julian Seward et al.
+==8535== Using Valgrind-3.8.1 and LibVEX; rerun with -h for copyright info
+==8535== Command: ./a.out images/bmps/03-unnormalized-hawkes-bay-NZ.bmp --normalize student-out-02_03-hawkes-bay-NZ.bmp
+==8535== Parent PID: 8533
+==8535== 
+--8535-- 
+--8535-- Valgrind options:
+--8535--    --tool=memcheck
+--8535--    --leak-check=full
+--8535--    --verbose
+--8535--    --log-file=memcheck-02.log
+--8535-- Contents of /proc/version:
+--8535--   Linux version 2.6.32-431.29.2.el6.x86_64 (mockbuild@x86-026.build.eng.bos.redhat.com) (gcc version 4.4.7 20120313 (Red Hat 4.4.7-4) (GCC) ) #1 SMP Sun Jul 27 15:55:46 EDT 2014
+--8535-- Arch and hwcaps: AMD64, amd64-sse3-cx16
+--8535-- Page sizes: currently 4096, max supported 4096
+--8535-- Valgrind library directory: /usr/lib64/valgrind
+--8535-- Reading syms from /tmp/.Kzkr5E/a.out
+--8535-- Reading syms from /usr/lib64/valgrind/memcheck-amd64-linux
+--8535--    object doesn't have a dynamic symbol table
+--8535-- Reading syms from /lib64/ld-2.12.so
+--8535--   Considering /usr/lib/debug/.build-id/3b/fa45bce0e82e1d90d37a0cc8630f97f2003bf5.debug ..
+--8535--   .. build-id is valid
+--8535-- Scheduler: using generic scheduler lock implementation.
+--8535-- Reading suppressions file: /usr/lib64/valgrind/default.supp
+==8535== embedded gdbserver: reading from /tmp/vgdb-pipe-from-vgdb-to-8535-by-smit1988-on-ecegrid-thin1.ecn.purdue.edu
+==8535== embedded gdbserver: writing to   /tmp/vgdb-pipe-to-vgdb-from-8535-by-smit1988-on-ecegrid-thin1.ecn.purdue.edu
+==8535== embedded gdbserver: shared mem   /tmp/vgdb-pipe-shared-mem-vgdb-8535-by-smit1988-on-ecegrid-thin1.ecn.purdue.edu
+==8535== 
+==8535== TO CONTROL THIS PROCESS USING vgdb (which you probably
+==8535== don't want to do, unless you know exactly what you're doing,
+==8535== or are doing some strange experiment):
+==8535==   /usr/lib64/valgrind/../../bin/vgdb --pid=8535 ...command...
+==8535== 
+==8535== TO DEBUG THIS PROCESS USING GDB: start GDB like this
+==8535==   /path/to/gdb ./a.out
+==8535== and then give GDB the following command
+==8535==   target remote | /usr/lib64/valgrind/../../bin/vgdb --pid=8535
+==8535== --pid is optional if only one valgrind process is running
+==8535== 
+--8535-- REDIR: 0x35ff417610 (strlen) redirected to 0x38049551 (vgPlain_amd64_linux_REDIR_FOR_strlen)
+--8535-- Reading syms from /usr/lib64/valgrind/vgpreload_core-amd64-linux.so
+--8535-- Reading syms from /usr/lib64/valgrind/vgpreload_memcheck-amd64-linux.so
+--8535-- REDIR: 0x35ff417480 (index) redirected to 0x4a07c30 (index)
+--8535-- REDIR: 0x35ff417500 (strcmp) redirected to 0x4a08570 (strcmp)
+--8535-- Reading syms from /lib64/libc-2.12.so
+--8535--   Considering /usr/lib/debug/.build-id/73/3ad3a438b5a695f7a63a77413f9b2c8c94e8e6.debug ..
+--8535--   .. build-id is valid
+--8535-- REDIR: 0x35ff884cd0 (strcasecmp) redirected to 0x480155c (_vgnU_ifunc_wrapper)
+--8535-- REDIR: 0x35ff886f90 (strncasecmp) redirected to 0x480155c (_vgnU_ifunc_wrapper)
+--8535-- REDIR: 0x35ff882c40 (__GI_strrchr) redirected to 0x4a07ab0 (__GI_strrchr)
+--8535-- REDIR: 0x35ff87f6e0 (strcmp) redirected to 0x480155c (_vgnU_ifunc_wrapper)
+--8535-- REDIR: 0x35ff928420 (__strcmp_sse42) redirected to 0x4a084d0 (strcmp)
+--8535-- REDIR: 0x35ff881120 (strlen) redirected to 0x480155c (_vgnU_ifunc_wrapper)
+--8535-- REDIR: 0x35ff9336f0 (__strlen_sse42) redirected to 0x4a07f90 (strlen)
+--8535-- REDIR: 0x35ff88aaf0 (strchrnul) redirected to 0x4a09fb0 (strchrnul)
+--8535-- REDIR: 0x35ff884500 (mempcpy) redirected to 0x4a0a020 (mempcpy)
+--8535-- REDIR: 0x35ff87b520 (free) redirected to 0x4a063a9 (free)
+--8535-- REDIR: 0x35ff87a640 (malloc) redirected to 0x4a069ac (malloc)
+--8535-- REDIR: 0x35ff889670 (memcpy) redirected to 0x4a08b60 (memcpy)
+--8535-- REDIR: 0x35ff881160 (__GI_strlen) redirected to 0x4a07fb0 (__GI_strlen)
+==8535== Invalid read of size 1
+==8535==    at 0x400DBA: linearNormalization (answer07.c:171)
+==8535==    by 0x401B5A: main (<stdin>:79)
+==8535==  Address 0x4c49e70 is 0 bytes after a block of size 60,000 alloc'd
+==8535==    at 0x4A06A2E: malloc (vg_replace_malloc.c:270)
+==8535==    by 0x401114: Image_loadbmp (<stdin>:129)
+==8535==    by 0x401AED: main (<stdin>:65)
+==8535== 
+==8535== Invalid read of size 1
+==8535==    at 0x400DDA: linearNormalization (answer07.c:173)
+==8535==    by 0x401B5A: main (<stdin>:79)
+==8535==  Address 0x4c49e70 is 0 bytes after a block of size 60,000 alloc'd
+==8535==    at 0x4A06A2E: malloc (vg_replace_malloc.c:270)
+==8535==    by 0x401114: Image_loadbmp (<stdin>:129)
+==8535==    by 0x401AED: main (<stdin>:65)
+==8535== 
+==8535== Invalid read of size 1
+==8535==    at 0x400DEB: linearNormalization (answer07.c:174)
+==8535==    by 0x401B5A: main (<stdin>:79)
+==8535==  Address 0x4c49e70 is 0 bytes after a block of size 60,000 alloc'd
+==8535==    at 0x4A06A2E: malloc (vg_replace_malloc.c:270)
+==8535==    by 0x401114: Image_loadbmp (<stdin>:129)
+==8535==    by 0x401AED: main (<stdin>:65)
+==8535== 
+==8535== Invalid read of size 1
+==8535==    at 0x400E1D: linearNormalization (answer07.c:178)
+==8535==    by 0x401B5A: main (<stdin>:79)
+==8535==  Address 0x4c49e70 is 0 bytes after a block of size 60,000 alloc'd
+==8535==    at 0x4A06A2E: malloc (vg_replace_malloc.c:270)
+==8535==    by 0x401114: Image_loadbmp (<stdin>:129)
+==8535==    by 0x401AED: main (<stdin>:65)
+==8535== 
+==8535== Invalid write of size 1
+==8535==    at 0x400E57: linearNormalization (answer07.c:178)
+==8535==    by 0x401B5A: main (<stdin>:79)
+==8535==  Address 0x4c49e70 is 0 bytes after a block of size 60,000 alloc'd
+==8535==    at 0x4A06A2E: malloc (vg_replace_malloc.c:270)
+==8535==    by 0x401114: Image_loadbmp (<stdin>:129)
+==8535==    by 0x401AED: main (<stdin>:65)
+==8535== 
+--8535-- REDIR: 0x35ff8839a0 (memset) redirected to 0x480155c (_vgnU_ifunc_wrapper)
+--8535-- REDIR: 0x35ff8839e0 (__GI_memset) redirected to 0x4a09a50 (memset)
+==8535== 
+==8535== HEAP SUMMARY:
+==8535==     in use at exit: 53 bytes in 1 blocks
+==8535==   total heap usage: 8 allocs, 7 frees, 242,159 bytes allocated
+==8535== 
+==8535== Searching for pointers to 1 not-freed blocks
+==8535== Checked 64,680 bytes
+==8535== 
+==8535== 53 bytes in 1 blocks are definitely lost in loss record 1 of 1
+==8535==    at 0x4A06A2E: malloc (vg_replace_malloc.c:270)
+==8535==    by 0x40107D: Image_loadbmp (<stdin>:117)
+==8535==    by 0x401AED: main (<stdin>:65)
+==8535== 
+==8535== LEAK SUMMARY:
+==8535==    definitely lost: 53 bytes in 1 blocks
+==8535==    indirectly lost: 0 bytes in 0 blocks
+==8535==      possibly lost: 0 bytes in 0 blocks
+==8535==    still reachable: 0 bytes in 0 blocks
+==8535==         suppressed: 0 bytes in 0 blocks
+==8535== 
+==8535== ERROR SUMMARY: 6 errors from 6 contexts (suppressed: 6 from 6)
+==8535== 
+==8535== 1 errors in context 1 of 6:
+==8535== Invalid write of size 1
+==8535==    at 0x400E57: linearNormalization (answer07.c:178)
+==8535==    by 0x401B5A: main (<stdin>:79)
+==8535==  Address 0x4c49e70 is 0 bytes after a block of size 60,000 alloc'd
+==8535==    at 0x4A06A2E: malloc (vg_replace_malloc.c:270)
+==8535==    by 0x401114: Image_loadbmp (<stdin>:129)
+==8535==    by 0x401AED: main (<stdin>:65)
+==8535== 
+==8535== 
+==8535== 1 errors in context 2 of 6:
+==8535== Invalid read of size 1
+==8535==    at 0x400E1D: linearNormalization (answer07.c:178)
+==8535==    by 0x401B5A: main (<stdin>:79)
+==8535==  Address 0x4c49e70 is 0 bytes after a block of size 60,000 alloc'd
+==8535==    at 0x4A06A2E: malloc (vg_replace_malloc.c:270)
+==8535==    by 0x401114: Image_loadbmp (<stdin>:129)
+==8535==    by 0x401AED: main (<stdin>:65)
+==8535== 
+==8535== 
+==8535== 1 errors in context 3 of 6:
+==8535== Invalid read of size 1
+==8535==    at 0x400DEB: linearNormalization (answer07.c:174)
+==8535==    by 0x401B5A: main (<stdin>:79)
+==8535==  Address 0x4c49e70 is 0 bytes after a block of size 60,000 alloc'd
+==8535==    at 0x4A06A2E: malloc (vg_replace_malloc.c:270)
+==8535==    by 0x401114: Image_loadbmp (<stdin>:129)
+==8535==    by 0x401AED: main (<stdin>:65)
+==8535== 
+==8535== 
+==8535== 1 errors in context 4 of 6:
+==8535== Invalid read of size 1
+==8535==    at 0x400DDA: linearNormalization (answer07.c:173)
+==8535==    by 0x401B5A: main (<stdin>:79)
+==8535==  Address 0x4c49e70 is 0 bytes after a block of size 60,000 alloc'd
+==8535==    at 0x4A06A2E: malloc (vg_replace_malloc.c:270)
+==8535==    by 0x401114: Image_loadbmp (<stdin>:129)
+==8535==    by 0x401AED: main (<stdin>:65)
+==8535== 
+==8535== 
+==8535== 1 errors in context 5 of 6:
+==8535== Invalid read of size 1
+==8535==    at 0x400DBA: linearNormalization (answer07.c:171)
+==8535==    by 0x401B5A: main (<stdin>:79)
+==8535==  Address 0x4c49e70 is 0 bytes after a block of size 60,000 alloc'd
+==8535==    at 0x4A06A2E: malloc (vg_replace_malloc.c:270)
+==8535==    by 0x401114: Image_loadbmp (<stdin>:129)
+==8535==    by 0x401AED: main (<stdin>:65)
+==8535== 
+--8535-- 
+--8535-- used_suppression:      4 U1004-ARM-_dl_relocate_object
+--8535-- used_suppression:      2 glibc-2.5.x-on-SUSE-10.2-(PPC)-2a
+==8535== 
+==8535== ERROR SUMMARY: 6 errors from 6 contexts (suppressed: 6 from 6)
