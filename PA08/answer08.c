@@ -21,9 +21,9 @@ void List_destroy(List * list)
   if(list != NULL){
     if(list->next != NULL)
       List_destroy(list->next);
+    free(list->str);
+    free(list);
   }
-  free(list->str);
-  free(list);
 }
 
 int List_length(List * list)
@@ -61,7 +61,7 @@ List * List_merge(List * lhs, List * rhs, int (*compar)(const char *, const char
       else
 	{
 	  //if lhs is greater
-	  if(compar(lhs->str,rhs->str) == 1)
+	  if(compar(lhs->str,rhs->str) > 0)
 	    {
 	      new = lhs;
 	      lhs = lhs->next;
