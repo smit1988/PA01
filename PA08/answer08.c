@@ -18,8 +18,10 @@ List * List_createNode(const char * str)
 
 void List_destroy(List * list)
 {
-  if(list->next != NULL)
-    List_destroy(list->next);
+  if(list != NULL){
+    if(list->next != NULL)
+      List_destroy(list->next);
+  }
   free(list->str);
   free(list);
 }
