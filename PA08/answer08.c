@@ -45,23 +45,7 @@ List * List_merge(List * lhs, List * rhs, int (*compar)(const char *, const char
   List * new = NULL;
   //keep track of head
   List * start = new;
-  /*
-  //if at least one list still has elements left
-  while((lhs != NULL) || (rhs != NULL))
-    {
-      //if lhs is greater
-      if(compar(lhs->str,rhs->str) == 1)
-	{
-	  new = lhs;
-	  lhs = lhs->next;
-	  //if rhs is greater or they're equal
-	}else {
-	new = rhs;
-	rhs = rhs->next;
-      }
-      new = new->next;
-      new == NULL;
-      }*/
+  //if at least one of the elements is left
   while((lhs != NULL) || (rhs != NULL))
     {
       if(rhs == NULL)
@@ -76,11 +60,13 @@ List * List_merge(List * lhs, List * rhs, int (*compar)(const char *, const char
 	}
       else
 	{
+	  //if lhs is greater
 	  if(compar(lhs->str,rhs->str) == 1)
 	    {
 	      new = lhs;
 	      lhs = lhs->next;
 	    }
+	  //if rhs is greater or equal
 	  else
 	    {
 	      new = rhs;
@@ -89,6 +75,7 @@ List * List_merge(List * lhs, List * rhs, int (*compar)(const char *, const char
 	}
       new = new->next;
     }
+  return start;
 }
 
 List * List_sort(List * list, int (*compar)(const char *, const char*))
