@@ -42,9 +42,10 @@ int List_length(List * list)
 List * List_merge(List * lhs, List * rhs, int (*compar)(const char *, const char*))
 {
   //new list
-  List * new = NULL;
+  List start;
+  List * new = &start;
+  start.next = NULL;
   //keep track of head
-  List * start = new;
   //if lhs is null, the remaining is rhs
   //if rhs is null, the remaining is lhs
   //if neither are null, the next element is the greater of the two
@@ -53,36 +54,57 @@ List * List_merge(List * lhs, List * rhs, int (*compar)(const char *, const char
     {
       if(rhs == NULL)
 	{
-	  new = lhs;
-	  lhs = lhs->next;
+	  new->next = lhs;
+	  break;
 	}
       else if(lhs == NULL)
 	{
-	  new = rhs;
-	  rhs = rhs->next;
+	  new->next = rhs;
+	  break;
 	}
       else
 	{
 	  //if lhs is greater
-	  if(strcmp(lhs->str,rhs->str) > 0)
+	  if((compar(lhs->str,rhs->str)) < 0)
 	    {
-	      new = lhs;
+	      new->next = lhs;
 	      lhs = lhs->next;
 	    }
 	  //if rhs is greater or equal
 	  else
 	    {
-	      new = rhs;
+	      new->next = rhs;
 	      rhs = rhs->next;
 	    }
 	}
       new = new->next;
-      new = NULL;
     }
-  return start;
+  return (start.next);
 }
 
 List * List_sort(List * list, int (*compar)(const char *, const char*))
 {
-  return list;
+  List lhs;
+  List * left = &lhs;
+  lhs.next = list;
+  //longer
+  List * rhs = list;
+  int i;
+  int length = List_length(list);
+  if(length <= 1)
+    {
+      return list;
+    }
+  for(i = 0; i < (length/2); i++)
+    {
+      left = left->next;
+      rhs = rhs->next;
+      if(((length/2) - i - 1))
+	{
+	 left->next = NULL;
+	}
+    }
+  List_sort(lhs.next, compar);
+  List_sort(rhs, compar);
+  return List_merge(lhs.next, rhs, compar);
 }
