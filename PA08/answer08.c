@@ -99,12 +99,12 @@ List * List_sort(List * list, int (*compar)(const char *, const char*))
     {
       left = left->next;
       rhs = rhs->next;
-      if(((length/2) - i - 1))
+      if(((length/2) - i) == 1)
 	{
 	 left->next = NULL;
 	}
     }
-  List_sort(lhs.next, compar);
-  List_sort(rhs, compar);
+  lhs.next = List_sort(lhs.next, compar);
+  rhs = List_sort(rhs, compar);
   return List_merge(lhs.next, rhs, compar);
 }
