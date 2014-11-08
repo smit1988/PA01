@@ -1,0 +1,88 @@
+==24085== Memcheck, a memory error detector
+==24085== Copyright (C) 2002-2012, and GNU GPL'd, by Julian Seward et al.
+==24085== Using Valgrind-3.8.1 and LibVEX; rerun with -h for copyright info
+==24085== Command: ./a.out 22
+==24085== Parent PID: 24084
+==24085== 
+--24085-- 
+--24085-- Valgrind options:
+--24085--    --tool=memcheck
+--24085--    --leak-check=full
+--24085--    --verbose
+--24085--    --log-file=memcheck.log
+--24085-- Contents of /proc/version:
+--24085--   Linux version 2.6.32-431.29.2.el6.x86_64 (mockbuild@x86-026.build.eng.bos.redhat.com) (gcc version 4.4.7 20120313 (Red Hat 4.4.7-4) (GCC) ) #1 SMP Sun Jul 27 15:55:46 EDT 2014
+--24085-- Arch and hwcaps: AMD64, amd64-sse3-cx16
+--24085-- Page sizes: currently 4096, max supported 4096
+--24085-- Valgrind library directory: /usr/lib64/valgrind
+--24085-- Reading syms from /tmp/.FXn741/a.out
+--24085-- Reading syms from /usr/lib64/valgrind/memcheck-amd64-linux
+--24085--    object doesn't have a dynamic symbol table
+--24085-- Reading syms from /lib64/ld-2.12.so
+--24085--   Considering /usr/lib/debug/.build-id/3b/fa45bce0e82e1d90d37a0cc8630f97f2003bf5.debug ..
+--24085--   .. build-id is valid
+--24085-- Scheduler: using generic scheduler lock implementation.
+--24085-- Reading suppressions file: /usr/lib64/valgrind/default.supp
+==24085== embedded gdbserver: reading from /tmp/vgdb-pipe-from-vgdb-to-24085-by-smit1988-on-ecegrid-thin1.ecn.purdue.edu
+==24085== embedded gdbserver: writing to   /tmp/vgdb-pipe-to-vgdb-from-24085-by-smit1988-on-ecegrid-thin1.ecn.purdue.edu
+==24085== embedded gdbserver: shared mem   /tmp/vgdb-pipe-shared-mem-vgdb-24085-by-smit1988-on-ecegrid-thin1.ecn.purdue.edu
+==24085== 
+==24085== TO CONTROL THIS PROCESS USING vgdb (which you probably
+==24085== don't want to do, unless you know exactly what you're doing,
+==24085== or are doing some strange experiment):
+==24085==   /usr/lib64/valgrind/../../bin/vgdb --pid=24085 ...command...
+==24085== 
+==24085== TO DEBUG THIS PROCESS USING GDB: start GDB like this
+==24085==   /path/to/gdb ./a.out
+==24085== and then give GDB the following command
+==24085==   target remote | /usr/lib64/valgrind/../../bin/vgdb --pid=24085
+==24085== --pid is optional if only one valgrind process is running
+==24085== 
+--24085-- REDIR: 0x35ff417610 (strlen) redirected to 0x38049551 (vgPlain_amd64_linux_REDIR_FOR_strlen)
+--24085-- Reading syms from /usr/lib64/valgrind/vgpreload_core-amd64-linux.so
+--24085-- Reading syms from /usr/lib64/valgrind/vgpreload_memcheck-amd64-linux.so
+--24085-- REDIR: 0x35ff417480 (index) redirected to 0x4a07c30 (index)
+--24085-- REDIR: 0x35ff417500 (strcmp) redirected to 0x4a08570 (strcmp)
+--24085-- Reading syms from /lib64/libc-2.12.so
+--24085--   Considering /usr/lib/debug/.build-id/73/3ad3a438b5a695f7a63a77413f9b2c8c94e8e6.debug ..
+--24085--   .. build-id is valid
+--24085-- REDIR: 0x35ff884cd0 (strcasecmp) redirected to 0x480155c (_vgnU_ifunc_wrapper)
+--24085-- REDIR: 0x35ff886f90 (strncasecmp) redirected to 0x480155c (_vgnU_ifunc_wrapper)
+--24085-- REDIR: 0x35ff882c40 (__GI_strrchr) redirected to 0x4a07ab0 (__GI_strrchr)
+--24085-- REDIR: 0x35ff87a640 (malloc) redirected to 0x4a069ac (malloc)
+--24085-- REDIR: 0x35ff881160 (__GI_strlen) redirected to 0x4a07fb0 (__GI_strlen)
+--24085-- REDIR: 0x35ff889670 (memcpy) redirected to 0x4a08b60 (memcpy)
+--24085-- REDIR: 0x35ff87f6e0 (strcmp) redirected to 0x480155c (_vgnU_ifunc_wrapper)
+--24085-- REDIR: 0x35ff928420 (__strcmp_sse42) redirected to 0x4a084d0 (strcmp)
+--24085-- REDIR: 0x35ff884500 (mempcpy) redirected to 0x4a0a020 (mempcpy)
+--24085-- REDIR: 0x35ff88aaf0 (strchrnul) redirected to 0x4a09fb0 (strchrnul)
+--24085-- REDIR: 0x35ff87b520 (free) redirected to 0x4a063a9 (free)
+==24085== 
+==24085== HEAP SUMMARY:
+==24085==     in use at exit: 21 bytes in 2 blocks
+==24085==   total heap usage: 29 allocs, 27 frees, 382 bytes allocated
+==24085== 
+==24085== Searching for pointers to 2 not-freed blocks
+==24085== Checked 64,568 bytes
+==24085== 
+==24085== 21 (16 direct, 5 indirect) bytes in 1 blocks are definitely lost in loss record 2 of 2
+==24085==    at 0x4A06A2E: malloc (vg_replace_malloc.c:270)
+==24085==    by 0x400979: List_createNode_sol (<stdin>:19)
+==24085==    by 0x400DB6: List_create (test_support_functions.c:48)
+==24085==    by 0x400FE3: make_list (test_support_functions.c:79)
+==24085==    by 0x4019B0: tests_List_merge (test_List_merge.c:118)
+==24085==    by 0x401FE5: main (<stdin>:159)
+==24085== 
+==24085== LEAK SUMMARY:
+==24085==    definitely lost: 16 bytes in 1 blocks
+==24085==    indirectly lost: 5 bytes in 1 blocks
+==24085==      possibly lost: 0 bytes in 0 blocks
+==24085==    still reachable: 0 bytes in 0 blocks
+==24085==         suppressed: 0 bytes in 0 blocks
+==24085== 
+==24085== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 6 from 6)
+--24085-- 
+--24085-- used_suppression:      4 U1004-ARM-_dl_relocate_object
+--24085-- used_suppression:      2 glibc-2.5.x-on-SUSE-10.2-(PPC)-2a
+==24085== 
+==24085== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 6 from 6)
