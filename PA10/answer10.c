@@ -3,7 +3,8 @@
 //ece264
 
 //The book was referenced for the structures of binary trees
-//My PA08 code was used for creating and sorting linked lists
+
+//Make business structure with ID and start of name
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -13,25 +14,12 @@
 #define BUF 2000
 #define NONE 50000
 
-/*
-typedef struct Name_st
-{
-  long int address;
+typedef struct Business_st{
   int ID;
-  struct Name_st * next;
-} Name_list;
-*/
-
-typedef struct ListNode_st
-{
   long int address;
-  int ID;
-  struct ListNode_st * next;
-} List;
+  struct Business_st * next;
+}Business_struct;
 
-//Sort by business name, state, city, address, star rating(descending), text of review
-//the two files share the business id
-//contain business name, file offset for beginning of address for business.tsv, file offset for review text
 struct YelpDataBST {
   char * name;
   long int address;
@@ -40,47 +28,35 @@ struct YelpDataBST {
   struct YelpDataBST * right;
 };
 
-//Name_list * Create_name(long int address, int ID);
-List * List_createNode(long int address, int ID);
-void List_destroy(List * list);
-int List_length(List * list);
-List * List_merge(const char* businesses_path, List * lhs, List * rhs, int (*compar)(const char *, const char*));
-List * List_sort(const char* businesses_path, List * list, int (*compar)(const char *, const char*));
 
-List * List_createNode(long int address, int ID)
+Business_struct * Create_bus(long int address, int ID);
+void Destroy_bus(Business_struct * bus);
+int List_length(Business_struct * list);
+Business_struct * List_merge(const char* businesses_path, Business_struct * lhs, Business_struct * rhs, int (*compar)(const char *, const char*));
+Business_struct * List_sort(const char* businesses_path, Business_struct * list, int (*compar)(const char *, const char*));
+
+Business_struct * Create_bus(long int address, int ID)
 {
-  List * make = NULL;
-  make = malloc(sizeof(List));
+  Business_struct * make = NULL;
+  make = malloc(sizeof(Business_struct));
   make->address = address;
   make->ID = ID;
   make->next = NULL;
   return make;
 }
 
-/*
-Name_list * Create_name(long int address, int ID)
+void Destroy_bus(Business_struct * bus)
 {
-  Name_list * make = NULL;
-  make = malloc(sizeof(List));
-  make->address = address;
-  make->ID = ID;
-  make->next = NULL;
-  return make;
-}
-*/
-
-void List_destroy(List * list)
-{
-  if(list != NULL){
-    if(list->next != NULL)
-      List_destroy(list->next);
-    free(list);
+  if(bus != NULL){
+    if(bus->next != NULL)
+      Destroy_bus(bus->next);
+    free(bus);
   }
 }
 
-int List_length(List * list)
+int List_length(Business_struct * list)
 {
-  List * length = list;
+  Business_struct * length = list;
   int counter = 0;
   //if length is NULL off the bat, length 0
   while (length != NULL)
@@ -91,12 +67,11 @@ int List_length(List * list)
   return counter;
 }
 
-//currently going off name only
-List * List_merge(const char* businesses_path, List * lhs, List * rhs, int (*compar)(const char *, const char*))
+Business_struct * List_merge(const char* businesses_path, Business_struct * lhs, Business_struct * rhs, int (*compar)(const char *, const char*))
 {
   //new list
-  List start;
-  List * new = &start;
+  Business_struct start;
+  Business_struct * new = &start;
   start.next = NULL;
   FILE * fptr;
   int length, count;
@@ -160,19 +135,20 @@ List * List_merge(const char* businesses_path, List * lhs, List * rhs, int (*com
 	    }
 	  free(name);
 	  free(name1);
+	  fclose(fptr);
 	}
       new = new->next;
     }
   return (start.next);
 }
 
-List * List_sort(const char* businesses_path, List * list, int (*compar)(const char *, const char*))
+Business_struct * List_sort(const char* businesses_path, Business_struct * list, int (*compar)(const char *, const char*))
 {
-  List lhs;
-  List * left = &lhs;
+  Business_struct lhs;
+  Business_struct * left = &lhs;
   lhs.next = list;
   //longer
-  List * rhs = list;
+  Business_struct * rhs = list;
   int i;
   int length = List_length(list);
   if(length <= 1)
@@ -195,160 +171,58 @@ List * List_sort(const char* businesses_path, List * list, int (*compar)(const c
 
 struct YelpDataBST* create_business_bst(const char* businesses_path, const char* reviews_path)
 {
-  //Work with business first
-  //Read the business ID, store as a variable (not in struct)
-  //Read the business name, add to linked list
-  //At this point ftell should give the tab or the place after the tab, store it in the list
-  //Keep both files open, read the business ID in reviews, if a match, store start of review to list
-  //There could be multiple (maybe no?) reviews per business
-  //If there are multiple, keep making new nodes with the same data from business_path but new review location
-  //Once a nonmatching ID is read, maybe step back the cursor to read it again at the start of the next loop
-  FILE * fptr;
-  FILE * fptr1;
-  char * ID_char;
-  char advance = 'a';
-  long int address, review;
-  int ID_bus = 0, ID_rev, count = 0, length = 0, max = BUF;
-  List start;
-  List * new = &start;
+  Business_struct start;
+  Business_struct * new = &start;
   start.next = NULL;
-  fptr = fopen(businesses_path,"r");
-  if(fptr == NULL)
+  FILE * Bus_tsv;
+  char advance = 'a';
+  char * ID_char;
+  int length, count, ID_bus;
+  Bus_tsv = fopen(businesses_path,"r");
+  if(Bus_tsv == NULL)
     {
       return NULL;
     }
-  fptr1 = fopen(reviews_path,"r");
-  if(fptr1 == NULL)
-    {
-      return NULL;
-    }
-
   while(advance != EOF)
     {
       length = 0;
       count = 0;
       ID_char = malloc(sizeof(char) * BUF);
       do{
-        ID_char[length] = fgetc(fptr);
+        ID_char[length] = fgetc(Bus_tsv);
         length++;
       }while(ID_char[length - 1] != '\t');
       ID_char[length - 1] = '\0';
       ID_bus = atoi(ID_char);
       free(ID_char);
-      new->next = List_createNode(ftell(fptr),ID_bus);
+      new->next = Create_bus(ftell(Bus_tsv),ID_bus);
       new = new->next;
       do{
-        advance = fgetc(fptr);
+        advance = fgetc(Bus_tsv);
       }while((advance != '\n') && (advance != EOF));
     }
-
-  /*  
-  //Linked list points to start of name in business and start of business id in review
-  //Review is NONE (50000) if there was no review data   
-  while(advance != EOF)//breaks at end if EOF
-    {
-      max = BUF;
-      //Find business ID
-      length = 0;
-      count = 0;
-      ID_char = malloc(sizeof(char) * BUF);
-      do{
-	ID_char[length] = fgetc(fptr);
-	length++;
-      }while(ID_char[length - 1] != '\t');
-      ID_char[length - 1] = '\0';
-      ID_bus = atoi(ID_char);
-      free(ID_char);
-      //ID is now an int, next fgetc will be the first character of the business name
-      //The current position is the start of the address
-      address = ftell(fptr);
-
-      //Find all matching reviews
-      //Find review ID
-      length = 0;
-      ID_char = malloc(sizeof(char) * BUF);
-      do{
-        ID_char[length] = fgetc(fptr1);
-	length++;
-      }while(ID_char[length - 1] != '\t');
-      ID_char[length - 1] = '\0';
-      ID_rev = atoi(ID_char);
-      free(ID_char);
-      fseek(fptr1, (-1 * length), SEEK_CUR);
-      if(ID_rev == ID_bus)
-	{
-	  review = ftell(fptr1);
-	}
-      else
-	{
-	  review = NONE;
-	}
-      fseek(fptr1, length, SEEK_CUR);
-      //Move to next start or EOF
-      while(ID_rev == ID_bus)
-	{
-	  if(ID_bus == 42152)
-	    break;
-	  do{
-	    advance = fgetc(fptr1);
-	  }while((advance != '\n') && (advance != EOF));
-	  if(advance != EOF)
-	    {
-	      length = 0;
-	      ID_char = malloc(sizeof(char) * BUF);
-	      do{
-		ID_char[length] = fgetc(fptr1);
-		length++;
-	      }while(ID_char[length - 1] != '\t');
-	      ID_char[length - 1] = '\0';
-	      ID_rev = atoi(ID_char);
-	      free(ID_char);
-	    }
-	}
-      fseek(fptr1, (-1 * length), SEEK_CUR);
-      new->next = List_createNode(address, review);
-      new = new->next;
-      printf("%ld %ld\n",new->address,new->review);
-      //Move on to next business
-      do{
-	advance = fgetc(fptr);
-      }while((advance != '\n') && (advance != EOF));
-      //42152 14 of them
-      printf("%d\n",List_length(start.next));
-    }
-  */
-  
-  //Now the linked list needs to be sorted
-  //First sort by business name
-  //All the rest the data will have to be read to sort
-  //Sort by state, city, address, star (descending), text of review
-  start.next = List_sort(businesses_path, start.next, strcmp);
-  printf("%d\n",start.next->ID);
-  printf("1\n");
   new = &start;
   char * name;
-  count = 0;
-  printf("2\n");
-  while(count < 38159)
+  advance = 'a';
+  while(advance != EOF)
     {
-      printf("3\n");
-  fseek(fptr,(new->next)->address,SEEK_SET);
-  printf("4\n");
-  new = new->next;
-  length = 0;
-  name = malloc(sizeof(char) * BUF);
-  do{
-    name[length] = fgetc(fptr);
-    length++;
-  }while(name[length - 1] != '\t');
-  name[length - 1] = '\0';
-  count++;
-  printf("%s\n",name);
+      fseek(Bus_tsv,(new->next)->address,SEEK_SET);
+      new = new->next;
+      length = 0;
+      name = malloc(sizeof(char) * BUF);
+      do{
+	name[length] = fgetc(Bus_tsv);
+	length++;
+      }while(name[length - 1] != '\t');
+      name[length - 1] = '\0';
+      printf("%d\t%s\n",new->ID,name);
+      free(name);
+      do{
+        advance = fgetc(Bus_tsv);
+      }while((advance != '\n') && (advance != EOF));
     }
-
-  //List_destroy(start.next);
-  fclose(fptr);
-  fclose(fptr1);
+  Destroy_bus(start.next);
+  fclose(Bus_tsv);
   return NULL;
 }
 
