@@ -11,6 +11,7 @@
 #include "answer10.h"
 
 #define BUF 2000
+#define NONE 50000
 
 typedef struct ListNode_st
 {
@@ -184,8 +185,8 @@ struct YelpDataBST* create_business_bst(const char* businesses_path, const char*
   FILE * fptr1;
   char * ID_char;
   char advance = 'a';
-  long int address;//, review;
-  int ID_bus = 0,/* ID_rev,*/ count = 0, length = 0, max = BUF;
+  long int address, review;
+  int ID_bus = 0, ID_rev, count = 0, length = 0, max = BUF;
   List start;
   List * new = &start;
   start.next = NULL;
@@ -199,8 +200,10 @@ struct YelpDataBST* create_business_bst(const char* businesses_path, const char*
     {
       return NULL;
     }
- 
-  //sketchily stopping at highest ID
+
+
+
+   
   while(advance != EOF)//breaks at end if EOF
     {
       max = BUF;
@@ -221,58 +224,59 @@ struct YelpDataBST* create_business_bst(const char* businesses_path, const char*
       address = ftell(fptr);
 
       //Find all matching reviews
-      /*
+      //Find review ID
+      length = 0;
+      ID_char = malloc(sizeof(char) * BUF);
       do{
-	//Find review ID
-	length = 0;
-	ID_char = malloc(sizeof(char) * BUF);
-	do{
-	  ID_char[length] = fgetc(fptr1);
-	  length++;
-	}while(ID_char[length - 1] != '\t');
-	ID_char[length - 1] = '\0';
-	ID_rev = atoi(ID_char);
-	printf("\t%d\n",ID_rev);
-	free(ID_char);
-	if(ID_rev == ID_bus) //same business
-	  {
-	    count = 0;
-	    while(count < 4)
-	      {
-		while((fgetc(fptr1)) != '\t'){}
-		count++;
-	      }
-	    review = ftell(fptr1);
-	    new->next = List_createNode(address, review);
-	    new = new->next;
-	    do{
-	      advance = fgetc(fptr1);
-	    }while((advance != '\n') && (advance != EOF));
-	    if(advance == EOF)
-	      {
-		break;
-	      }
-	  }
-	else
-	  {
-	    //either store value for next or rewind to reread
-	    fseek(fptr1, (-1 * length), SEEK_CUR);
-	  }
-	}while(ID_rev == ID_bus);
-      */
-      /*if(advance == EOF)
-        {
-          break;
-        }
-      */
+        ID_char[length] = fgetc(fptr1);
+	length++;
+      }while(ID_char[length - 1] != '\t');
+      ID_char[length - 1] = '\0';
+      ID_rev = atoi(ID_char);
+      printf("\t%d\n",ID_rev);
+      free(ID_char);
+      fseek(fptr1, (-1 * length), SEEK_CUR);
+      if(ID_rev == ID_bus)
+	{
+	  review = ftell(fptr1);
+	}
+      else
+	{
+	  review = NONE;
+	}
+      fseek(fptr1, length, SEEK_CUR);
+      //Move to next start or EOF
+      while(ID_rev == ID_bus)
+	{
+	  if(ID_bus == 42152)
+	    break;
+	  do{
+	    advance = fgetc(fptr1);
+	  }while((advance != '\n') && (advance != EOF));
+	  if(advance != EOF)
+	    {
+	      length = 0;
+	      ID_char = malloc(sizeof(char) * BUF);
+	      do{
+		ID_char[length] = fgetc(fptr1);
+		length++;
+	      }while(ID_char[length - 1] != '\t');
+	      ID_char[length - 1] = '\0';
+	      ID_rev = atoi(ID_char);
+	      printf("\t%d\n",ID_rev);
+	      free(ID_char);
+	    }
+	}
+      fseek(fptr1, (-1 * length), SEEK_CUR);
+      new->next = List_createNode(address, review);
+      new = new->next;				     
       //Move on to next business
-      new->next = List_createNode(address, 0);
       do{
 	advance = fgetc(fptr);
       }while((advance != '\n') && (advance != EOF));
       //42152 14 of them
-  }
-  
+    }
+
 
   /*new = start.next;
   printf("%s %ld %ld\n",new->name,new->address,new->review);
