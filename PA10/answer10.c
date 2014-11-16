@@ -153,9 +153,13 @@ struct YelpDataBST* create_business_bst(const char* businesses_path, const char*
   //If there are multiple, keep making new nodes with the same data from business_path but new review location
   //Once a nonmatching ID is read, maybe step back the cursor to read it again at the start of the next loop
   FILE * fptr;
-  char * ID_char, name;
+  char * ID_char;
+  char * name;
   long int address, review;
-  int ID, length = 0;
+  int ID, count = 0, length = 0, max = BUF;
+  List start;
+  List * new = &start;
+  start.next = NULL;
   fptr = fopen(businesses_path,"r");
   if(fptr == NULL)
     {
@@ -171,7 +175,25 @@ struct YelpDataBST* create_business_bst(const char* businesses_path, const char*
   ID = atoi(ID_char);
   free(ID_char);
   //ID is now an int, next fgetc will be the first character of the business name
+  name = malloc(sizeof(char) * max);
+  length = 0;
+  name[0] = '0';
+  do{
+    if(count == max)
+      {
+	max *= 2;
+	name = realloc(name, max);
+      }
+    name[length] = fgetc(fptr);
+    length++;
+    count++;
+  }while(name[length - 1] != '\t');
+  name[length - 1] = '\0';
+  //The current position is the start of the address
+  address = ftell(fptr);
 
+  new = List_createNode(name, address, review);
+  free(name);
   //Now the linked list needs to be sorted
   //First sort by business name
   //All the rest the data will have to be read to sort
@@ -194,4 +216,10 @@ void destroy_business_bst(struct YelpDataBST* bst)
 void destroy_business_result(struct Business* b)
 {
 
+}
+
+int main(int argc, char ** argv)
+{
+  create_business_bst("/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv");
+  return 0;
 }
