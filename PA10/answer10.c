@@ -168,9 +168,9 @@ struct YelpDataBST* create_business_bst(const char* businesses_path, const char*
         advance = fgetc(Bus_tsv);
       }while((advance != '\n') && (advance != EOF));
     }
-
-
   //Turn list into binary tree
+
+
   /*
   start.next = List_sort(businesses_path,start.next,strcmp);
   new = &start;

@@ -1,68 +1,77 @@
-==10446== Memcheck, a memory error detector
-==10446== Copyright (C) 2002-2012, and GNU GPL'd, by Julian Seward et al.
-==10446== Using Valgrind-3.8.1 and LibVEX; rerun with -h for copyright info
-==10446== Command: ./pa10
-==10446== Parent PID: 32175
-==10446== 
---10446-- 
---10446-- Valgrind options:
---10446--    --tool=memcheck
---10446--    --leak-check=full
---10446--    --verbose
---10446--    --log-file=memcheck.log
---10446-- Contents of /proc/version:
---10446--   Linux version 2.6.32-431.29.2.el6.x86_64 (mockbuild@x86-026.build.eng.bos.redhat.com) (gcc version 4.4.7 20120313 (Red Hat 4.4.7-4) (GCC) ) #1 SMP Sun Jul 27 15:55:46 EDT 2014
---10446-- Arch and hwcaps: AMD64, amd64-sse3-cx16
---10446-- Page sizes: currently 4096, max supported 4096
---10446-- Valgrind library directory: /usr/lib64/valgrind
---10446-- Reading syms from /home/shay/b/smit1988/ECE264/Solutions/PA01/PA10/pa10
---10446-- Reading syms from /usr/lib64/valgrind/memcheck-amd64-linux
---10446--    object doesn't have a dynamic symbol table
---10446-- Reading syms from /lib64/ld-2.12.so
---10446--   Considering /usr/lib/debug/.build-id/3b/fa45bce0e82e1d90d37a0cc8630f97f2003bf5.debug ..
---10446--   .. build-id is valid
---10446-- Scheduler: using generic scheduler lock implementation.
---10446-- Reading suppressions file: /usr/lib64/valgrind/default.supp
-==10446== embedded gdbserver: reading from /tmp/vgdb-pipe-from-vgdb-to-10446-by-smit1988-on-ecegrid-thin1.ecn.purdue.edu
-==10446== embedded gdbserver: writing to   /tmp/vgdb-pipe-to-vgdb-from-10446-by-smit1988-on-ecegrid-thin1.ecn.purdue.edu
-==10446== embedded gdbserver: shared mem   /tmp/vgdb-pipe-shared-mem-vgdb-10446-by-smit1988-on-ecegrid-thin1.ecn.purdue.edu
-==10446== 
-==10446== TO CONTROL THIS PROCESS USING vgdb (which you probably
-==10446== don't want to do, unless you know exactly what you're doing,
-==10446== or are doing some strange experiment):
-==10446==   /usr/lib64/valgrind/../../bin/vgdb --pid=10446 ...command...
-==10446== 
-==10446== TO DEBUG THIS PROCESS USING GDB: start GDB like this
-==10446==   /path/to/gdb ./pa10
-==10446== and then give GDB the following command
-==10446==   target remote | /usr/lib64/valgrind/../../bin/vgdb --pid=10446
-==10446== --pid is optional if only one valgrind process is running
-==10446== 
---10446-- REDIR: 0x35ff417610 (strlen) redirected to 0x38049551 (vgPlain_amd64_linux_REDIR_FOR_strlen)
---10446-- Reading syms from /usr/lib64/valgrind/vgpreload_core-amd64-linux.so
---10446-- Reading syms from /usr/lib64/valgrind/vgpreload_memcheck-amd64-linux.so
---10446-- REDIR: 0x35ff417480 (index) redirected to 0x4a07c30 (index)
---10446-- REDIR: 0x35ff417500 (strcmp) redirected to 0x4a08570 (strcmp)
---10446-- Reading syms from /lib64/libc-2.12.so
---10446--   Considering /usr/lib/debug/.build-id/73/3ad3a438b5a695f7a63a77413f9b2c8c94e8e6.debug ..
---10446--   .. build-id is valid
---10446-- REDIR: 0x35ff884cd0 (strcasecmp) redirected to 0x480155c (_vgnU_ifunc_wrapper)
---10446-- REDIR: 0x35ff886f90 (strncasecmp) redirected to 0x480155c (_vgnU_ifunc_wrapper)
---10446-- REDIR: 0x35ff882c40 (__GI_strrchr) redirected to 0x4a07ab0 (__GI_strrchr)
---10446-- REDIR: 0x35ff87a640 (malloc) redirected to 0x4a069ac (malloc)
---10446-- REDIR: 0x35ff87b520 (free) redirected to 0x4a063a9 (free)
---10446-- REDIR: 0x35ff88aaf0 (strchrnul) redirected to 0x4a09fb0 (strchrnul)
---10446-- REDIR: 0x35ff884500 (mempcpy) redirected to 0x4a0a020 (mempcpy)
-==10446== 
-==10446== HEAP SUMMARY:
-==10446==     in use at exit: 0 bytes in 0 blocks
-==10446==   total heap usage: 114,478 allocs, 114,478 frees, 153,552,384 bytes allocated
-==10446== 
-==10446== All heap blocks were freed -- no leaks are possible
-==10446== 
-==10446== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 6 from 6)
---10446-- 
---10446-- used_suppression:      4 U1004-ARM-_dl_relocate_object
---10446-- used_suppression:      2 glibc-2.5.x-on-SUSE-10.2-(PPC)-2a
-==10446== 
-==10446== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 6 from 6)
+==15676== Memcheck, a memory error detector
+==15676== Copyright (C) 2002-2012, and GNU GPL'd, by Julian Seward et al.
+==15676== Using Valgrind-3.8.1 and LibVEX; rerun with -h for copyright info
+==15676== Command: ./pa10
+==15676== Parent PID: 32175
+==15676== 
+--15676-- 
+--15676-- Valgrind options:
+--15676--    --tool=memcheck
+--15676--    --leak-check=full
+--15676--    --verbose
+--15676--    --log-file=memcheck.log
+--15676-- Contents of /proc/version:
+--15676--   Linux version 2.6.32-431.29.2.el6.x86_64 (mockbuild@x86-026.build.eng.bos.redhat.com) (gcc version 4.4.7 20120313 (Red Hat 4.4.7-4) (GCC) ) #1 SMP Sun Jul 27 15:55:46 EDT 2014
+--15676-- Arch and hwcaps: AMD64, amd64-sse3-cx16
+--15676-- Page sizes: currently 4096, max supported 4096
+--15676-- Valgrind library directory: /usr/lib64/valgrind
+--15676-- Reading syms from /home/shay/b/smit1988/ECE264/Solutions/PA01/PA10/pa10
+--15676-- Reading syms from /usr/lib64/valgrind/memcheck-amd64-linux
+--15676--    object doesn't have a dynamic symbol table
+--15676-- Reading syms from /lib64/ld-2.12.so
+--15676--   Considering /usr/lib/debug/.build-id/3b/fa45bce0e82e1d90d37a0cc8630f97f2003bf5.debug ..
+--15676--   .. build-id is valid
+--15676-- Scheduler: using generic scheduler lock implementation.
+--15676-- Reading suppressions file: /usr/lib64/valgrind/default.supp
+==15676== embedded gdbserver: reading from /tmp/vgdb-pipe-from-vgdb-to-15676-by-smit1988-on-ecegrid-thin1.ecn.purdue.edu
+==15676== embedded gdbserver: writing to   /tmp/vgdb-pipe-to-vgdb-from-15676-by-smit1988-on-ecegrid-thin1.ecn.purdue.edu
+==15676== embedded gdbserver: shared mem   /tmp/vgdb-pipe-shared-mem-vgdb-15676-by-smit1988-on-ecegrid-thin1.ecn.purdue.edu
+==15676== 
+==15676== TO CONTROL THIS PROCESS USING vgdb (which you probably
+==15676== don't want to do, unless you know exactly what you're doing,
+==15676== or are doing some strange experiment):
+==15676==   /usr/lib64/valgrind/../../bin/vgdb --pid=15676 ...command...
+==15676== 
+==15676== TO DEBUG THIS PROCESS USING GDB: start GDB like this
+==15676==   /path/to/gdb ./pa10
+==15676== and then give GDB the following command
+==15676==   target remote | /usr/lib64/valgrind/../../bin/vgdb --pid=15676
+==15676== --pid is optional if only one valgrind process is running
+==15676== 
+--15676-- REDIR: 0x35ff417610 (strlen) redirected to 0x38049551 (vgPlain_amd64_linux_REDIR_FOR_strlen)
+--15676-- Reading syms from /usr/lib64/valgrind/vgpreload_core-amd64-linux.so
+--15676-- Reading syms from /usr/lib64/valgrind/vgpreload_memcheck-amd64-linux.so
+--15676-- REDIR: 0x35ff417480 (index) redirected to 0x4a07c30 (index)
+--15676-- REDIR: 0x35ff417500 (strcmp) redirected to 0x4a08570 (strcmp)
+--15676-- Reading syms from /lib64/libc-2.12.so
+--15676--   Considering /usr/lib/debug/.build-id/73/3ad3a438b5a695f7a63a77413f9b2c8c94e8e6.debug ..
+--15676--   .. build-id is valid
+--15676-- REDIR: 0x35ff884cd0 (strcasecmp) redirected to 0x480155c (_vgnU_ifunc_wrapper)
+--15676-- REDIR: 0x35ff886f90 (strncasecmp) redirected to 0x480155c (_vgnU_ifunc_wrapper)
+--15676-- REDIR: 0x35ff882c40 (__GI_strrchr) redirected to 0x4a07ab0 (__GI_strrchr)
+--15676-- REDIR: 0x35ff87a640 (malloc) redirected to 0x4a069ac (malloc)
+--15676-- REDIR: 0x35ff87b520 (free) redirected to 0x4a063a9 (free)
+--15676-- REDIR: 0x35ff88aaf0 (strchrnul) redirected to 0x4a09fb0 (strchrnul)
+==15676== 
+==15676== HEAP SUMMARY:
+==15676==     in use at exit: 568 bytes in 1 blocks
+==15676==   total heap usage: 1,209,594 allocs, 1,209,593 frees, 2,344,088,224 bytes allocated
+==15676== 
+==15676== Searching for pointers to 1 not-freed blocks
+==15676== Checked 1,113,408 bytes
+==15676== 
+==15676== LEAK SUMMARY:
+==15676==    definitely lost: 0 bytes in 0 blocks
+==15676==    indirectly lost: 0 bytes in 0 blocks
+==15676==      possibly lost: 0 bytes in 0 blocks
+==15676==    still reachable: 568 bytes in 1 blocks
+==15676==         suppressed: 0 bytes in 0 blocks
+==15676== Reachable blocks (those to which a pointer was found) are not shown.
+==15676== To see them, rerun with: --leak-check=full --show-reachable=yes
+==15676== 
+==15676== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 6 from 6)
+--15676-- 
+--15676-- used_suppression:      4 U1004-ARM-_dl_relocate_object
+--15676-- used_suppression:      2 glibc-2.5.x-on-SUSE-10.2-(PPC)-2a
+==15676== 
+==15676== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 6 from 6)
