@@ -184,8 +184,8 @@ struct YelpDataBST* create_business_bst(const char* businesses_path, const char*
   FILE * fptr1;
   char * ID_char;
   char advance = 'a';
-  long int address, review;
-  int ID_bus = 0, ID_rev, count = 0, length = 0, max = BUF;
+  long int address;//, review;
+  int ID_bus = 0,/* ID_rev,*/ count = 0, length = 0, max = BUF;
   List start;
   List * new = &start;
   start.next = NULL;
@@ -201,7 +201,7 @@ struct YelpDataBST* create_business_bst(const char* businesses_path, const char*
     }
  
   //sketchily stopping at highest ID
-  while(ID_bus < 12150)//breaks at end if EOF
+  while(advance != EOF)//breaks at end if EOF
     {
       max = BUF;
       //Find business ID
@@ -221,6 +221,7 @@ struct YelpDataBST* create_business_bst(const char* businesses_path, const char*
       address = ftell(fptr);
 
       //Find all matching reviews
+      /*
       do{
 	//Find review ID
 	length = 0;
@@ -257,19 +258,22 @@ struct YelpDataBST* create_business_bst(const char* businesses_path, const char*
 	    //either store value for next or rewind to reread
 	    fseek(fptr1, (-1 * length), SEEK_CUR);
 	  }
-      }while(ID_rev == ID_bus);
+	}while(ID_rev == ID_bus);
+      */
       /*if(advance == EOF)
         {
           break;
         }
       */
       //Move on to next business
+      new->next = List_createNode(address, 0);
       do{
 	advance = fgetc(fptr);
       }while((advance != '\n') && (advance != EOF));
       //42152 14 of them
   }
   
+
   /*new = start.next;
   printf("%s %ld %ld\n",new->name,new->address,new->review);
   new = new->next;
@@ -295,8 +299,7 @@ struct YelpDataBST* create_business_bst(const char* businesses_path, const char*
   //First sort by business name
   //All the rest the data will have to be read to sort
   //Sort by state, city, address, star (descending), text of review
-  new = &start;
-  List_destroy(new->next);
+  List_destroy(start.next);
   fclose(fptr);
   fclose(fptr1);
   return NULL;
