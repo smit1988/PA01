@@ -217,6 +217,7 @@ struct YelpDataBST* create_business_bst(const char* businesses_path, const char*
       review = ftell(fptr1);
       new = List_createNode(name, address, review);
     }
+  printf("%s %d %d", new->name, new.address, new.review);
   free(name);
   //Now the linked list needs to be sorted
   //First sort by business name
