@@ -153,15 +153,21 @@ struct YelpDataBST* create_business_bst(const char* businesses_path, const char*
   //If there are multiple, keep making new nodes with the same data from business_path but new review location
   //Once a nonmatching ID is read, maybe step back the cursor to read it again at the start of the next loop
   FILE * fptr;
+  FILE * fptr1;
   char * ID_char;
   char * name;
   long int address, review;
-  int ID, count = 0, length = 0, max = BUF;
+  int ID_bus, ID_rev, count = 0, length = 0, max = BUF;
   List start;
   List * new = &start;
   start.next = NULL;
   fptr = fopen(businesses_path,"r");
   if(fptr == NULL)
+    {
+      return NULL;
+    }
+  fptr1 = fopen(reviews_path,"r");
+  if(fptr1 == NULL)
     {
       return NULL;
     }
@@ -172,7 +178,7 @@ struct YelpDataBST* create_business_bst(const char* businesses_path, const char*
     length++;
   }while(ID_char[length - 1] != '\t');
   ID_char[length - 1] = '\0';
-  ID = atoi(ID_char);
+  ID_bus = atoi(ID_char);
   free(ID_char);
   //ID is now an int, next fgetc will be the first character of the business name
   name = malloc(sizeof(char) * max);
@@ -191,14 +197,33 @@ struct YelpDataBST* create_business_bst(const char* businesses_path, const char*
   name[length - 1] = '\0';
   //The current position is the start of the address
   address = ftell(fptr);
-
-  new = List_createNode(name, address, review);
+  //Find review ID
+  ID_char = malloc(sizeof(char) * BUF);
+  do{
+    ID_char[length] = fgetc(fptr1);
+    length++;
+  }while(ID_char[length - 1] != '\t');
+  ID_char[length - 1] = '\0';
+  ID_rev = atoi(ID_char);
+  free(ID_char);
+  if(ID_rev == ID_bus) //same business
+    {
+      count = 0;
+      while(count < 4)
+	{
+	  while((fgetc(fptr1)) != '\t'){}
+	  count++;
+	}
+      review = ftell(fptr1);
+      new = List_createNode(name, address, review);
+    }
   free(name);
   //Now the linked list needs to be sorted
   //First sort by business name
   //All the rest the data will have to be read to sort
   //Sort by state, city, address, star (descending), text of review
   fclose(fptr);
+  fclose(fptr1);
   return NULL;
 }
 
