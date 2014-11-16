@@ -201,6 +201,7 @@ struct YelpDataBST* create_business_bst(const char* businesses_path, const char*
       return NULL;
     }
 
+  
   //Linked list points to start of name in business and start of business id in review
   //Review is NONE (50000) if there was no review data   
   while(advance != EOF)//breaks at end if EOF
@@ -265,34 +266,47 @@ struct YelpDataBST* create_business_bst(const char* businesses_path, const char*
 	}
       fseek(fptr1, (-1 * length), SEEK_CUR);
       new->next = List_createNode(address, review);
-      new = new->next;				     
+      new = new->next;
+      printf("%ld %ld\n",new->address,new->review);
       //Move on to next business
       do{
 	advance = fgetc(fptr);
       }while((advance != '\n') && (advance != EOF));
       //42152 14 of them
+      printf("%d\n",List_length(start.next));
     }
+
   
   //Now the linked list needs to be sorted
   //First sort by business name
   //All the rest the data will have to be read to sort
   //Sort by state, city, address, star (descending), text of review
   start.next = List_sort(businesses_path, start.next, strcmp);
+  fseek(fptr,(new->next)->address,SEEK_SET);
 
-  /*fseek(fptr,start.next->address,SEEK_SET);
+  printf("1\n");
+  new = &start;
   char * name;
-  length = 0;
   count = 0;
+  printf("2\n");
+  while(count < 38159)
+    {
+      printf("3\n");
+  fseek(fptr,(new->next)->address,SEEK_SET);
+  printf("4\n");
+  new = new->next;
+  length = 0;
   name = malloc(sizeof(char) * BUF);
   do{
     name[length] = fgetc(fptr);
     length++;
   }while(name[length - 1] != '\t');
   name[length - 1] = '\0';
-  printf("%s",name);
-  free(name);
-  */
-  List_destroy(start.next);
+  count++;
+  printf("%s\n",name);
+    }
+
+  //List_destroy(start.next);
   fclose(fptr);
   fclose(fptr1);
   return NULL;
