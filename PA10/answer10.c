@@ -197,31 +197,46 @@ struct YelpDataBST* create_business_bst(const char* businesses_path, const char*
   name[length - 1] = '\0';
   //The current position is the start of the address
   address = ftell(fptr);
-  //Find review ID
-  ID_char = malloc(sizeof(char) * BUF);
-  do{
-    ID_char[length] = fgetc(fptr1);
-    length++;
-  }while(ID_char[length - 1] != '\t');
-  ID_char[length - 1] = '\0';
-  ID_rev = atoi(ID_char);
-  free(ID_char);
-  if(ID_rev == ID_bus) //same business
+
+  //Find all matching reviews
+  do
     {
-      count = 0;
-      while(count < 4)
+      length = 0;
+      //Find review ID
+      ID_char = malloc(sizeof(char) * BUF);
+      do{
+	ID_char[length] = fgetc(fptr1);
+	length++;
+      }while(ID_char[length - 1] != '\t');
+      ID_char[length - 1] = '\0';
+      ID_rev = atoi(ID_char);
+      free(ID_char);
+      if(ID_rev == ID_bus) //same business
 	{
-	  while((fgetc(fptr1)) != '\t'){}
-	  count++;
+	  count = 0;
+	  while(count < 4)
+	    {
+	      while((fgetc(fptr1)) != '\t'){}
+	      count++;
+	    }
+	  review = ftell(fptr1);
+	  new->next = List_createNode(name, address, review);
+	  new = new->next;
+	  while((fgetc(fptr1)) != '\n'){}
 	}
-      review = ftell(fptr1);
-      new = List_createNode(name, address, review);
-    }
+      else
+	{
+	  //either store value for next or rewind to reread
+	  fseek(fptr1, (-1 * length), SEEK_CUR);
+	}
+    }while(ID_rev == ID_bus);
   free(name);
+
   //Now the linked list needs to be sorted
   //First sort by business name
   //All the rest the data will have to be read to sort
   //Sort by state, city, address, star (descending), text of review
+  List_destroy(new);
   fclose(fptr);
   fclose(fptr1);
   return NULL;
