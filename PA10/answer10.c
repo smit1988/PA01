@@ -156,6 +156,7 @@ struct YelpDataBST* create_business_bst(const char* businesses_path, const char*
   FILE * fptr1;
   char * ID_char;
   char * name;
+  char advance;
   long int address, review;
   int ID_bus, ID_rev, count = 0, length = 0, max = BUF;
   List start;
@@ -171,72 +172,113 @@ struct YelpDataBST* create_business_bst(const char* businesses_path, const char*
     {
       return NULL;
     }
-  //Find business ID
-  ID_char = malloc(sizeof(char) * BUF);
-  do{
-    ID_char[length] = fgetc(fptr);
-    length++;
-  }while(ID_char[length - 1] != '\t');
-  ID_char[length - 1] = '\0';
-  ID_bus = atoi(ID_char);
-  free(ID_char);
-  //ID is now an int, next fgetc will be the first character of the business name
-  name = malloc(sizeof(char) * max);
-  length = 0;
-  name[0] = '0';
-  do{
-    if(count == max)
-      {
-	max *= 2;
-	name = realloc(name, max);
-      }
-    name[length] = fgetc(fptr);
-    length++;
-    count++;
-  }while(name[length - 1] != '\t');
-  name[length - 1] = '\0';
-  //The current position is the start of the address
-  address = ftell(fptr);
-
-  //Find all matching reviews
-  do
+ 
+  while(1)//breaks at end if EOF
     {
+      max = BUF;
       length = 0;
-      //Find review ID
+      count = 0;
+      //Find business ID
       ID_char = malloc(sizeof(char) * BUF);
       do{
-	ID_char[length] = fgetc(fptr1);
+	ID_char[length] = fgetc(fptr);
 	length++;
       }while(ID_char[length - 1] != '\t');
       ID_char[length - 1] = '\0';
-      ID_rev = atoi(ID_char);
+      ID_bus = atoi(ID_char);
       free(ID_char);
-      if(ID_rev == ID_bus) //same business
-	{
-	  count = 0;
-	  while(count < 4)
-	    {
-	      while((fgetc(fptr1)) != '\t'){}
-	      count++;
-	    }
-	  review = ftell(fptr1);
-	  new->next = List_createNode(name, address, review);
-	  new = new->next;
-	  while((fgetc(fptr1)) != '\n'){}
-	}
-      else
-	{
-	  //either store value for next or rewind to reread
-	  fseek(fptr1, (-1 * length), SEEK_CUR);
-	}
-    }while(ID_rev == ID_bus);
-  free(name);
+      //ID is now an int, next fgetc will be the first character of the business name
+      name = malloc(sizeof(char) * max);
+      length = 0;
+      name[0] = '0';
+      do{
+	if(count == max)
+	  {
+	    max *= 2;
+	    name = realloc(name, max);
+	  }
+	name[length] = fgetc(fptr);
+	length++;
+	count++;
+      }while(name[length - 1] != '\t');
+      name[length - 1] = '\0';
+      //The current position is the start of the address
+      address = ftell(fptr);
 
+      //Find all matching reviews
+      do{
+	length = 0;
+	//Find review ID
+	ID_char = malloc(sizeof(char) * BUF);
+	do{
+	  ID_char[length] = fgetc(fptr1);
+	  length++;
+	}while(ID_char[length - 1] != '\t');
+	ID_char[length - 1] = '\0';
+	ID_rev = atoi(ID_char);
+	free(ID_char);
+	if(ID_rev == ID_bus) //same business
+	  {
+	    count = 0;
+	    while(count < 4)
+	      {
+		while((fgetc(fptr1)) != '\t'){}
+		count++;
+	      }
+	    review = ftell(fptr1);
+	    new->next = List_createNode(name, address, review);
+	    new = new->next;
+	    do{
+	      advance = fgetc(fptr1);
+	    }while((advance != '\n') && (advance != EOF));
+	    if(advance == EOF)
+	      {
+		break;
+	      }
+	  }
+	else
+	  {
+	    //either store value for next or rewind to reread
+	    fseek(fptr1, (-1 * length), SEEK_CUR);
+	  }
+      }while(ID_rev == ID_bus);
+      free(name);
+      //Move on to next business
+      do{
+	advance = fgetc(fptr);
+      }while((advance != '\n') && (advance != EOF));
+      if(advance == EOF)
+	{
+	  break;
+	}
+  }
+  
+  /*new = start.next;
+  printf("%s %ld %ld\n",new->name,new->address,new->review);
+  new = new->next;
+  printf("%s %ld %ld\n",new->name,new->address,new->review);
+  new = new->next;
+  printf("%s %ld %ld\n",new->name,new->address,new->review);
+  new = new->next;
+  printf("%s %ld %ld\n",new->name,new->address,new->review);
+  new = new->next;
+  printf("%s %ld %ld\n",new->name,new->address,new->review);
+  new = new->next;
+  printf("%s %ld %ld\n",new->name,new->address,new->review);
+  new = new->next;
+  printf("%s %ld %ld\n",new->name,new->address,new->review);
+  new = new->next;
+  printf("%s %ld %ld\n",new->name,new->address,new->review);
+  new = new->next;
+  printf("%s %ld %ld\n",new->name,new->address,new->review);
+  new = new->next;
+  printf("%s %ld %ld\n",new->name,new->address,new->review);
+  */
   //Now the linked list needs to be sorted
   //First sort by business name
   //All the rest the data will have to be read to sort
   //Sort by state, city, address, star (descending), text of review
-  List_destroy(new);
+  List_destroy(start.next);
   fclose(fptr);
   fclose(fptr1);
   return NULL;
