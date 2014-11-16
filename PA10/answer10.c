@@ -14,9 +14,20 @@
 #define BUF 2000
 #define NONE 50000
 
+typedef struct Review_offset_st{
+  long int text;
+  long int stars;
+}Review_offset;
+
+typedef struct Review_offset_array_st{
+  //malloc size of review_offset * number of entries
+  Review_offset * offsets;
+}Review_array;
+
 typedef struct Business_st{
   int ID;
   long int address;
+  long int review;
   struct Business_st * next;
 }Business_struct;
 
@@ -29,17 +40,18 @@ struct YelpDataBST {
 };
 
 
-Business_struct * Create_bus(long int address, int ID);
+Business_struct * Create_bus(long int address, long int review, int ID);
 void Destroy_bus(Business_struct * bus);
 int List_length(Business_struct * list);
-Business_struct * List_merge(const char* businesses_path, Business_struct * lhs, Business_struct * rhs, int (*compar)(const char *, const char*));
-Business_struct * List_sort(const char* businesses_path, Business_struct * list, int (*compar)(const char *, const char*));
+//Business_struct * List_merge(const char* businesses_path, Business_struct * lhs, Business_struct * rhs, int (*compar)(const char *, const char*));
+//Business_struct * List_sort(const char* businesses_path, Business_struct * list, int (*compar)(const char *, const char*));
 
-Business_struct * Create_bus(long int address, int ID)
+Business_struct * Create_bus(long int address, long int review, int ID)
 {
   Business_struct * make = NULL;
   make = malloc(sizeof(Business_struct));
   make->address = address;
+  make->review = review;
   make->ID = ID;
   make->next = NULL;
   return make;
@@ -67,107 +79,6 @@ int List_length(Business_struct * list)
   return counter;
 }
 
-Business_struct * List_merge(const char* businesses_path, Business_struct * lhs, Business_struct * rhs, int (*compar)(const char *, const char*))
-{
-  //new list
-  Business_struct start;
-  Business_struct * new = &start;
-  start.next = NULL;
-  FILE * fptr;
-  int length, count;
-  char * name;
-  char * name1;
-  //keep track of head
-  //if lhs is null, the remaining is rhs
-  //if rhs is null, the remaining is lhs
-  //if neither are null, the next element is the greater of the two
-  //if at least one of the elements is left
-  while((lhs != NULL) || (rhs != NULL))
-    {
-      if(rhs == NULL)
-	{
-	  new->next = lhs;
-	  break;
-	}
-      else if(lhs == NULL)
-	{
-	  new->next = rhs;
-	  break;
-	}
-      else
-	{
-	  //if lhs is greater
-	  fptr = fopen(businesses_path,"r");
-	  if(fptr == NULL)
-	    {
-	      return NULL;
-	    }
-	  fseek(fptr,lhs->address,SEEK_SET);
-	  length = 0;
-	  count = 0;
-	  name = malloc(sizeof(char) * BUF);
-	  do{
-	    name[length] = fgetc(fptr);
-	    length++;
-	  }while(name[length - 1] != '\t');
-	  name[length - 1] = '\0';
-
-	  fseek(fptr,rhs->address,SEEK_SET);
-          length = 0;
-          count = 0;
-          name1 = malloc(sizeof(char) * BUF);
-          do{
-            name1[length] = fgetc(fptr);
-            length++;
-          }while(name1[length - 1] != '\t');
-          name1[length - 1] = '\0';
-
-	  if((compar(name,name1)) < 0)
-	    {
-	      new->next = lhs;
-	      lhs = lhs->next;
-	    }
-	  //if rhs is greater or equal
-	  else
-	    {
-	      new->next = rhs;
-	      rhs = rhs->next;
-	    }
-	  free(name);
-	  free(name1);
-	  fclose(fptr);
-	}
-      new = new->next;
-    }
-  return (start.next);
-}
-
-Business_struct * List_sort(const char* businesses_path, Business_struct * list, int (*compar)(const char *, const char*))
-{
-  Business_struct lhs;
-  Business_struct * left = &lhs;
-  lhs.next = list;
-  //longer
-  Business_struct * rhs = list;
-  int i;
-  int length = List_length(list);
-  if(length <= 1)
-    {
-      return list;
-    }
-  for(i = 0; i < (length/2); i++)
-    {
-      left = left->next;
-      rhs = rhs->next;
-      if(((length/2) - i) == 1)
-	{
-	  left->next = NULL;
-	}
-    }
-  lhs.next = List_sort(businesses_path, lhs.next, compar);
-  rhs = List_sort(businesses_path, rhs, compar);
-  return List_merge(businesses_path, lhs.next, rhs, compar);
-}
 
 struct YelpDataBST* create_business_bst(const char* businesses_path, const char* reviews_path)
 {
@@ -175,14 +86,23 @@ struct YelpDataBST* create_business_bst(const char* businesses_path, const char*
   Business_struct * new = &start;
   start.next = NULL;
   FILE * Bus_tsv;
+  FILE * Rev_tsv;
   char advance = 'a';
   char * ID_char;
-  int length, count, ID_bus;
+  int length, count, ID_bus, ID_rev;
+  long int address, review;
   Bus_tsv = fopen(businesses_path,"r");
   if(Bus_tsv == NULL)
     {
       return NULL;
     }
+  Rev_tsv = fopen(reviews_path,"r");
+  if(Rev_tsv == NULL)
+    {
+      return NULL;
+    }
+
+  //creates linked list of business ID's, start of name offset, pointer to array of reviews
   while(advance != EOF)
     {
       length = 0;
@@ -195,12 +115,64 @@ struct YelpDataBST* create_business_bst(const char* businesses_path, const char*
       ID_char[length - 1] = '\0';
       ID_bus = atoi(ID_char);
       free(ID_char);
-      new->next = Create_bus(ftell(Bus_tsv),ID_bus);
+      //ID is now an int, next fgetc will be the first character of the business name
+      //The current position is the start of the address
+      address = ftell(Bus_tsv);
+      //Find all matching reviews
+      //Find review ID
+      length = 0;
+      ID_char = malloc(sizeof(char) * BUF);
+      do{
+        ID_char[length] = fgetc(Rev_tsv);
+	length++;
+      }while(ID_char[length - 1] != '\t');
+      ID_char[length - 1] = '\0';
+      ID_rev = atoi(ID_char);
+      free(ID_char);
+      fseek(Rev_tsv, (-1 * length), SEEK_CUR);
+      if(ID_rev == ID_bus)
+	{
+	  review = ftell(Rev_tsv);
+	}
+      else
+	{
+	  review = NONE;
+	}
+      fseek(Rev_tsv, length, SEEK_CUR);
+      //Move to next start or EOF
+      while(ID_rev == ID_bus)
+	{
+	  if(ID_bus == 42152)
+	    break;
+	  do{
+	    advance = fgetc(Rev_tsv);
+	  }while((advance != '\n') && (advance != EOF));
+	  if(advance != EOF)
+	    {
+	      length = 0;
+	      ID_char = malloc(sizeof(char) * BUF);
+	      do{
+		ID_char[length] = fgetc(Rev_tsv);
+		length++;
+	      }while(ID_char[length - 1] != '\t');
+	      ID_char[length - 1] = '\0';
+	      ID_rev = atoi(ID_char);
+	      free(ID_char);
+	    }
+	}
+      fseek(Rev_tsv, (-1 * length), SEEK_CUR);
+      new->next = Create_bus(address, review, ID_bus);
       new = new->next;
+      printf("%ld %ld\n",new->address,new->review);
       do{
         advance = fgetc(Bus_tsv);
       }while((advance != '\n') && (advance != EOF));
     }
+
+
+  //Turn list into binary tree
+  /*
+  start.next = List_sort(businesses_path,start.next,strcmp);
   new = &start;
   char * name;
   advance = 'a';
@@ -221,6 +193,7 @@ struct YelpDataBST* create_business_bst(const char* businesses_path, const char*
         advance = fgetc(Bus_tsv);
       }while((advance != '\n') && (advance != EOF));
     }
+  */
   Destroy_bus(start.next);
   fclose(Bus_tsv);
   return NULL;
