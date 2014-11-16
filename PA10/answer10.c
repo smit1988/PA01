@@ -156,9 +156,9 @@ struct YelpDataBST* create_business_bst(const char* businesses_path, const char*
   FILE * fptr1;
   char * ID_char;
   char * name;
-  char advance;
+  char advance = 'a';
   long int address, review;
-  int ID_bus, ID_rev, count = 0, length = 0, max = BUF;
+  int ID_bus = 0, ID_rev, count = 0, length = 0, max = BUF;
   List start;
   List * new = &start;
   start.next = NULL;
@@ -173,12 +173,13 @@ struct YelpDataBST* create_business_bst(const char* businesses_path, const char*
       return NULL;
     }
  
-  while(1)//breaks at end if EOF
+  //sketchily stopping at highest ID
+  while(ID_bus < 32150)//breaks at end if EOF
     {
       max = BUF;
+      //Find business ID
       length = 0;
       count = 0;
-      //Find business ID
       ID_char = malloc(sizeof(char) * BUF);
       do{
 	ID_char[length] = fgetc(fptr);
@@ -186,6 +187,7 @@ struct YelpDataBST* create_business_bst(const char* businesses_path, const char*
       }while(ID_char[length - 1] != '\t');
       ID_char[length - 1] = '\0';
       ID_bus = atoi(ID_char);
+      printf("%d\n",ID_bus);
       free(ID_char);
       //ID is now an int, next fgetc will be the first character of the business name
       name = malloc(sizeof(char) * max);
@@ -207,8 +209,8 @@ struct YelpDataBST* create_business_bst(const char* businesses_path, const char*
 
       //Find all matching reviews
       do{
-	length = 0;
 	//Find review ID
+	length = 0;
 	ID_char = malloc(sizeof(char) * BUF);
 	do{
 	  ID_char[length] = fgetc(fptr1);
@@ -216,6 +218,7 @@ struct YelpDataBST* create_business_bst(const char* businesses_path, const char*
 	}while(ID_char[length - 1] != '\t');
 	ID_char[length - 1] = '\0';
 	ID_rev = atoi(ID_char);
+	printf("\t%d\n",ID_rev);
 	free(ID_char);
 	if(ID_rev == ID_bus) //same business
 	  {
@@ -243,14 +246,16 @@ struct YelpDataBST* create_business_bst(const char* businesses_path, const char*
 	  }
       }while(ID_rev == ID_bus);
       free(name);
+      /*if(advance == EOF)
+        {
+          break;
+        }
+      */
       //Move on to next business
       do{
 	advance = fgetc(fptr);
       }while((advance != '\n') && (advance != EOF));
-      if(advance == EOF)
-	{
-	  break;
-	}
+      //42152 14 of them
   }
   
   /*new = start.next;
