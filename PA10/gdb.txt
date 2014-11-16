@@ -1,0 +1,5 @@
+Starting program: /home/shay/b/smit1988/ECE264/Solutions/PA01/PA10/pa10 
+
+Program exited normally.
+Undefined command: "valgrind".  Try "help".
+Undefined command: "valgrind".  Try "help".
