@@ -33,6 +33,7 @@ typedef struct Business_st{
 
 struct YelpDataBST {
   char * name;
+  int ID;
   long int address;
   long int review;
   struct YelpDataBST * left;
@@ -169,7 +170,41 @@ struct YelpDataBST* create_business_bst(const char* businesses_path, const char*
       }while((advance != '\n') && (advance != EOF));
     }
   //Turn list into binary tree
+  static struct YelpDataBST * TreeNode_construct(long int business, long int review, int ID, char * name)
+  {
+    YelpDataBST * tn;
+    tn = malloc(sizeof(YelpDataBST));
+    tn->left = NULL;
+    tn->right = NULL;
+    //free this somewhere
+    tn->name = strdup(name);
+    tn->ID = ID;
+    tn->business = business;
+    tn->review = review;
+    return tn;
+  }
 
+  YelpDataBST * Tree_insert(YelpDataBST * tn, long int business, long int review, int ID, char * name)
+  {
+    if(tn==NULL)
+      {
+	return TreeNode_construct(business, review, ID, name);
+      }
+    if(strcasecmp(tn->name,name) == 0)
+      {
+	//value already in there (shouldn't really happen in this program
+	return tn;
+      }
+    if(strcasecmp(tn->name,name) > 0) //tn->name is greater than name
+      {
+	tn->left = Tree_insert(tn->left,business,review,ID,name);
+      }
+    else
+      {
+	tn->right = Tree_insert(tn->right,business,review,ID,name);
+      }
+    return tn;
+  }
 
   /*
   start.next = List_sort(businesses_path,start.next,strcmp);
