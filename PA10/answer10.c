@@ -20,11 +20,13 @@ typedef struct Review_offset_st{
   long int stars;
 }Review_offset;
 
+/*
 //Stores all reviews for a given business through an array of Review_offset structures
 typedef struct Review_offset_array_st{
   //malloc size of review_offset * number of entries
   Review_offset * offsets;
 }Review_array;
+*/
 
 //Stores the business name, ID, offset for the start of the address, and offset for star rating if there is one
 //In the future maybe change this to store a Review_array
@@ -32,7 +34,9 @@ typedef struct Business_st{
   char * name;
   int ID;
   long int address;
-  long int review;
+  //An array of reviews
+  Review_offset * rev_array;
+  //long int review;
   struct Business_st * next;
 }Business_struct;
 
@@ -47,19 +51,20 @@ struct YelpDataBST {
 };
 
 
-Business_struct * Create_bus(const char * name, long int address, long int review, int ID);
+Business_struct * Create_bus(const char * name, long int address, Review_offset * rev_array, int ID);
 void Destroy_bus(Business_struct * bus);
 //int List_length(Business_struct * list);
 //Business_struct * List_merge(const char* businesses_path, Business_struct * lhs, Business_struct * rhs, int (*compar)(const char *, const char*));
 //Business_struct * List_sort(const char* businesses_path, Business_struct * list, int (*compar)(const char *, const char*));
 
-Business_struct * Create_bus(const char * name, long int address, long int review, int ID)
+Business_struct * Create_bus(const char * name, long int address, Review_offset * rev_array, int ID)
 {
   Business_struct * make = NULL;
   make = malloc(sizeof(Business_struct));
   make->name = strdup(name);
   make->address = address;
-  make->review = review;
+  //Leave the passed rev_array as is, just point to it
+  make->rev_array = rev_array;
   make->ID = ID;
   make->next = NULL;
   return make;
@@ -69,9 +74,9 @@ void Destroy_bus(Business_struct * bus)
 {
   if(bus != NULL){
     if(bus->next != NULL)
-      {
-	Destroy_bus(bus->next);
-      }
+      Destroy_bus(bus->next);
+    if(bus->rev_array != NULL
+       free(bus->rev_array);
     free(bus->name);
     free(bus);
   }
@@ -97,13 +102,14 @@ struct YelpDataBST* create_business_bst(const char* businesses_path, const char*
   Business_struct start;
   Business_struct * new = &start;
   start.next = NULL;
+  Review_offset * rev_array = NULL;
   FILE * Bus_tsv;
   FILE * Rev_tsv;
   char advance = 'a';
   char * ID_char;
   char * name;
   int length, count, ID_bus, ID_rev;
-  long int address, review;
+  long int address;//, review;
   Bus_tsv = fopen(businesses_path,"r");
   if(Bus_tsv == NULL)
     {
@@ -149,11 +155,28 @@ struct YelpDataBST* create_business_bst(const char* businesses_path, const char*
       ID_char[length - 1] = '\0';
       ID_rev = atoi(ID_char);
       free(ID_char);
+
+      //To pass the review array
+      //Check if the ID's match, if not set the review array to NULL and move on
+      //If the ID's match, a new entry will be added so allocate memory for it
+      //Get the offset for the star rating
+      //Get the offset for the review text
+      //Go to the next line
+      //Restart the loop to see if the ID's match
+      //don't forget to free
+      count = 1;
+      while(ID_bus == ID_rev)
+	{
+	  rev_array = realloc(rev_array,sizeof(Review_offset) * count);
+	}
+
+
+      /*
       /*The current code will back up to the start of the line
 if the ID's match, the review long int will be set to the start of the review ID
 if the ID's don't match, the review will be set to an arbitrary value "none"
 "none" shouldn't be a good value but is sketchy code right now
-       */
+       
       fseek(Rev_tsv, (-1 * length), SEEK_CUR);
       if(ID_rev == ID_bus)
 	{
@@ -186,10 +209,11 @@ if the ID's don't match, the review will be set to an arbitrary value "none"
 	    }
 	}
       fseek(Rev_tsv, (-1 * length), SEEK_CUR);
+*/
       new->next = Create_bus(name,address, review, ID_bus);
       free(name);
       new = new->next;
-      printf("%ld %ld\n",new->address,new->review);
+      printf("%s %ld %ld\n",new->name,new->address,new->review);
       do{
         advance = fgetc(Bus_tsv);
       }while((advance != '\n') && (advance != EOF));
