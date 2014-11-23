@@ -47,17 +47,17 @@ struct YelpDataBST {
 };
 
 
-Business_struct * Create_bus(char * name, long int address, long int review, int ID);
+Business_struct * Create_bus(const char * name, long int address, long int review, int ID);
 void Destroy_bus(Business_struct * bus);
 //int List_length(Business_struct * list);
 //Business_struct * List_merge(const char* businesses_path, Business_struct * lhs, Business_struct * rhs, int (*compar)(const char *, const char*));
 //Business_struct * List_sort(const char* businesses_path, Business_struct * list, int (*compar)(const char *, const char*));
 
-Business_struct * Create_bus(char * name, long int address, long int review, int ID)
+Business_struct * Create_bus(const char * name, long int address, long int review, int ID)
 {
   Business_struct * make = NULL;
-  make->name = strdup(name);
   make = malloc(sizeof(Business_struct));
+  make->name = strdup(name);
   make->address = address;
   make->review = review;
   make->ID = ID;
@@ -69,7 +69,9 @@ void Destroy_bus(Business_struct * bus)
 {
   if(bus != NULL){
     if(bus->next != NULL)
-      Destroy_bus(bus->next);
+      {
+	Destroy_bus(bus->next);
+      }
     free(bus->name);
     free(bus);
   }

@@ -1,3 +1,10 @@
 Starting program: /home/shay/b/smit1988/ECE264/Solutions/PA01/PA10/pa10 
 
-Program exited normally.
+Program received signal SIGSEGV, Segmentation fault.
+0x0000000000400776 in Create_bus (name=0x602490 "Boston Cleaners", address=18, review=0, ID=0) at answer10.c:59
+59	  make->name = strdup(name);
+A debugging session is active.
+
+	Inferior 1 [process 14965] will be killed.
+
+Quit anyway? (y or n) 
