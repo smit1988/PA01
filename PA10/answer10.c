@@ -51,13 +51,13 @@ struct YelpDataBST {
 };
 
 
-Business_struct * Create_bus(const char * name, long int address, Review_offset * rev_array, int ID);
+Business_struct * Create_bus(const char * name, long int address, Review_offset * rev_array, int ID, int count);
 void Destroy_bus(Business_struct * bus);
 //int List_length(Business_struct * list);
 //Business_struct * List_merge(const char* businesses_path, Business_struct * lhs, Business_struct * rhs, int (*compar)(const char *, const char*));
 //Business_struct * List_sort(const char* businesses_path, Business_struct * list, int (*compar)(const char *, const char*));
 
-Business_struct * Create_bus(const char * name, long int address, Review_offset * rev_array, int ID)
+Business_struct * Create_bus(const char * name, long int address, Review_offset * rev_array, int ID, int count)
 {
   Business_struct * make = NULL;
   make = malloc(sizeof(Business_struct));
@@ -65,9 +65,12 @@ Business_struct * Create_bus(const char * name, long int address, Review_offset 
   make->address = address;
   //Leave the passed rev_array as is, just point to it
   //This doesn't work
-  make->rev_array = rev_array;
+  //make->rev_array = rev_array;
   make->ID = ID;
   make->next = NULL;
+  make->rev_array = NULL;
+  //make->rev_array = malloc(sizeof(Review_offset) * count);
+  //make->rev_array = memcpy(make->rev_array,rev_array,sizeof(Review_offset) * count);
   return make;
 }
 
@@ -125,6 +128,7 @@ struct YelpDataBST* create_business_bst(const char* businesses_path, const char*
   //creates linked list of business ID's, start of name offset, pointer to array of reviews
   while(advance != EOF)
     {
+      rev_array = NULL;
       length = 0;
       count = 0;
       ID_char = malloc(sizeof(char) * BUF);
@@ -154,7 +158,10 @@ struct YelpDataBST* create_business_bst(const char* businesses_path, const char*
 	length++;
       }while(ID_char[length - 1] != '\t');
       ID_char[length - 1] = '\0';
+      //not a number?
+      printf("%s \t",ID_char);
       ID_rev = atoi(ID_char);
+      printf("%d\n",ID_rev);
       free(ID_char);
 
       //To pass the review array
@@ -184,7 +191,7 @@ struct YelpDataBST* create_business_bst(const char* businesses_path, const char*
 	  //Next line
 	  do{
 	    advance = fgetc(Rev_tsv);
-	  }while(advance != '\t');
+	  }while(advance != '\n');
 	  //Find review ID
 	  length = 0;
 	  ID_char = malloc(sizeof(char) * BUF);
@@ -199,7 +206,6 @@ struct YelpDataBST* create_business_bst(const char* businesses_path, const char*
 	    fseek(Rev_tsv, (-1 * length), SEEK_CUR);
 	  count++;
 	}
-
 
       /*
       The current code will back up to the start of the line
@@ -240,8 +246,10 @@ if the ID's don't match, the review will be set to an arbitrary value "none"
 	}
       fseek(Rev_tsv, (-1 * length), SEEK_CUR);
 */
-      new->next = Create_bus(name,address, rev_array, ID_bus);
+      new->next = Create_bus(name,address, rev_array, ID_bus, count);
       free(name);
+      if(rev_array != NULL)
+	free(rev_array);
       new = new->next;
       printf("%s %ld\n",new->name,new->address);
       do{

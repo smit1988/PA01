@@ -1,10 +1,816 @@
+Breakpoint 1 at 0x400a5c: file answer10.c, line 163.
+Breakpoint 2 at 0x400a68: file answer10.c, line 164.
 Starting program: /home/shay/b/smit1988/ECE264/Solutions/PA01/PA10/pa10 
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
+
+Breakpoint 2, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:176
+176	      count = 1;
+Continuing.
+
+Breakpoint 1, create_business_bst (businesses_path=0x400e20 "/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", reviews_path=0x400de8 "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv")
+    at answer10.c:163
+163	      free(ID_char);
+Continuing.
 
 Program received signal SIGABRT, Aborted.
 0x00000035ff832625 in raise (sig=6) at ../nptl/sysdeps/unix/sysv/linux/raise.c:64
 64	  return INLINE_SYSCALL (tgkill, 3, pid, selftid, sig);
-A debugging session is active.
+Continuing.
 
-	Inferior 1 [process 28180] will be killed.
-
-Quit anyway? (y or n) 
+Program terminated with signal SIGABRT, Aborted.
+The program no longer exists.
