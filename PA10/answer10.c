@@ -20,14 +20,6 @@ typedef struct Review_offset_st{
   long int stars;
 }Review_offset;
 
-/*
-//Stores all reviews for a given business through an array of Review_offset structures
-typedef struct Review_offset_array_st{
-  //malloc size of review_offset * number of entries
-  Review_offset * offsets;
-}Review_array;
-*/
-
 //Stores the business name, ID, offset for the start of the address, and offset for star rating if there is one
 //In the future maybe change this to store a Review_array
 typedef struct Business_st{
@@ -43,9 +35,8 @@ typedef struct Business_st{
 //Binary tree form of Business_struct
 struct YelpDataBST {
   char * name;
-  int ID;
   long int address;
-  long int review;
+  Review_offset * rev_array;
   struct YelpDataBST * left;
   struct YelpDataBST * right;
 };
@@ -53,9 +44,8 @@ struct YelpDataBST {
 
 Business_struct * Create_bus(const char * name, long int address, Review_offset * rev_array, int ID, int count);
 void Destroy_bus(Business_struct * bus);
-//int List_length(Business_struct * list);
-//Business_struct * List_merge(const char* businesses_path, Business_struct * lhs, Business_struct * rhs, int (*compar)(const char *, const char*));
-//Business_struct * List_sort(const char* businesses_path, Business_struct * list, int (*compar)(const char *, const char*));
+static struct YelpDataBST * TreeNode_construct(long int address, Review_offset * rev_array, char * name);
+struct YelpDataBST * Tree_insert(struct YelpDataBST * tn, long int address, Review_offset * rev_array, char * name);
 
 Business_struct * Create_bus(const char * name, long int address, Review_offset * rev_array, int ID, int count)
 {
@@ -64,13 +54,9 @@ Business_struct * Create_bus(const char * name, long int address, Review_offset 
   make->name = strdup(name);
   make->address = address;
   //Leave the passed rev_array as is, just point to it
-  //This doesn't work
   make->rev_array = rev_array;
   make->ID = ID;
   make->next = NULL;
-  //make->rev_array = NULL;
-  //make->rev_array = malloc(sizeof(Review_offset) * count);
-  //make->rev_array = memcpy(make->rev_array,rev_array,sizeof(Review_offset) * count);
   return make;
 }
 
@@ -79,33 +65,62 @@ void Destroy_bus(Business_struct * bus)
   if(bus != NULL){
     if(bus->next != NULL)
       Destroy_bus(bus->next);
+    /*
     if(bus->rev_array != NULL)
        free(bus->rev_array);
+    */
     free(bus->name);
     free(bus);
   }
 }
 
-/*
-int List_length(Business_struct * list)
+static struct YelpDataBST * TreeNode_construct(long int address, Review_offset * rev_array, char * name)
 {
-  Business_struct * length = list;
-  int counter = 0;
-  //if length is NULL off the bat, length 0
-  while (length != NULL)
-    {
-      counter++;
-      length = length->next;
-    }
-  return counter;
+  struct YelpDataBST * tn;
+  //free this somewhere
+  tn = malloc(sizeof(struct YelpDataBST));
+  tn->left = NULL;
+  tn->right = NULL;
+  //free this somewhere
+  tn->name = strdup(name);
+  tn->address = address;
+  //free this somwehre and make sure it isn't freed from the linked list
+  tn->rev_array = rev_array;
+  return tn;
 }
-*/
+
+struct YelpDataBST * Tree_insert(struct YelpDataBST * tn, long int address, Review_offset * rev_array, char * name)
+{
+  if(tn==NULL)
+    {
+      return TreeNode_construct(address, rev_array, name);
+    }
+  if(strcasecmp(tn->name,name) == 0)
+    {
+      //value already in there (shouldn't really happen in this program
+      return tn;
+    }
+  if(strcasecmp(tn->name,name) > 0) //tn->name is greater than name
+    {
+      tn->left = Tree_insert(tn->left,address,rev_array,name);
+    }
+  else
+    {
+      tn->right = Tree_insert(tn->right,address,rev_array,name);
+    }
+  return tn;
+}
 
 struct YelpDataBST* create_business_bst(const char* businesses_path, const char* reviews_path)
 {
+  //start.next is the first node
   Business_struct start;
   Business_struct * new = &start;
   start.next = NULL;
+  //root.left is the root node
+  struct YelpDataBST root;
+  //struct YelpDataBST * leaves = &root;
+  root.left = NULL;
   Review_offset * rev_array = NULL;
   FILE * Bus_tsv;
   FILE * Rev_tsv;
@@ -113,7 +128,7 @@ struct YelpDataBST* create_business_bst(const char* businesses_path, const char*
   char * ID_char;
   char * name;
   int length, count, i, ID_bus = 0, ID_rev;
-  long int address;//, review;
+  long int address;
   Bus_tsv = fopen(businesses_path,"r");
   if(Bus_tsv == NULL)
     {
@@ -216,75 +231,25 @@ struct YelpDataBST* create_business_bst(const char* businesses_path, const char*
 	free(rev_array);
       */
       new = new->next;
-      printf("%s %ld\n",new->name,new->address);
+      //printf("%s %ld\n",new->name,new->address);
       do{
         advance = fgetc(Bus_tsv);
       }while((advance != '\n') && (advance != EOF));
     }
 
-  /*
   //Turn list into binary tree
-  static struct YelpDataBST * TreeNode_construct(long int business, long int review, int ID, char * name)
-  {
-    YelpDataBST * tn;
-    tn = malloc(sizeof(YelpDataBST));
-    tn->left = NULL;
-    tn->right = NULL;
-    //free this somewhere
-    tn->name = strdup(name);
-    tn->ID = ID;
-    tn->business = business;
-    tn->review = review;
-    return tn;
-  }
-
-  YelpDataBST * Tree_insert(YelpDataBST * tn, long int business, long int review, int ID, char * name)
-  {
-    if(tn==NULL)
-      {
-	return TreeNode_construct(business, review, ID, name);
-      }
-    if(strcasecmp(tn->name,name) == 0)
-      {
-	//value already in there (shouldn't really happen in this program
-	return tn;
-      }
-    if(strcasecmp(tn->name,name) > 0) //tn->name is greater than name
-      {
-	tn->left = Tree_insert(tn->left,business,review,ID,name);
-      }
-    else
-      {
-	tn->right = Tree_insert(tn->right,business,review,ID,name);
-      }
-    return tn;
-  }
-  */
-  /*
-  start.next = List_sort(businesses_path,start.next,strcmp);
+  //root.left is the root node of the tree
   new = &start;
-  char * name;
-  advance = 'a';
-  while(advance != EOF)
+  while(new->next != NULL)
     {
-      fseek(Bus_tsv,(new->next)->address,SEEK_SET);
       new = new->next;
-      length = 0;
-      name = malloc(sizeof(char) * BUF);
-      do{
-	name[length] = fgetc(Bus_tsv);
-	length++;
-      }while(name[length - 1] != '\t');
-      name[length - 1] = '\0';
-      printf("%d\t%s\n",new->ID,name);
-      free(name);
-      do{
-        advance = fgetc(Bus_tsv);
-      }while((advance != '\n') && (advance != EOF));
+      Tree_insert(root.left, new->address, new->rev_array, new->name);
     }
-  */
+
   Destroy_bus(start.next);
+  destroy_business_bst(root.left);
   fclose(Bus_tsv);
+  fclose(Rev_tsv);
   return NULL;
 }
 
@@ -296,7 +261,13 @@ struct Business* get_business_reviews(struct YelpDataBST* bst,char* name, char* 
 //remember about list destroy at top
 void destroy_business_bst(struct YelpDataBST* bst)
 {
-
+  if(bst == NULL)
+    return;
+  free(bst->name);
+  free(bst->rev_array);
+  destroy_business_bst(bst->left);
+  destroy_business_bst(bst->right);
+  free(bst);
 }
 
 void destroy_business_result(struct Business* b)
