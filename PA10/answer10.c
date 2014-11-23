@@ -172,6 +172,7 @@ struct YelpDataBST* create_business_bst(const char* businesses_path, const char*
       //If it is not a match backup to start of line
       //Restart the loop to see if the ID's match
       //don't forget to free
+      printf("ID_bus: %d\n",ID_bus);
       count = 1;
       while(ID_bus == ID_rev)
 	{
@@ -185,13 +186,14 @@ struct YelpDataBST* create_business_bst(const char* businesses_path, const char*
 	      }while(advance != '\t');
 	    }
 	  rev_array[count-1].text = ftell(Rev_tsv);
+	  printf("%ld %ld\n",rev_array[count-1].stars,rev_array[count-1].text);
 	  //Next line
 	  do{
 	    advance = fgetc(Rev_tsv);
 	  }while((advance != '\n') && (advance != EOF));
 	  count++;
-	  //Basically end of file, a bit cheaty though
-	  if(ID_bus == 42152)
+	  //Last entry, EOF wasn't working for some reason
+	  if((ID_bus == 42152) && (count == 15))
 	    {
 	      break;
 	    }
@@ -207,45 +209,6 @@ struct YelpDataBST* create_business_bst(const char* businesses_path, const char*
 	  free(ID_char);
 	}
       fseek(Rev_tsv,(-1 * length), SEEK_CUR);
-      /*
-      The current code will back up to the start of the line
-if the ID's match, the review long int will be set to the start of the review ID
-if the ID's don't match, the review will be set to an arbitrary value "none"
-"none" shouldn't be a good value but is sketchy code right now
-       
-      fseek(Rev_tsv, (-1 * length), SEEK_CUR);
-      if(ID_rev == ID_bus)
-	{
-	  review = ftell(Rev_tsv);
-	}
-      else
-	{
-	  review = NONE;
-	}
-      fseek(Rev_tsv, length, SEEK_CUR);
-      //Move to next start or EOF
-      while(ID_rev == ID_bus)
-	{
-	  if(ID_bus == 42152)
-	    break;
-	  do{
-	    advance = fgetc(Rev_tsv);
-	  }while((advance != '\n') && (advance != EOF));
-	  if(advance != EOF)
-	    {
-	      length = 0;
-	      ID_char = malloc(sizeof(char) * BUF);
-	      do{
-		ID_char[length] = fgetc(Rev_tsv);
-		length++;
-	      }while(ID_char[length - 1] != '\t');
-	      ID_char[length - 1] = '\0';
-	      ID_rev = atoi(ID_char);
-	      free(ID_char);
-	    }
-	}
-      fseek(Rev_tsv, (-1 * length), SEEK_CUR);
-*/
       new->next = Create_bus(name,address, rev_array, ID_bus, count);
       free(name);
       /*
@@ -253,7 +216,7 @@ if the ID's don't match, the review will be set to an arbitrary value "none"
 	free(rev_array);
       */
       new = new->next;
-      printf("%s %ld\n",new->name,new->address);
+      //printf("%s %ld\n",new->name,new->address);
       do{
         advance = fgetc(Bus_tsv);
       }while((advance != '\n') && (advance != EOF));
