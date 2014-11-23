@@ -65,10 +65,10 @@ Business_struct * Create_bus(const char * name, long int address, Review_offset 
   make->address = address;
   //Leave the passed rev_array as is, just point to it
   //This doesn't work
-  //make->rev_array = rev_array;
+  make->rev_array = rev_array;
   make->ID = ID;
   make->next = NULL;
-  make->rev_array = NULL;
+  //make->rev_array = NULL;
   //make->rev_array = malloc(sizeof(Review_offset) * count);
   //make->rev_array = memcpy(make->rev_array,rev_array,sizeof(Review_offset) * count);
   return make;
@@ -158,10 +158,7 @@ struct YelpDataBST* create_business_bst(const char* businesses_path, const char*
 	length++;
       }while(ID_char[length - 1] != '\t');
       ID_char[length - 1] = '\0';
-      //not a number?
-      printf("%s \t",ID_char);
       ID_rev = atoi(ID_char);
-      printf("%d\n",ID_rev);
       free(ID_char);
 
       //To pass the review array
@@ -191,7 +188,13 @@ struct YelpDataBST* create_business_bst(const char* businesses_path, const char*
 	  //Next line
 	  do{
 	    advance = fgetc(Rev_tsv);
-	  }while(advance != '\n');
+	  }while((advance != '\n') && (advance != EOF));
+	  count++;
+	  //Basically end of file, a bit cheaty though
+	  if(ID_bus == 42152)
+	    {
+	      break;
+	    }
 	  //Find review ID
 	  length = 0;
 	  ID_char = malloc(sizeof(char) * BUF);
@@ -202,11 +205,8 @@ struct YelpDataBST* create_business_bst(const char* businesses_path, const char*
 	  ID_char[length - 1] = '\0';
 	  ID_rev = atoi(ID_char);
 	  free(ID_char);
-	  if(ID_bus != ID_rev)
-	    fseek(Rev_tsv, (-1 * length), SEEK_CUR);
-	  count++;
 	}
-
+      fseek(Rev_tsv,(-1 * length), SEEK_CUR);
       /*
       The current code will back up to the start of the line
 if the ID's match, the review long int will be set to the start of the review ID
@@ -248,8 +248,10 @@ if the ID's don't match, the review will be set to an arbitrary value "none"
 */
       new->next = Create_bus(name,address, rev_array, ID_bus, count);
       free(name);
+      /*
       if(rev_array != NULL)
 	free(rev_array);
+      */
       new = new->next;
       printf("%s %ld\n",new->name,new->address);
       do{
