@@ -112,7 +112,7 @@ struct YelpDataBST* create_business_bst(const char* businesses_path, const char*
   char advance = 'a';
   char * ID_char;
   char * name;
-  int length, count, i, ID_bus, ID_rev;
+  int length, count, i, ID_bus = 0, ID_rev;
   long int address;//, review;
   Bus_tsv = fopen(businesses_path,"r");
   if(Bus_tsv == NULL)
@@ -126,7 +126,7 @@ struct YelpDataBST* create_business_bst(const char* businesses_path, const char*
     }
 
   //creates linked list of business ID's, start of name offset, pointer to array of reviews
-  while(advance != EOF)
+  while(ID_bus != 42152)
     {
       rev_array = NULL;
       length = 0;
@@ -172,7 +172,7 @@ struct YelpDataBST* create_business_bst(const char* businesses_path, const char*
       //If it is not a match backup to start of line
       //Restart the loop to see if the ID's match
       //don't forget to free
-      printf("ID_bus: %d\n",ID_bus);
+      //printf("ID_bus: %d\n",ID_bus);
       count = 1;
       while(ID_bus == ID_rev)
 	{
@@ -186,7 +186,7 @@ struct YelpDataBST* create_business_bst(const char* businesses_path, const char*
 	      }while(advance != '\t');
 	    }
 	  rev_array[count-1].text = ftell(Rev_tsv);
-	  printf("%ld %ld\n",rev_array[count-1].stars,rev_array[count-1].text);
+	  //printf("%ld %ld\n",rev_array[count-1].stars,rev_array[count-1].text);
 	  //Next line
 	  do{
 	    advance = fgetc(Rev_tsv);
@@ -216,7 +216,7 @@ struct YelpDataBST* create_business_bst(const char* businesses_path, const char*
 	free(rev_array);
       */
       new = new->next;
-      //printf("%s %ld\n",new->name,new->address);
+      printf("%s %ld\n",new->name,new->address);
       do{
         advance = fgetc(Bus_tsv);
       }while((advance != '\n') && (advance != EOF));
