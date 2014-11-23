@@ -64,6 +64,7 @@ Business_struct * Create_bus(const char * name, long int address, Review_offset 
   make->name = strdup(name);
   make->address = address;
   //Leave the passed rev_array as is, just point to it
+  //This doesn't work
   make->rev_array = rev_array;
   make->ID = ID;
   make->next = NULL;

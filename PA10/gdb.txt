@@ -1,10 +1,10 @@
 Starting program: /home/shay/b/smit1988/ECE264/Solutions/PA01/PA10/pa10 
 
-Program received signal SIGSEGV, Segmentation fault.
-0x0000000000400776 in Create_bus (name=0x602490 "Boston Cleaners", address=18, review=0, ID=0) at answer10.c:59
-59	  make->name = strdup(name);
+Program received signal SIGABRT, Aborted.
+0x00000035ff832625 in raise (sig=6) at ../nptl/sysdeps/unix/sysv/linux/raise.c:64
+64	  return INLINE_SYSCALL (tgkill, 3, pid, selftid, sig);
 A debugging session is active.
 
-	Inferior 1 [process 14965] will be killed.
+	Inferior 1 [process 28180] will be killed.
 
 Quit anyway? (y or n) 

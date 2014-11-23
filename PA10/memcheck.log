@@ -1,79 +1,112 @@
-==31173== Memcheck, a memory error detector
-==31173== Copyright (C) 2002-2012, and GNU GPL'd, by Julian Seward et al.
-==31173== Using Valgrind-3.8.1 and LibVEX; rerun with -h for copyright info
-==31173== Command: ./pa10
-==31173== Parent PID: 9115
-==31173== 
---31173-- 
---31173-- Valgrind options:
---31173--    --tool=memcheck
---31173--    --leak-check=full
---31173--    --verbose
---31173--    --log-file=memcheck.log
---31173-- Contents of /proc/version:
---31173--   Linux version 2.6.32-431.29.2.el6.x86_64 (mockbuild@x86-026.build.eng.bos.redhat.com) (gcc version 4.4.7 20120313 (Red Hat 4.4.7-4) (GCC) ) #1 SMP Sun Jul 27 15:55:46 EDT 2014
---31173-- Arch and hwcaps: AMD64, amd64-sse3-cx16
---31173-- Page sizes: currently 4096, max supported 4096
---31173-- Valgrind library directory: /usr/lib64/valgrind
---31173-- Reading syms from /home/shay/b/smit1988/ECE264/Solutions/PA01/PA10/pa10
---31173-- Reading syms from /usr/lib64/valgrind/memcheck-amd64-linux
---31173--    object doesn't have a dynamic symbol table
---31173-- Reading syms from /lib64/ld-2.12.so
---31173--   Considering /usr/lib/debug/.build-id/3b/fa45bce0e82e1d90d37a0cc8630f97f2003bf5.debug ..
---31173--   .. build-id is valid
---31173-- Scheduler: using generic scheduler lock implementation.
---31173-- Reading suppressions file: /usr/lib64/valgrind/default.supp
-==31173== embedded gdbserver: reading from /tmp/vgdb-pipe-from-vgdb-to-31173-by-smit1988-on-ecegrid-thin1.ecn.purdue.edu
-==31173== embedded gdbserver: writing to   /tmp/vgdb-pipe-to-vgdb-from-31173-by-smit1988-on-ecegrid-thin1.ecn.purdue.edu
-==31173== embedded gdbserver: shared mem   /tmp/vgdb-pipe-shared-mem-vgdb-31173-by-smit1988-on-ecegrid-thin1.ecn.purdue.edu
-==31173== 
-==31173== TO CONTROL THIS PROCESS USING vgdb (which you probably
-==31173== don't want to do, unless you know exactly what you're doing,
-==31173== or are doing some strange experiment):
-==31173==   /usr/lib64/valgrind/../../bin/vgdb --pid=31173 ...command...
-==31173== 
-==31173== TO DEBUG THIS PROCESS USING GDB: start GDB like this
-==31173==   /path/to/gdb ./pa10
-==31173== and then give GDB the following command
-==31173==   target remote | /usr/lib64/valgrind/../../bin/vgdb --pid=31173
-==31173== --pid is optional if only one valgrind process is running
-==31173== 
---31173-- REDIR: 0x35ff417610 (strlen) redirected to 0x38049551 (vgPlain_amd64_linux_REDIR_FOR_strlen)
---31173-- Reading syms from /usr/lib64/valgrind/vgpreload_core-amd64-linux.so
---31173-- Reading syms from /usr/lib64/valgrind/vgpreload_memcheck-amd64-linux.so
---31173-- REDIR: 0x35ff417480 (index) redirected to 0x4a07c30 (index)
---31173-- REDIR: 0x35ff417500 (strcmp) redirected to 0x4a08570 (strcmp)
---31173-- Reading syms from /lib64/libc-2.12.so
---31173--   Considering /usr/lib/debug/.build-id/73/3ad3a438b5a695f7a63a77413f9b2c8c94e8e6.debug ..
---31173--   .. build-id is valid
---31173-- REDIR: 0x35ff884cd0 (strcasecmp) redirected to 0x480155c (_vgnU_ifunc_wrapper)
---31173-- REDIR: 0x35ff886f90 (strncasecmp) redirected to 0x480155c (_vgnU_ifunc_wrapper)
---31173-- REDIR: 0x35ff882c40 (__GI_strrchr) redirected to 0x4a07ab0 (__GI_strrchr)
---31173-- REDIR: 0x35ff87a640 (malloc) redirected to 0x4a069ac (malloc)
---31173-- REDIR: 0x35ff87b520 (free) redirected to 0x4a063a9 (free)
---31173-- REDIR: 0x35ff881160 (__GI_strlen) redirected to 0x4a07fb0 (__GI_strlen)
---31173-- REDIR: 0x35ff889670 (memcpy) redirected to 0x4a08b60 (memcpy)
---31173-- REDIR: 0x35ff88aaf0 (strchrnul) redirected to 0x4a09fb0 (strchrnul)
-==31173== 
-==31173== HEAP SUMMARY:
-==31173==     in use at exit: 568 bytes in 1 blocks
-==31173==   total heap usage: 1,285,912 allocs, 1,285,911 frees, 2,421,443,695 bytes allocated
-==31173== 
-==31173== Searching for pointers to 1 not-freed blocks
-==31173== Checked 1,113,408 bytes
-==31173== 
-==31173== LEAK SUMMARY:
-==31173==    definitely lost: 0 bytes in 0 blocks
-==31173==    indirectly lost: 0 bytes in 0 blocks
-==31173==      possibly lost: 0 bytes in 0 blocks
-==31173==    still reachable: 568 bytes in 1 blocks
-==31173==         suppressed: 0 bytes in 0 blocks
-==31173== Reachable blocks (those to which a pointer was found) are not shown.
-==31173== To see them, rerun with: --leak-check=full --show-reachable=yes
-==31173== 
-==31173== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 6 from 6)
---31173-- 
---31173-- used_suppression:      4 U1004-ARM-_dl_relocate_object
---31173-- used_suppression:      2 glibc-2.5.x-on-SUSE-10.2-(PPC)-2a
-==31173== 
-==31173== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 6 from 6)
+==14662== Memcheck, a memory error detector
+==14662== Copyright (C) 2002-2012, and GNU GPL'd, by Julian Seward et al.
+==14662== Using Valgrind-3.8.1 and LibVEX; rerun with -h for copyright info
+==14662== Command: ./pa10
+==14662== Parent PID: 9115
+==14662== 
+--14662-- 
+--14662-- Valgrind options:
+--14662--    --tool=memcheck
+--14662--    --leak-check=full
+--14662--    --verbose
+--14662--    --log-file=memcheck.log
+--14662-- Contents of /proc/version:
+--14662--   Linux version 2.6.32-431.29.2.el6.x86_64 (mockbuild@x86-026.build.eng.bos.redhat.com) (gcc version 4.4.7 20120313 (Red Hat 4.4.7-4) (GCC) ) #1 SMP Sun Jul 27 15:55:46 EDT 2014
+--14662-- Arch and hwcaps: AMD64, amd64-sse3-cx16
+--14662-- Page sizes: currently 4096, max supported 4096
+--14662-- Valgrind library directory: /usr/lib64/valgrind
+--14662-- Reading syms from /home/shay/b/smit1988/ECE264/Solutions/PA01/PA10/pa10
+--14662-- Reading syms from /usr/lib64/valgrind/memcheck-amd64-linux
+--14662--    object doesn't have a dynamic symbol table
+--14662-- Reading syms from /lib64/ld-2.12.so
+--14662--   Considering /usr/lib/debug/.build-id/3b/fa45bce0e82e1d90d37a0cc8630f97f2003bf5.debug ..
+--14662--   .. build-id is valid
+--14662-- Scheduler: using generic scheduler lock implementation.
+--14662-- Reading suppressions file: /usr/lib64/valgrind/default.supp
+==14662== embedded gdbserver: reading from /tmp/vgdb-pipe-from-vgdb-to-14662-by-smit1988-on-ecegrid-thin1.ecn.purdue.edu
+==14662== embedded gdbserver: writing to   /tmp/vgdb-pipe-to-vgdb-from-14662-by-smit1988-on-ecegrid-thin1.ecn.purdue.edu
+==14662== embedded gdbserver: shared mem   /tmp/vgdb-pipe-shared-mem-vgdb-14662-by-smit1988-on-ecegrid-thin1.ecn.purdue.edu
+==14662== 
+==14662== TO CONTROL THIS PROCESS USING vgdb (which you probably
+==14662== don't want to do, unless you know exactly what you're doing,
+==14662== or are doing some strange experiment):
+==14662==   /usr/lib64/valgrind/../../bin/vgdb --pid=14662 ...command...
+==14662== 
+==14662== TO DEBUG THIS PROCESS USING GDB: start GDB like this
+==14662==   /path/to/gdb ./pa10
+==14662== and then give GDB the following command
+==14662==   target remote | /usr/lib64/valgrind/../../bin/vgdb --pid=14662
+==14662== --pid is optional if only one valgrind process is running
+==14662== 
+--14662-- REDIR: 0x35ff417610 (strlen) redirected to 0x38049551 (vgPlain_amd64_linux_REDIR_FOR_strlen)
+--14662-- Reading syms from /usr/lib64/valgrind/vgpreload_core-amd64-linux.so
+--14662-- Reading syms from /usr/lib64/valgrind/vgpreload_memcheck-amd64-linux.so
+--14662-- REDIR: 0x35ff417480 (index) redirected to 0x4a07c30 (index)
+--14662-- REDIR: 0x35ff417500 (strcmp) redirected to 0x4a08570 (strcmp)
+--14662-- Reading syms from /lib64/libc-2.12.so
+--14662--   Considering /usr/lib/debug/.build-id/73/3ad3a438b5a695f7a63a77413f9b2c8c94e8e6.debug ..
+--14662--   .. build-id is valid
+--14662-- REDIR: 0x35ff884cd0 (strcasecmp) redirected to 0x480155c (_vgnU_ifunc_wrapper)
+--14662-- REDIR: 0x35ff886f90 (strncasecmp) redirected to 0x480155c (_vgnU_ifunc_wrapper)
+--14662-- REDIR: 0x35ff882c40 (__GI_strrchr) redirected to 0x4a07ab0 (__GI_strrchr)
+--14662-- REDIR: 0x35ff87a640 (malloc) redirected to 0x4a069ac (malloc)
+--14662-- REDIR: 0x35ff87b520 (free) redirected to 0x4a063a9 (free)
+--14662-- REDIR: 0x35ff87ba10 (realloc) redirected to 0x4a06b57 (realloc)
+--14662-- REDIR: 0x35ff881160 (__GI_strlen) redirected to 0x4a07fb0 (__GI_strlen)
+--14662-- REDIR: 0x35ff889670 (memcpy) redirected to 0x4a08b60 (memcpy)
+--14662-- REDIR: 0x35ff88aaf0 (strchrnul) redirected to 0x4a09fb0 (strchrnul)
+--14662-- REDIR: 0x35ff884500 (mempcpy) redirected to 0x4a0a020 (mempcpy)
+==14662== Invalid write of size 1
+==14662==    at 0x400A17: create_business_bst (answer10.c:152)
+==14662==    by 0x400CA7: main (answer10.c:335)
+==14662==  Address 0x4cba3b0 is 0 bytes after a block of size 2,000 alloc'd
+==14662==    at 0x4A06A2E: malloc (vg_replace_malloc.c:270)
+==14662==    by 0x4009FA: create_business_bst (answer10.c:150)
+==14662==    by 0x400CA7: main (answer10.c:335)
+==14662== 
+==14662== Invalid read of size 1
+==14662==    at 0x400A2A: create_business_bst (answer10.c:154)
+==14662==    by 0x400CA7: main (answer10.c:335)
+==14662==  Address 0x4cba3b0 is 0 bytes after a block of size 2,000 alloc'd
+==14662==    at 0x4A06A2E: malloc (vg_replace_malloc.c:270)
+==14662==    by 0x4009FA: create_business_bst (answer10.c:150)
+==14662==    by 0x400CA7: main (answer10.c:335)
+==14662== 
+==14662== Invalid write of size 1
+==14662==    at 0x400A3E: create_business_bst (answer10.c:155)
+==14662==    by 0x400CA7: main (answer10.c:335)
+==14662==  Address 0x4cbab68 is not stack'd, malloc'd or (recently) free'd
+==14662== 
+--14662-- VALGRIND INTERNAL ERROR: Valgrind received a signal 11 (SIGSEGV) - exiting
+--14662-- si_code=80;  Faulting address: 0x0;  sp: 0x4030b6dd0
+
+valgrind: the 'impossible' happened:
+   Killed by fatal signal
+==14662==    at 0x3803EC04: vgPlain_arena_malloc (m_mallocfree.c:291)
+==14662==    by 0x38003C34: vgMemCheck_new_block (mc_malloc_wrappers.c:263)
+==14662==    by 0x3800409A: vgMemCheck_malloc (mc_malloc_wrappers.c:301)
+==14662==    by 0x3807A58A: vgPlain_scheduler (scheduler.c:1665)
+==14662==    by 0x380A5A29: run_a_thread_NORETURN (syswrap-linux.c:103)
+
+sched status:
+  running_tid=1
+
+Thread 1: status = VgTs_Runnable
+==14662==    at 0x4A06A2E: malloc (vg_replace_malloc.c:270)
+==14662==    by 0x4007BC: Create_bus (answer10.c:63)
+==14662==    by 0x400BCA: create_business_bst (answer10.c:242)
+==14662==    by 0x400CA7: main (answer10.c:335)
+
+
+Note: see also the FAQ in the source distribution.
+It contains workarounds to several common problems.
+In particular, if Valgrind aborted or crashed after
+identifying problems in your program, there's a good chance
+that fixing those problems will prevent Valgrind aborting or
+crashing, especially if it happened in m_mallocfree.c.
+
+If that doesn't help, please report this bug to: www.valgrind.org
+
+In the bug report, send all the above text, the valgrind
+version, and what OS and version you are using.  Thanks.
+
