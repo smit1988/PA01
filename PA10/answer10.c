@@ -289,16 +289,27 @@ struct YelpDataBST* create_business_bst(const char* businesses_path, const char*
 
 struct Business* get_business_reviews(struct YelpDataBST* bst,char* name, char* state, char* zip_code)
 {
-  //YelpDataBST has a rev_array which is (in no particular order) the array of start of stars and review text
-  //The address is just after the name
+  //YelpDataBST has the name, array of location nodes, and the number of locations
+  //Location nodes have start of address and array of reviews
+  //Reviews have start of star and start of review text
   //Locations should be sorted by state >> city >> address
-  //Reviews should be sorted by start rating (descending) >> text of review
+  //Reviews should be sorted by star rating (descending) >> text of review
   //bst is the root of the tree
   //name is the name of the business to search for (case insensitive)
   //state is two letter (uppercase) state code to filter by, or NULL for all
   //zip code or NULL
+  //
   //First search the tree for the case insensitive name
   //store the name in business struct object
+  //start a loop for finding all the locations and allocating
+  //load address, city, state, zip code into the struct
+  //start a loop for finding all the reviews and allocating
+  //Now an entire Business struct should be loaded into memory
+  //
+  //Possibly now create the Business struct that will be returned
+  //One by one find the lowest or highest value (state>>city>>address) and load into this new struct
+  //When a new location is added to the new struct, go in and sort the reviews (star rating descending>>text)
+
 
   return NULL;
 }
