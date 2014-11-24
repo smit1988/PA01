@@ -65,10 +65,8 @@ void Destroy_bus(Business_struct * bus)
   if(bus != NULL){
     if(bus->next != NULL)
       Destroy_bus(bus->next);
-    /*
     if(bus->rev_array != NULL)
        free(bus->rev_array);
-    */
     free(bus->name);
     free(bus);
   }
@@ -82,9 +80,9 @@ static struct YelpDataBST * TreeNode_construct(long int address, Review_offset *
   tn->left = NULL;
   tn->right = NULL;
   //free this somewhere
-  tn->name = strdup(name);
+  tn->name = name;
   tn->address = address;
-  //free this somwehre and make sure it isn't freed from the linked list
+  //free this somwhere and make sure it isn't freed from the linked list
   tn->rev_array = rev_array;
   return tn;
 }
@@ -236,6 +234,8 @@ struct YelpDataBST* create_business_bst(const char* businesses_path, const char*
         advance = fgetc(Bus_tsv);
       }while((advance != '\n') && (advance != EOF));
     }
+  //Forget this address for the last entry (memory errors)
+  rev_array = NULL;
 
   //Turn list into binary tree
   //root.left is the root node of the tree
@@ -263,10 +263,13 @@ void destroy_business_bst(struct YelpDataBST* bst)
 {
   if(bst == NULL)
     return;
-  free(bst->name);
-  free(bst->rev_array);
   destroy_business_bst(bst->left);
   destroy_business_bst(bst->right);
+  /*
+  free(bst->name);
+  if(bst->rev_array != NULL)
+    free(bst->rev_array);
+  */
   free(bst);
 }
 
