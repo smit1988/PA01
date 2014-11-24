@@ -243,7 +243,7 @@ struct YelpDataBST* create_business_bst(const char* businesses_path, const char*
   while(new->next != NULL)
     {
       new = new->next;
-      Tree_insert(root.left, new->address, new->rev_array, new->name);
+      root.left = Tree_insert(root.left, new->address, new->rev_array, new->name);
     }
 
   Destroy_bus(start.next);
