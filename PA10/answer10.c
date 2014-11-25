@@ -62,7 +62,26 @@ void destroy_business_bst_tree(struct YelpDataBST * bst);
 
 static void TreeNode_print(struct YelpDataBST * tn)
 {
-  printf("%s\n",tn->name);
+  int i;
+  FILE * bus;
+  char advance;
+  //FILE * rev;
+  Business_struct * * local = tn->locations;
+  if(strcasecmp(tn->name,"Boston Cleaners") == 0)
+    {
+      printf("%s\n",tn->name);
+      bus=fopen(tn->bus_file,"r");
+      for(i = 0; i < tn->locations_size; i++)
+	{
+	  printf("%s %d %ld %d\n", (local[i])->name, (local[i])->ID,(local[i])->address,(local[i])->rev_size);
+	  fseek(bus,(local[i])->address, SEEK_SET);
+	  do{
+	    advance = fgetc(bus);
+	    printf("%c",advance);
+	  }while(advance != '\n');
+	}
+      fclose(bus);
+    }
 }
 
 static void Tree_printInorder(struct YelpDataBST * tn)
@@ -333,6 +352,7 @@ struct Business* get_business_reviews(struct YelpDataBST* bst,char* name, char* 
   tree_node = Tree_search(bst, name);
   bus_load = malloc(sizeof(struct Business));
   bus_load->name = strdup(name);
+  printf("%s\n",bus_load->name);
   bus_load->num_locations = (uint32_t) tree_node->locations_size;
   load_loc = bus_load->locations;
   load_loc = malloc(sizeof(struct Location) * tree_node->locations_size);
@@ -349,7 +369,7 @@ struct Business* get_business_reviews(struct YelpDataBST* bst,char* name, char* 
   //First loops goes through every location
   for(i = 0; i < tree_node->locations_size; i++)
     {
-      fseek(Bus_tsv,((tree_node->locations)[i])->address, SEEK_CUR);
+      fseek(Bus_tsv,((tree_node->locations)[i])->address, SEEK_SET);
       //four tabs finds address, city, state, zip code
       for(j = 0; j < 4; j++)
 	{
@@ -377,19 +397,20 @@ struct Business* get_business_reviews(struct YelpDataBST* bst,char* name, char* 
 	    load_loc[i].zip_code = strdup(buffer);
 	  free(buffer);
 	}
+      printf("%s %s %s %s\n", load_loc[i].address, load_loc[i].city, load_loc[i].state, load_loc[i].zip_code);
       load_rev = (load_loc[i]).reviews;
       //count number of reviews to malloc
       load_rev = malloc(sizeof(struct Review) * (((tree_node->locations)[i])->rev_size));
       //This loop makes array of reviews for each location
       for(k = 0; k < (((tree_node->locations)[i])->rev_size); k++)
 	{
-	  fseek(Rev_tsv,((((tree_node->locations)[i])->rev_array)[k]).stars,SEEK_CUR);
+	  fseek(Rev_tsv,((((tree_node->locations)[i])->rev_array)[k]).stars,SEEK_SET);
 	  buffer = malloc(sizeof(char) * BUF);
 	  buffer[0] = fgetc(Rev_tsv);
 	  buffer[1] = '\0';
 	  load_rev[k].stars = (uint8_t) atoi(buffer);
 	  free(buffer);
-	  fseek(Rev_tsv,((((tree_node->locations)[i])->rev_array)[k]).text,SEEK_CUR);
+	  fseek(Rev_tsv,((((tree_node->locations)[i])->rev_array)[k]).text,SEEK_SET);
 	  max = BUF;
 	  buffer = malloc(sizeof(char) * max);
 	  length = 0;
@@ -404,6 +425,7 @@ struct Business* get_business_reviews(struct YelpDataBST* bst,char* name, char* 
 	  }while((buffer[length-1] != '\n') && (buffer[length-1] != EOF));
 	  buffer[length-1] = '\0';
 	  load_rev[k].text = strdup(buffer);
+	  printf("%d %s\n", load_rev[k].stars, load_rev[k].text);
 	  free(buffer);
 	}	
     }
@@ -456,12 +478,12 @@ void destroy_business_result(struct Business* b)
   free(b);
 }
 
-
 int main(int argc, char ** argv)
 {
   struct YelpDataBST * test;
   test = create_business_bst("/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv");
   Tree_printInorder(test);
+  get_business_reviews(test,"Boston Cleaners","NV","46033");
   destroy_business_bst(test);
   return 0;
 }
