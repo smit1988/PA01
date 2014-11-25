@@ -328,7 +328,6 @@ struct Business* get_business_reviews(struct YelpDataBST* bst,char* name, char* 
   struct Review * load_rev;
   int i, j, k, length, max;
   char * buffer;
-  char star_char;
   FILE * Bus_tsv;
   FILE * Rev_tsv;
   tree_node = Tree_search(bst, name);
@@ -355,7 +354,6 @@ struct Business* get_business_reviews(struct YelpDataBST* bst,char* name, char* 
       for(j = 0; j < 4; j++)
 	{
 	  //This function may be similar to the example reference page for realloc
-	  buffer = NULL;
 	  max = BUF;
 	  buffer = malloc(sizeof(char) * max);
 	  length = 0;
@@ -385,13 +383,34 @@ struct Business* get_business_reviews(struct YelpDataBST* bst,char* name, char* 
 	  for(k = 0; k < (((tree_node->locations)[i])->rev_size); k++)
 	    {
 	      fseek(Rev_tsv,((((tree_node->locations)[i])->rev_array)[k]).stars,SEEK_CUR);
+	      buffer = malloc(sizeof(char) * BUF);
+	      buffer[0] = fgetc(Rev_tsv);
+	      buffer[1] = '\0';
+	      load_rev[k].stars = (uint8_t) atoi(buffer);	      
+	      free(buffer);
+	      fseek(Rev_tsv,((((tree_node->locations)[i])->rev_array)[k]).text,SEEK_CUR);
+	      max = BUF;
+	      buffer = malloc(sizeof(char) * max);
+	      length = 0;
+	      do{
+		if(length == max)
+		  {
+		    max *= 2;
+		    buffer = realloc(buffer, max);
+		  }
+		buffer[length] = fgetc(Rev_tsv);
+		length++;
+	      }while((buffer[length-1] != '\n') && (buffer[length-1] != EOF));
+	      buffer[length-1] = '\0';
+	      load_rev[k].text = strdup(buffer);
+	      free(buffer);
 	    }
 	}
     }
-
+  //In its current state nothing is sorted
   fclose(Bus_tsv);
   fclose(Rev_tsv);
-  return NULL;
+  return bus_load;
 }
 
 //The linked list has to be destroyed first then the tree can be
@@ -418,7 +437,7 @@ void destroy_business_bst_tree(struct YelpDataBST * bst)
 
 void destroy_business_result(struct Business* b)
 {
-
+  
 }
 
 int main(int argc, char ** argv)
