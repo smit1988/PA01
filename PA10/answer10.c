@@ -332,8 +332,7 @@ struct Business* get_business_reviews(struct YelpDataBST* bst,char* name, char* 
   FILE * Rev_tsv;
   tree_node = Tree_search(bst, name);
   bus_load = malloc(sizeof(struct Business));
-  //no need to free name
-  bus_load->name = name;
+  bus_load->name = strdup(name);
   bus_load->num_locations = (uint32_t) tree_node->locations_size;
   load_loc = bus_load->locations;
   load_loc = malloc(sizeof(struct Location) * tree_node->locations_size);
@@ -377,36 +376,36 @@ struct Business* get_business_reviews(struct YelpDataBST* bst,char* name, char* 
 	  else
 	    load_loc[i].zip_code = strdup(buffer);
 	  free(buffer);
-	  load_rev = (load_loc[i]).reviews;
-	  //count number of reviews to malloc
-	  load_rev = malloc(sizeof(struct Review) * (((tree_node->locations)[i])->rev_size));
-	  //This loop makes array of reviews for each location
-	  for(k = 0; k < (((tree_node->locations)[i])->rev_size); k++)
-	    {
-	      fseek(Rev_tsv,((((tree_node->locations)[i])->rev_array)[k]).stars,SEEK_CUR);
-	      buffer = malloc(sizeof(char) * BUF);
-	      buffer[0] = fgetc(Rev_tsv);
-	      buffer[1] = '\0';
-	      load_rev[k].stars = (uint8_t) atoi(buffer);	      
-	      free(buffer);
-	      fseek(Rev_tsv,((((tree_node->locations)[i])->rev_array)[k]).text,SEEK_CUR);
-	      max = BUF;
-	      buffer = malloc(sizeof(char) * max);
-	      length = 0;
-	      do{
-		if(length == max)
-		  {
-		    max *= 2;
-		    buffer = realloc(buffer, max);
-		  }
-		buffer[length] = fgetc(Rev_tsv);
-		length++;
-	      }while((buffer[length-1] != '\n') && (buffer[length-1] != EOF));
-	      buffer[length-1] = '\0';
-	      load_rev[k].text = strdup(buffer);
-	      free(buffer);
-	    }
 	}
+      load_rev = (load_loc[i]).reviews;
+      //count number of reviews to malloc
+      load_rev = malloc(sizeof(struct Review) * (((tree_node->locations)[i])->rev_size));
+      //This loop makes array of reviews for each location
+      for(k = 0; k < (((tree_node->locations)[i])->rev_size); k++)
+	{
+	  fseek(Rev_tsv,((((tree_node->locations)[i])->rev_array)[k]).stars,SEEK_CUR);
+	  buffer = malloc(sizeof(char) * BUF);
+	  buffer[0] = fgetc(Rev_tsv);
+	  buffer[1] = '\0';
+	  load_rev[k].stars = (uint8_t) atoi(buffer);
+	  free(buffer);
+	  fseek(Rev_tsv,((((tree_node->locations)[i])->rev_array)[k]).text,SEEK_CUR);
+	  max = BUF;
+	  buffer = malloc(sizeof(char) * max);
+	  length = 0;
+	  do{
+	    if(length == max)
+	      {
+		max *= 2;
+		buffer = realloc(buffer, max);
+	      }
+	    buffer[length] = fgetc(Rev_tsv);
+	    length++;
+	  }while((buffer[length-1] != '\n') && (buffer[length-1] != EOF));
+	  buffer[length-1] = '\0';
+	  load_rev[k].text = strdup(buffer);
+	  free(buffer);
+	}	
     }
   //In its current state nothing is sorted
   fclose(Bus_tsv);
@@ -452,11 +451,12 @@ void destroy_business_result(struct Business* b)
       free(((b->locations)[i-1]).zip_code);
       free(((b->locations)[i-1]).reviews);
     }
+  free(b->name);
   free(b->locations);
   free(b);
 }
 
-/*
+
 int main(int argc, char ** argv)
 {
   struct YelpDataBST * test;
@@ -465,4 +465,4 @@ int main(int argc, char ** argv)
   destroy_business_bst(test);
   return 0;
 }
-*/
+
