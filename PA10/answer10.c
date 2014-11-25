@@ -34,8 +34,8 @@ typedef struct Business_st{
 
 //Binary tree form of Business_struct
 struct YelpDataBST {
-  char * bus_file;
-  char * rev_file;
+  const char * bus_file;
+  const char * rev_file;
   char * name;
   //long int address;
   //Review_offset * rev_array;
@@ -52,8 +52,8 @@ struct YelpDataBST {
 
 Business_struct * Create_bus(const char * name, long int address, Review_offset * rev_array, int ID, int rev_size);
 void Destroy_bus(Business_struct * bus);
-static struct YelpDataBST * TreeNode_construct(char * name, Business_struct * List_root, Business_struct * locations, char * bus_file, char * rev_file);
-struct YelpDataBST * Tree_insert(struct YelpDataBST * tn,char * name, Business_struct * List_root, Business_struct * locations, char * bus_file, char * rev_file);
+static struct YelpDataBST * TreeNode_construct(char * name, Business_struct * List_root, Business_struct * locations, const char * bus_file, const char * rev_file);
+struct YelpDataBST * Tree_insert(struct YelpDataBST * tn,char * name, Business_struct * List_root, Business_struct * locations, const char * bus_file, const char * rev_file);
 struct YelpDataBST * Tree_search(struct YelpDataBST * tn, char * name);
 static void TreeNode_print(struct YelpDataBST * tn);
 static void Tree_printInorder(struct YelpDataBST * tn);
@@ -102,7 +102,7 @@ void Destroy_bus(Business_struct * bus)
 
 //If this function is called, the name of the to be created node has not been used before
 //List is destroyed with tree so it's okay to have an array of list nodes
-static struct YelpDataBST * TreeNode_construct(char * name, Business_struct * List_root, Business_struct * locations, char * bus_file, char * rev_file)
+static struct YelpDataBST * TreeNode_construct(char * name, Business_struct * List_root, Business_struct * locations, const char * bus_file, const char * rev_file)
 {
   struct YelpDataBST * tn;
   tn = malloc(sizeof(struct YelpDataBST));
@@ -119,7 +119,7 @@ static struct YelpDataBST * TreeNode_construct(char * name, Business_struct * Li
   return tn;
 }
 
-struct YelpDataBST * Tree_insert(struct YelpDataBST * tn, char * name, Business_struct * List_root, Business_struct * locations, char * bus_file, char * rev_file)
+struct YelpDataBST * Tree_insert(struct YelpDataBST * tn, char * name, Business_struct * List_root, Business_struct * locations, const char * bus_file, const char * rev_file)
 {
   if(tn==NULL)
     {
@@ -324,7 +324,7 @@ struct Business* get_business_reviews(struct YelpDataBST* bst,char* name, char* 
   //When a new location is added to the new struct, go in and sort the reviews (star rating descending>>text)
   struct YelpDataBST * tree_node;
   struct Business * bus_load;
-  struct Location * load_loc = bus_load->locations;
+  struct Location * load_loc;
   struct Review * load_rev;
   int i, j, k, length, max;
   char * buffer;
@@ -335,6 +335,7 @@ struct Business* get_business_reviews(struct YelpDataBST* bst,char* name, char* 
   //no need to free name
   bus_load->name = name;
   bus_load->num_locations = (uint32_t) tree_node->locations_size;
+  load_loc = bus_load->locations;
   load_loc = malloc(sizeof(struct Location) * tree_node->locations_size);
   Bus_tsv = fopen(tree_node->bus_file,"r");
   if(Bus_tsv == NULL)
@@ -347,7 +348,7 @@ struct Business* get_business_reviews(struct YelpDataBST* bst,char* name, char* 
       return NULL;
     }
   //First loops goes through every location
-  for(i = 0, i < tree_node->locations_size, i++)
+  for(i = 0; i < tree_node->locations_size; i++)
     {
       fseek(Bus_tsv,((tree_node->locations)[i])->address, SEEK_CUR);
       //four tabs finds address, city, state, zip code
@@ -437,15 +438,31 @@ void destroy_business_bst_tree(struct YelpDataBST * bst)
 
 void destroy_business_result(struct Business* b)
 {
-  
+  int i;
+  int j;  
+  for(i = sizeof(b->locations)/sizeof(struct Location); i > 0; i--)
+    {
+      for(j = sizeof((((b->locations)[i-1]).reviews)) / sizeof(struct Review); j > 0; j--)
+	{
+	  free(((((b->locations)[i-1]).reviews)[j-1]).text);
+	}
+      free(((b->locations)[i-1]).address);
+      free(((b->locations)[i-1]).city);
+      free(((b->locations)[i-1]).state);
+      free(((b->locations)[i-1]).zip_code);
+      free(((b->locations)[i-1]).reviews);
+    }
+  free(b->locations);
+  free(b);
 }
 
+/*
 int main(int argc, char ** argv)
 {
   struct YelpDataBST * test;
   test = create_business_bst("/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv");
   Tree_printInorder(test);
-  //Add root of linked list to bst struct so it can be returned
   destroy_business_bst(test);
   return 0;
 }
+*/
