@@ -357,9 +357,10 @@ struct Business* get_business_reviews(struct YelpDataBST* bst,char* name, char* 
   /*
   load_loc = bus_load->locations;
   load_loc = malloc(sizeof(struct Location) * tree_node->locations_size);
-  */
   bus_load->locations = malloc(sizeof(struct Location) * tree_node->locations_size); 
   load_loc = bus_load->locations;
+  */
+  load_loc = malloc(sizeof(struct Location) * tree_node->locations_size);
   Bus_tsv = fopen(tree_node->bus_file,"r");
   if(Bus_tsv == NULL)
     {
@@ -402,9 +403,9 @@ struct Business* get_business_reviews(struct YelpDataBST* bst,char* name, char* 
 	  free(buffer);
 	}
       //printf("%s %s %s %s\n", load_loc[i].address, load_loc[i].city, load_loc[i].state, load_loc[i].zip_code);
-      (load_loc[i]).reviews = malloc(sizeof(struct Review) * (((tree_node->locations)[i])->rev_size));
-      load_rev = (load_loc[i]).reviews;
-      //load_rev = malloc(sizeof(struct Review) * (((tree_node->locations)[i])->rev_size));
+      //(load_loc[i]).reviews = malloc(sizeof(struct Review) * (((tree_node->locations)[i])->rev_size));
+      //load_rev = (load_loc[i]).reviews;
+      load_rev = malloc(sizeof(struct Review) * (((tree_node->locations)[i])->rev_size));
       //This loop makes array of reviews for each location
       for(k = 0; k < (((tree_node->locations)[i])->rev_size); k++)
 	{
@@ -432,7 +433,9 @@ struct Business* get_business_reviews(struct YelpDataBST* bst,char* name, char* 
 	  //printf("%d %s\n", load_rev[k].stars, load_rev[k].text);
 	  free(buffer);
 	}	
+      (load_loc[i]).reviews = load_rev;
     }
+  bus_load->locations = load_loc;
   //In its current state nothing is sorted
   fclose(Bus_tsv);
   fclose(Rev_tsv);
@@ -463,11 +466,14 @@ void destroy_business_bst_tree(struct YelpDataBST * bst)
 
 void destroy_business_result(struct Business* b)
 {
+  size_t length;
   int i;
-  int j;  
-  for(i = sizeof(b->locations)/sizeof(struct Location); i > 0; i--)
+  int j;
+  length = sizeof(b->locations)/sizeof(struct Location);
+  for(i = (int) length; i > 0; i--)
     {
-      for(j = sizeof((((b->locations)[i-1]).reviews)) / sizeof(struct Review); j > 0; j--)
+      length = sizeof((((b->locations)[i-1]).reviews)) / sizeof(struct Review);
+      for(j = length; j > 0; j--)
 	{
 	  free(((((b->locations)[i-1]).reviews)[j-1]).text);
 	}
