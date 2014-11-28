@@ -49,7 +49,8 @@ struct YelpDataBST {
   struct YelpDataBST * right;
 };
 
-
+int Review_compare(const void * a, const void * b);
+int Location_compare(const void * a, const void * b);
 Business_struct * Create_bus(const char * name, long int address, Review_offset * rev_array, int ID, int rev_size);
 void Destroy_bus(Business_struct * bus);
 static struct YelpDataBST * TreeNode_construct(char * name, Business_struct * List_root, Business_struct * locations, const char * bus_file, const char * rev_file);
@@ -59,6 +60,44 @@ static void TreeNode_print(struct YelpDataBST * tn);
 static void Tree_printInorder(struct YelpDataBST * tn);
 void destroy_business_bst_list(struct YelpDataBST * bst);
 void destroy_business_bst_tree(struct YelpDataBST * bst);
+
+int Review_compare(const void * a, const void * b)
+{
+  //Star rating descending >> text
+  //inputs will be pointers to the start of the review array elements
+  //>0 a goes after b
+  uint8_t stars_a = ((struct Review *)a)->stars;
+  uint8_t stars_b = ((struct Review *)b)->stars;
+  if(stars_a == stars_b)
+    {
+      //sort by text
+      return strcasecmp(((struct Review *)a)->text, ((struct Review *)b)->text);
+    }
+  else if(stars_a < stars_b)
+    return 1;
+  else
+    return -1;
+}
+
+int Location_compare(const void * a, const void * b)
+{
+  //state>>city>>address
+  int state = strcasecmp(((struct Location *)a)->state, ((struct Location *)b)->state);
+  if(state == 0)
+    {
+      //Sort by city
+      int city = strcasecmp(((struct Location *)a)->city, ((struct Location *)b)->city);
+      if(city == 0)
+	{
+	  //Sort by address
+	  return strcasecmp(((struct Location *)a)->address, ((struct Location *)b)->address);
+	}
+      else
+	return city;
+    }
+  else
+    return state;
+}
 
 static void TreeNode_print(struct YelpDataBST * tn)
 {
@@ -350,18 +389,9 @@ struct Business* get_business_reviews(struct YelpDataBST* bst,char* name, char* 
   FILE * Bus_tsv;
   FILE * Rev_tsv;
   tree_node = Tree_search(bst, name);
-  //printf("name %s, locations_size %d, ID %d, rev_size %d\n", tree_node->name, tree_node->locations_size, (tree_node->locations)[0]->ID, (tree_node->locations)[0]->rev_size);
-  //printf("name %s, locations_size %d, ID %d, rev_size %d\n", tree_node->name, tree_node->locations_size, (tree_node->locations)[1]->ID, (tree_node->locations)[1]->rev_size); 
   bus_load = malloc(sizeof(struct Business));
   bus_load->name = strdup(name);
-  //printf("%s\n",bus_load->name);
   bus_load->num_locations = (uint32_t) tree_node->locations_size;
-  /*
-  load_loc = bus_load->locations;
-  load_loc = malloc(sizeof(struct Location) * tree_node->locations_size);
-  bus_load->locations = malloc(sizeof(struct Location) * tree_node->locations_size); 
-  load_loc = bus_load->locations;
-  */
   load_loc = malloc(sizeof(struct Location) * tree_node->locations_size);
   Bus_tsv = fopen(tree_node->bus_file,"r");
   if(Bus_tsv == NULL)
@@ -402,12 +432,8 @@ struct Business* get_business_reviews(struct YelpDataBST* bst,char* name, char* 
 	    load_loc[i].state = strdup(buffer);
 	  else
 	    load_loc[i].zip_code = strdup(buffer);
-	  //printf("address %s, city %s, state %s, zipcode %s\n", load_loc[i].address, load_loc[i].city, load_loc[i].state, load_loc[i].zip_code);
 	  free(buffer);
 	}
-      //printf("%s %s %s %s\n", load_loc[i].address, load_loc[i].city, load_loc[i].state, load_loc[i].zip_code);
-      //(load_loc[i]).reviews = malloc(sizeof(struct Review) * (((tree_node->locations)[i])->rev_size));
-      //load_rev = (load_loc[i]).reviews;
       load_rev = malloc(sizeof(struct Review) * (((tree_node->locations)[i])->rev_size));
       //This loop makes array of reviews for each location
       for(k = 0; k < (((tree_node->locations)[i])->rev_size); k++)
@@ -433,14 +459,16 @@ struct Business* get_business_reviews(struct YelpDataBST* bst,char* name, char* 
 	  }while((buffer[length-1] != '\n') && (buffer[length-1] != EOF));
 	  buffer[length-1] = '\0';
 	  load_rev[k].text = strdup(buffer);
-	  //printf("%d %s\n", load_rev[k].stars, load_rev[k].text);
 	  free(buffer);
 	}	
       (load_loc[i]).num_reviews = (uint32_t) (((tree_node->locations)[i])->rev_size);
+      //Sort the review array
+      qsort(load_rev, (load_loc[i]).num_reviews, sizeof(struct Review), Review_compare);
       (load_loc[i]).reviews = load_rev;
     }
+  //Sort the locations array
+  qsort(load_loc, bus_load->num_locations, sizeof(struct Location), Location_compare); 
   bus_load->locations = load_loc;
-  //In its current state nothing is sorted
   fclose(Bus_tsv);
   fclose(Rev_tsv);
   return bus_load;
@@ -473,10 +501,10 @@ void destroy_business_result(struct Business* b)
   int i;
   int j;
   //Need to go off num_locations and num_reviews
-  printf("Number of locations(2): %d\n", (int) b->num_locations);
+  //printf("Number of locations(2): %d\n", (int) b->num_locations);
   for(i = (int) b->num_locations; i > 0; i--)
     {
-      printf("Number of reviews(4 or 11): %d\n", (int) (b->locations)[i-1].num_reviews);
+      //printf("Number of reviews(4 or 11): %d\n", (int) (b->locations)[i-1].num_reviews);
       for(j = (int) (b->locations)[i-1].num_reviews; j > 0; j--)
 	{
 	  free(((((b->locations)[i-1]).reviews)[j-1]).text);
@@ -492,7 +520,7 @@ void destroy_business_result(struct Business* b)
   free(b);
 }
 
-
+/*
 int main(int argc, char ** argv)
 {
   struct YelpDataBST * test;
@@ -514,8 +542,9 @@ int main(int argc, char ** argv)
       printf("%d %s\n", (((b->locations)[1]).reviews)[i].stars, (((b->locations)[1]).reviews)[i].text);
     }
   */
+/*
   destroy_business_result(b);
   destroy_business_bst(test);
   return 0;
 }
-
+*/
