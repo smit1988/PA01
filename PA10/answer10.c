@@ -77,7 +77,7 @@ int Review_compare(const void * a, const void * b)
 
 int Location_compare(const void * a, const void * b)
 {
-  //state>>city>>address
+  //state>>city>>address>>zip_code
   int state = strcasecmp(((struct Location *)a)->state, ((struct Location *)b)->state);
   if(state == 0)
     {
@@ -86,7 +86,14 @@ int Location_compare(const void * a, const void * b)
       if(city == 0)
 	{
 	  //Sort by address
-	  return strcasecmp(((struct Location *)a)->address, ((struct Location *)b)->address);
+	  int address = strcasecmp(((struct Location *)a)->address, ((struct Location *)b)->address);
+	  if(address = 0)
+	    {
+	      //Sort by zip code
+	      return strcasecmp(((struct Location *)a)->zip_code, ((struct Location *)b)->zip_code);
+	    }
+	  else
+	    return address;
 	}
       else
 	return city;
