@@ -90,7 +90,7 @@ int Location_compare(const void * a, const void * b)
 	  if(address == 0)
 	    {
 	      //Sort by zip code
-	      return strcasecmp(((struct Location *)a)->zip_code, ((struct Location *)b)->zip_code);
+	      return strcasecmp(((struct Location *)b)->zip_code, ((struct Location *)a)->zip_code);
 	    }
 	  else
 	    return address;
