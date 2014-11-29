@@ -1,6 +1,5 @@
 ================================================================================
-QUERY #1:  name="McDonald's"  state=""  zip_code=""
-
+QUERY #1:  name="McDonald's"  state=""  
 RESULTS:  "McDonald's"  (198 locations)
 
 LOCATION #1:  address="10823 S 51st St"  city="Ahwatukee"  state="AZ"  zip_code="85044"  (7 reviews)
