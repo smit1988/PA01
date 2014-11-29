@@ -352,6 +352,8 @@ struct Business* get_business_reviews(struct YelpDataBST* bst,char* name, char* 
   FILE * Bus_tsv;
   FILE * Rev_tsv;
   tree_node = Tree_search(bst, name);
+  if(tree_node == NULL)
+    return NULL;
   bus_load = malloc(sizeof(struct Business));
   bus_load->name = strdup(name);
   bus_load->num_locations = (uint32_t) tree_node->locations_size;
