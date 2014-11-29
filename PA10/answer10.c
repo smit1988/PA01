@@ -56,8 +56,8 @@ void Destroy_bus(Business_struct * bus);
 static struct YelpDataBST * TreeNode_construct(char * name, Business_struct * List_root, Business_struct * locations, const char * bus_file, const char * rev_file);
 struct YelpDataBST * Tree_insert(struct YelpDataBST * tn,char * name, Business_struct * List_root, Business_struct * locations, const char * bus_file, const char * rev_file);
 struct YelpDataBST * Tree_search(struct YelpDataBST * tn, char * name);
-static void TreeNode_print(struct YelpDataBST * tn);
-static void Tree_printInorder(struct YelpDataBST * tn);
+//static void TreeNode_print(struct YelpDataBST * tn);
+//static void Tree_printInorder(struct YelpDataBST * tn);
 void destroy_business_bst_list(struct YelpDataBST * bst);
 void destroy_business_bst_tree(struct YelpDataBST * bst);
 
@@ -99,6 +99,7 @@ int Location_compare(const void * a, const void * b)
     return state;
 }
 
+/*
 static void TreeNode_print(struct YelpDataBST * tn)
 {
   int i;
@@ -131,6 +132,7 @@ static void Tree_printInorder(struct YelpDataBST * tn)
   TreeNode_print(tn);
   Tree_printInorder(tn->right);
 }
+*/
 
 Business_struct * Create_bus(const char * name, long int address, Review_offset * rev_array, int ID, int rev_size)
 {
@@ -384,7 +386,7 @@ struct Business* get_business_reviews(struct YelpDataBST* bst,char* name, char* 
   struct Business * bus_load;
   struct Location * load_loc;
   struct Review * load_rev;
-  int i, j, k, length, max;
+  int i, j, k, m, length, max, state_compare, zip_compare;
   char * buffer;
   FILE * Bus_tsv;
   FILE * Rev_tsv;
@@ -404,7 +406,9 @@ struct Business* get_business_reviews(struct YelpDataBST* bst,char* name, char* 
       return NULL;
     }
   //First loops goes through every location
-  for(i = 0; i < tree_node->locations_size; i++)
+  //i is used for the array location, breaks if at some point it finds a bad match
+  i = 0;
+  for(m = 0; m < tree_node->locations_size; m++)
     {
       fseek(Bus_tsv,((tree_node->locations)[i])->address, SEEK_SET);
       //four tabs finds address, city, state, zip code
@@ -465,10 +469,38 @@ struct Business* get_business_reviews(struct YelpDataBST* bst,char* name, char* 
       //Sort the review array
       qsort(load_rev, (load_loc[i]).num_reviews, sizeof(struct Review), Review_compare);
       (load_loc[i]).reviews = load_rev;
+      //Don't add this to the final list if filter doesn't match
+      if(state == NULL)
+	state_compare = 0;
+      else
+	state_compare = strcasecmp(load_loc[i].state,state);
+      if(zip_code == NULL)
+	zip_compare = 0;
+      else
+	zip_compare = strcasecmp(load_loc[i].zip_code,zip_code);
+      if((zip_compare == 0) && (state_compare == 0))
+	i++;
+      else
+	{
+	  //decrease the number of locations
+	  //free everything used
+	  (bus_load->num_locations)--;
+	  for(k = (int) load_loc[i].num_reviews; k > 0; k--)
+	    {
+	      free(((((load_loc)[i]).reviews)[k-1]).text);
+	    }
+	  free(((load_loc)[i]).address);
+	  free(((load_loc)[i]).city);
+	  free(((load_loc)[i]).state);
+	  free(((load_loc)[i]).zip_code);
+	  free(((load_loc)[i]).reviews);
+	}
     }
   //Sort the locations array
   qsort(load_loc, bus_load->num_locations, sizeof(struct Location), Location_compare); 
   bus_load->locations = load_loc;
+  //Now the Business struct has every result for the name sorted
+  //Filter out wrong names and zip codes
   fclose(Bus_tsv);
   fclose(Rev_tsv);
   return bus_load;
@@ -525,26 +557,11 @@ int main(int argc, char ** argv)
 {
   struct YelpDataBST * test;
   struct Business * b;
-  //int i;
   test = create_business_bst("/home/shay/a/ece264p0/share/yelp_data/businesses.tsv", "/home/shay/a/ece264p0/share/yelp_data/reviews.tsv");
-  Tree_printInorder(test);
   b = get_business_reviews(test,"Boston Cleaners","NV","46033");
-  /*
-  printf("%s\n",b->name);
-  printf("%s %s %s %s\n", (b->locations)[0].address, (b->locations)[0].city, (b->locations)[0].state, (b->locations)[0].zip_code);
-  printf("%s %s %s %s\n", (b->locations)[1].address, (b->locations)[1].city, (b->locations)[1].state, (b->locations)[1].zip_code);
-  for(i=0; i<4; i++)
-    {
-      printf("%d %s\n", (((b->locations)[0]).reviews)[i].stars, (((b->locations)[0]).reviews)[i].text);
-    }
-  for(i=0; i<11; i++)
-    {
-      printf("%d %s\n", (((b->locations)[1]).reviews)[i].stars, (((b->locations)[1]).reviews)[i].text);
-    }
-  */
-/*
   destroy_business_result(b);
   destroy_business_bst(test);
   return 0;
 }
+
 */
