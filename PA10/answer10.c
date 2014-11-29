@@ -37,8 +37,6 @@ struct YelpDataBST {
   const char * bus_file;
   const char * rev_file;
   char * name;
-  //long int address;
-  //Review_offset * rev_array;
   //Root of linked list
   Business_struct * List_root;
   //Array of businesses with same name
@@ -56,8 +54,6 @@ void Destroy_bus(Business_struct * bus);
 static struct YelpDataBST * TreeNode_construct(char * name, Business_struct * List_root, Business_struct * locations, const char * bus_file, const char * rev_file);
 struct YelpDataBST * Tree_insert(struct YelpDataBST * tn,char * name, Business_struct * List_root, Business_struct * locations, const char * bus_file, const char * rev_file);
 struct YelpDataBST * Tree_search(struct YelpDataBST * tn, char * name);
-//static void TreeNode_print(struct YelpDataBST * tn);
-//static void Tree_printInorder(struct YelpDataBST * tn);
 void destroy_business_bst_list(struct YelpDataBST * bst);
 void destroy_business_bst_tree(struct YelpDataBST * bst);
 
@@ -98,41 +94,6 @@ int Location_compare(const void * a, const void * b)
   else
     return state;
 }
-
-/*
-static void TreeNode_print(struct YelpDataBST * tn)
-{
-  int i;
-  FILE * bus;
-  char advance;
-  //FILE * rev;
-  Business_struct * * local = tn->locations;
-  if(strcasecmp(tn->name,"Boston Cleaners") == 0)
-    {
-      printf("%s\n",tn->name);
-      bus=fopen(tn->bus_file,"r");
-      for(i = 0; i < tn->locations_size; i++)
-	{
-	  printf("%s %d %ld %d\n", (local[i])->name, (local[i])->ID,(local[i])->address,(local[i])->rev_size);
-	  fseek(bus,(local[i])->address, SEEK_SET);
-	  do{
-	    advance = fgetc(bus);
-	    printf("%c",advance);
-	  }while(advance != '\n');
-	}
-      fclose(bus);
-    }
-}
-
-static void Tree_printInorder(struct YelpDataBST * tn)
-{
-  if(tn == NULL)
-    return;
-  Tree_printInorder(tn->left);
-  TreeNode_print(tn);
-  Tree_printInorder(tn->right);
-}
-*/
 
 Business_struct * Create_bus(const char * name, long int address, Review_offset * rev_array, int ID, int rev_size)
 {
@@ -496,13 +457,19 @@ struct Business* get_business_reviews(struct YelpDataBST* bst,char* name, char* 
 	  free(((load_loc)[i]).reviews);
 	}
     }
+  fclose(Bus_tsv);
+  fclose(Rev_tsv);
+  //return NULL if necessary
   //Sort the locations array
   qsort(load_loc, bus_load->num_locations, sizeof(struct Location), Location_compare); 
   bus_load->locations = load_loc;
+  if(bus_load->num_locations == 0)
+    {
+      destroy_business_result(bus_load);
+      return NULL;
+    }
   //Now the Business struct has every result for the name sorted
   //Filter out wrong names and zip codes
-  fclose(Bus_tsv);
-  fclose(Rev_tsv);
   return bus_load;
 }
 
