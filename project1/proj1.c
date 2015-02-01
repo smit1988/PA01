@@ -12,25 +12,25 @@ double GetPriorityZeroTime(float lamda0);
 double GetPriorityZeroTime(float lambda0)
 {
   double X = (double)rand()/ RAND_MAX; // Generates X value between 0 and 1
-  double R0 = -1/lambda0 * log(1-X);  // Generates IA time R value
+  double R0 = -(1/lambda0) * log(1-X);  // Generates IA time R value
   double IAT0 = (lambda0 * exp(-lambda0 *R0) ); 
-  return IAT0;
+  return 1/IAT0;
 }
 
 double GetPriorityOneTime(float lambda1) 
 {
   double X = (double)rand()/ RAND_MAX; // Generates X value between 0 and 1
-  double R1 = -1/lambda1 * log(1-X);  // Generates IA time R value
+  double R1 = -(1/lambda1) * log(1-X);  // Generates IA time R value
   double IAT1 = (lambda1 * exp(-lambda1 *R1) ); 
-  return IAT1;
+  return 1/IAT1;
 }
 
 double GetServiceTime(float avgservicetime)
 {
   double X = (double)rand()/ RAND_MAX; // Generates X value between 0 and 1
-  double RS= -1/avgservicetime * log(1-X);  // Generates Service time R value
+  double RS= -(1/avgservicetime) * log(1-X);  // Generates Service time R value
   double ST = (avgservicetime * exp(-avgservicetime *RS) );
-  return ST;
+  return 1/ST;
 } 
 
 int main(int argc, char ** argv)
