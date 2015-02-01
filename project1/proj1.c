@@ -3,33 +3,33 @@
 #include <string.h>
 #include <math.h>
 
-int GetServiceTime(float avgservicetime);
-int GetPriorityOneTime(float lambda1);
-int GetPriorityZeroTime(float lamda0);
+double GetServiceTime(float avgservicetime);
+double GetPriorityOneTime(float lambda1);
+double GetPriorityZeroTime(float lamda0);
 
 
      
-int GetPriorityZeroTime(float lambda0)
+double GetPriorityZeroTime(float lambda0)
 {
-  float X = (float)rand()/ RAND_MAX; // Generates X value between 0 and 1
-  float R0 = -1/lambda0 * log(1-X);  // Generates IA time R value
-  int IAT0 = ceil(lambda0 * exp(-lambda0 *R0) ); 
+  double X = (double)rand()/ RAND_MAX; // Generates X value between 0 and 1
+  double R0 = -1/lambda0 * log(1-X);  // Generates IA time R value
+  double IAT0 = (lambda0 * exp(-lambda0 *R0) ); 
   return IAT0;
 }
 
-int GetPriorityOneTime(float lambda1) 
+double GetPriorityOneTime(float lambda1) 
 {
-  float X = (float)rand()/ RAND_MAX; // Generates X value between 0 and 1
-  float R1 = -1/lambda1 * log(1-X);  // Generates IA time R value
-  int IAT1 = ceil(lambda1 * exp(-lambda1 *R1) ); 
+  double X = (double)rand()/ RAND_MAX; // Generates X value between 0 and 1
+  double R1 = -1/lambda1 * log(1-X);  // Generates IA time R value
+  double IAT1 = (lambda1 * exp(-lambda1 *R1) ); 
   return IAT1;
 }
 
-int GetServiceTime(float avgservicetime)
+double GetServiceTime(float avgservicetime)
 {
-  float X = (float)rand()/ RAND_MAX; // Generates X value between 0 and 1
-  float RS= -1/avgservicetime * log(1-X);  // Generates Service time R value
-  int   ST = ceil(avgservicetime * exp(-avgservicetime *RS) );
+  double X = (double)rand()/ RAND_MAX; // Generates X value between 0 and 1
+  double RS= -1/avgservicetime * log(1-X);  // Generates Service time R value
+  double ST = (avgservicetime * exp(-avgservicetime *RS) );
   return ST;
 } 
 
@@ -44,17 +44,20 @@ int main(int argc, char ** argv)
       AvgServiceTime = atof(argv[3]);
       NumberOfTasks = atof(argv[4]);
 
-      int Server = 0, Queue_0 = 0, Queue_1 = 0, time = 0, i, k, r, NumberOfTimes;
-      int NoServiceTime=0;
+      int Server = 0, Queue_0 = 0, Queue_1 = 0, i,j, k, r, NumberOfTimes;
       int TasksRemain = atoi(argv[4]);
       int TasksRemain0 = TasksRemain;
       int TasksRemain1 = TasksRemain;
-      int QueLength = 0, QueLength0 = 0, QueLength1 = 0;
+      int QueueLength = 0, QueueLength0 = 0, QueueLength1 = 0;
+      double swap1 = 0, swap2 = 0;
+      double time = 0, ServiceTimeStart = 0, AverageCPU = 0;
+      double CumulWaitingTime1 = 0, CumulWaitingTime0 = 0;
+      double Previous_T = 0, Previous_Queue0 = 0, Previous_Queue1 = 0;
       //FEL take numberoftasks * 5
       //FEL will be int array with 2 arguments: event (0 arrival,1 arrival,-1 departure, 
       //2 executed) and time
-      int FEL[TasksRemain * 2][2];
-      int Current_FEL[4][2]; //array of all the current time events
+      double FEL[TasksRemain * 2][2];
+      double Current_FEL[4][2]; //array of all the current time events
  
       for(i = 0; i <= NumberOfTasks * 2 -1; i++)
       {
@@ -90,12 +93,14 @@ int main(int argc, char ** argv)
 	    }
 	  //At this point Current_FEL contains all the time events, there are NumberOfTimes
 
+	  /*
 	  if ((Server == 0) && (NumberOfTimes == 0))
 	    {
 	      NoServiceTime++;
 	    }
+	  */
 
-	  if(NumberOfTimes != 0)
+	  if(NumberOfTimes != 0)//probably unnecessary
 	    {
 	      //Departures > priorities > nonpriorities
 	      //After an event, change Current_FEL[x][0] to 2
@@ -111,6 +116,7 @@ int main(int argc, char ** argv)
 			      if(Queue_0  > 0)
 			      	{
 				  Queue_0--;
+				  r = 0;
 				  while (FEL[r][1] >= time)
 				    {
 				      r++;
@@ -122,6 +128,7 @@ int main(int argc, char ** argv)
 			      else if(Queue_1  > 0)
 			      	{
 				  Queue_1--;
+				  r = 0;
 				  while (FEL[r][1] >= time)
 				    {
 				      r++;
@@ -132,7 +139,7 @@ int main(int argc, char ** argv)
 
 			        else
 				  {
-				    NoServiceTime++;
+				    ServiceTimeStart = time;
 				    Server = 0;
 				  }
 			    }
@@ -144,7 +151,9 @@ int main(int argc, char ** argv)
 				}
 			      else 
 				{
+				  AverageCPU += time - ServiceTimeStart;
 				  Server = 1;
+				  r = 0;
 				  while (FEL[r][1] >= time)
 				    {
 				      r++;
@@ -165,6 +174,7 @@ int main(int argc, char ** argv)
 				  FEL[r][0] = 0;
 				  TasksRemain0--;
 			      	}
+			      QueueLength0 = QueueLength0 + Queue_0;
 			    }
 			  else
 			    {
@@ -174,7 +184,9 @@ int main(int argc, char ** argv)
 				}
 			      else
 				{ 
+				  AverageCPU += time - ServiceTimeStart;
 				  Server = 1;
+				  r = 0;
 				  while (FEL[r][1] >= time)
 				    {
 				      r++;
@@ -194,31 +206,72 @@ int main(int argc, char ** argv)
 				  FEL[r][0] = 1;
 				  TasksRemain1--;
 			        }
+			      QueueLength1 = QueueLength1 + Queue_1;
 			    }
 			}
 		    }
 		}
 	    }
 
+
+	  //double Previous_T = 0, Previous_Queue0 = 0, Previous_Queue1 = 0;
+	  CumulWaitingTime0 += (time - Previous_T) * Previous_Queue0;
+	  CumulWaitingTime1 += (time - Previous_T) * Previous_Queue1;
+	  Previous_Queue0 = Queue_0;
+          Previous_Queue1 = Queue_1;
+	  Previous_T = time;
+	  
+	  //Sort FEL
+	  for (i = 0; i < (TasksRemain * 2); i++)
+	    {
+	      for (j = i + 1; j < (TasksRemain * 2); j++)
+		{
+		  if (FEL[1][i] > FEL[1][j])
+		    {
+		      swap1 =  FEL[1][i];
+		      swap2 = FEL[0][i];
+		      FEL[1][i] = FEL[1][j];
+		      FEL[0][i] = FEL[0][j];
+		      FEL[1][j] = swap1;
+		      FEL[0][j] = swap2;
+		    }
+		}
+	    }
+	  //There will be garbage used times
+	  //First credible entry is FEL[r][1] > time
+	  //FEL[r][1] is the next time the loop will go to, i.e. time=FEL[r][1]
+	  r = 0;
+	  while (FEL[r][1] < time)
+	    {
+	      r++;
+	      if(r == (NumberOfTasks * 2 - 1))
+		break;
+	    }
+	  //last value
+	  time = FEL[r][1];
+
+	  /*
 	    QueLength = QueLength + Queue_0 + Queue_1; //Accumulating Que Length
 	    QueLength0 = QueLength0 + Queue_0;
 	    QueLength1 = QueLength1 + Queue_1;
-	    time++; 
+	  */
 	}
 
 	// CUMULATIVE STATISTICS
 
-	int AverageQueLength =0;
-	int AverageWatitingTime0 = 0;
-	int AverageWatitingTime1 = 0;
-	int AverageCPU = 0;
+      QueueLength = QueueLength0 + QueueLength1;
 
-	AverageQueLength = QueLength / time ;
-	AverageWatitingTime1 = QueLength1/(NumberOfTasks);
-	AverageWatitingTime0 = QueLength0/(NumberOfTasks);
-	AverageCPU = (time - NoServiceTime) / time;
+      double AverageQueLength =0;
+      double AverageWatitingTime0 = 0;
+      double AverageWatitingTime1 = 0;
 
-	printf("%d\t%d\t%d\t%d\t", AverageQueLength, AverageWatitingTime0, AverageWatitingTime1, AverageCPU);
+      AverageQueLength = QueueLength / ((double)NumberOfTasks * 2.0);
+      //declare cumulwaiting
+      AverageWatitingTime1 = CumulWaitingTime1/((double)NumberOfTasks);
+      AverageWatitingTime0 = CumulWaitingTime0/((double)NumberOfTasks);
+      AverageCPU = (time - AverageCPU) / time;
+
+      printf("%f\t%f\t%f\t%f\t\n", AverageQueLength, AverageWatitingTime0, AverageWatitingTime1, AverageCPU);
 
     }
   return 0;
