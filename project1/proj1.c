@@ -198,7 +198,6 @@ int main(int argc, char ** argv)
 			      if (TasksRemain1 > 0)
 			      	{
 				  r = 0;
-				  printf("Line 201\n");
 				  while (FEL[r][1] >= time)
 				    {
 				      r++;
@@ -242,7 +241,7 @@ int main(int argc, char ** argv)
 	  //First credible entry is FEL[r][1] > time
 	  //FEL[r][1] is the next time the loop will go to, i.e. time=FEL[r][1]
 	  r = 0;
-	  while (FEL[r][1] < time)
+	  while (FEL[r][1] <= time)
 	    {
 	      r++;
 	      if(r == (NumberOfTasks * 2 - 1))
@@ -250,7 +249,6 @@ int main(int argc, char ** argv)
 	    }
 	  //last value
 	  time = FEL[r][1];
-	  printf("%f\n",time);
 
 	  /*
 	    QueLength = QueLength + Queue_0 + Queue_1; //Accumulating Que Length
