@@ -44,7 +44,7 @@ int main(int argc, char ** argv)
       AvgServiceTime = atof(argv[3]);
       NumberOfTasks = atof(argv[4]);
 
-      int Server = 0, Queue_0 = 0, Queue_1 = 0, i,j, k, r, NumberOfTimes;
+      int Server = 0, Queue_0 = 0, Queue_1 = 0, i,j, k, r = 0, NumberOfTimes;
       int TasksRemain = atoi(argv[4]);
       int TasksRemain0 = TasksRemain;
       int TasksRemain1 = TasksRemain;
@@ -198,6 +198,7 @@ int main(int argc, char ** argv)
 			      if (TasksRemain1 > 0)
 			      	{
 				  r = 0;
+				  printf("Line 201\n");
 				  while (FEL[r][1] >= time)
 				    {
 				      r++;
@@ -226,14 +227,14 @@ int main(int argc, char ** argv)
 	    {
 	      for (j = i + 1; j < (TasksRemain * 2); j++)
 		{
-		  if (FEL[1][i] > FEL[1][j])
+		  if (FEL[i][1] > FEL[j][1])
 		    {
-		      swap1 =  FEL[1][i];
-		      swap2 = FEL[0][i];
-		      FEL[1][i] = FEL[1][j];
-		      FEL[0][i] = FEL[0][j];
-		      FEL[1][j] = swap1;
-		      FEL[0][j] = swap2;
+		      swap1 =  FEL[i][1];
+		      swap2 = FEL[i][0];
+		      FEL[i][1] = FEL[j][1];
+		      FEL[i][0] = FEL[j][0];
+		      FEL[j][1] = swap1;
+		      FEL[j][0] = swap2;
 		    }
 		}
 	    }
@@ -249,6 +250,7 @@ int main(int argc, char ** argv)
 	    }
 	  //last value
 	  time = FEL[r][1];
+	  printf("%f\n",time);
 
 	  /*
 	    QueLength = QueLength + Queue_0 + Queue_1; //Accumulating Que Length
