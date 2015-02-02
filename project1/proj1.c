@@ -4,11 +4,6 @@
 #include <math.h>
 
 int GetTime(float LamOrServ);
-/*
-int GetServiceTime(float avgservicetime);
-int GetPriorityOneTime(float lambda1);
-int GetPriorityZeroTime(float lamda0);
-*/
 
 int GetTime(float LamOrServ)
 {
@@ -16,48 +11,13 @@ int GetTime(float LamOrServ)
   int R0 = ceil(-(1/LamOrServ) * log(1-X));  // Generates IA time R value
   return R0;
 }
-  
-/*   
-int GetPriorityZeroTime(float lambda0)
-{
-  double X = (double)rand()/ RAND_MAX; // Generates X value between 0 and 1
-  double R0 = -(1/lambda0) * log(1-X);  // Generates IA time R value
-  int IAT0 = ceil(lambda0 * exp(-lambda0 *R0) ); 
-  printf("IATO: %d\n",IAT0);
-  return IAT0;
-}
-
-int GetPriorityOneTime(float lambda1) 
-{
-  double X = (double)rand()/ RAND_MAX; // Generates X value between 0 and 1
-  double R1 = -(1/lambda1) * log(1-X);  // Generates IA time R value
-  int IAT1 = ceil(lambda1 * exp(-lambda1 *R1) ); 
-  printf("IAT1: %d\n",IAT1);
-  return IAT1;
-}
-
-int GetServiceTime(float avgservicetime)
-{
-  double X = (double)rand()/ RAND_MAX; // Generates X value between 0 and 1
-  double RS= -(1/avgservicetime) * log(1-X);  // Generates Service time R value
-  int ST = ceil(avgservicetime * exp(-avgservicetime *RS) );
-  printf("ST: %d\n",ST);
-  return ST;
-} 
-*/
 
 int main(int argc, char ** argv)
-
-
 {
-
   int TasksRemain = 0;
   int NumberofLines = 2;
-
   int TasksRemain0 = 2;
   int TasksRemain1 = 2;
-
-
 
   if (argc > 2)  // MODE 1
     {
@@ -68,331 +28,317 @@ int main(int argc, char ** argv)
       AvgServiceTime = atof(argv[3]);
       NumberOfTasks = atof(argv[4]); 
 
-
       TasksRemain = atoi(argv[4]);
       TasksRemain0 = TasksRemain;
       TasksRemain1 = TasksRemain;
-
     }
 
-  if ( argc ==2) 
-  {
-    FILE * fp2 = fopen(argv[1], "r");
-
-    while (feof(fp2) == 0) // TEST
+  if (argc ==2) 
     {
-     if (feof(fp2) == 0) {TasksRemain++;}
-    fseek(fp2, 0, SEEK_SET); // fp2 @ beginning of file
-    NumberofLines = TasksRemain;
+      FILE * fp2 = fopen(argv[1], "r");
 
-    int Service_Array[NumberofLines];
-    int Arrival_Counter = 0;
-  }
+      while (feof(fp2) == 0) // TEST
+	{
+	  if (feof(fp2) == 0)
+	    {
+	      TasksRemain++;
+	    }
+	  fseek(fp2, 0, SEEK_SET); // fp2 @ beginning of file
+	  NumberofLines = TasksRemain;
+	}
+      int Service_Array[NumberofLines];
+      int Arrival_Counter = 0;
+    }
 
-
-
-      FILE * fp;
-      int Server = 0, Queue_0 = 0, Queue_1 = 0, i,j, k, r = 0, NumberOfTimes, a =0, b = 0, c =0;
+  FILE * fp;
+  int Server = 0, Queue_0 = 0, Queue_1 = 0, i,j, k, r = 0, NumberOfTimes, a =0, b = 0, c =0;
       
-
-      int QueueLength = 0, QueueLength0 = 0, QueueLength1 = 0;
-      double swap1 = 0, swap2 = 0;
-      double time = 0, ServiceTimeStart = 0, AverageCPU = 0;
-      double CumulWaitingTime1 = 0, CumulWaitingTime0 = 0;
-      double Previous_T = 0, Previous_Queue0 = 0, Previous_Queue1 = 0;
-      //FEL take numberoftasks * 5
-      //FEL will be int array with 2 arguments: event (0 arrival,1 arrival,-1 departure, 
-      //2 executed) and time
-      double FEL[TasksRemain * 2][2];
+  int QueueLength = 0, QueueLength0 = 0, QueueLength1 = 0;
+  double swap1 = 0, swap2 = 0;
+  double time = 0, ServiceTimeStart = 0, AverageCPU = 0;
+  double CumulWaitingTime1 = 0, CumulWaitingTime0 = 0;
+  double Previous_T = 0, Previous_Queue0 = 0, Previous_Queue1 = 0;
+  //FEL take numberoftasks * 5
+  //FEL will be int array with 2 arguments: event (0 arrival,1 arrival,-1 departure, 
+  //2 executed) and time
+  double FEL[TasksRemain * 2][2];
      
-      double Current_FEL[4][2]; //array of all the current time events
+  double Current_FEL[4][2]; //array of all the current time events
  
+  for(i = 0; i <= NumberOfTasks * 2 -1; i++)
+    {       
+      FEL[i][0] = 2;
+      FEL[i][1] = -1;
+      //Current_FEL[i][0] = 2;
+      //Current_FEL[i][1] = -1;
+    }
 
-
-      for(i = 0; i <= NumberOfTasks * 2 -1; i++)
-      {
-       
-        FEL[i][0] = 2;
-        FEL[i][1] = -1;
-        //Current_FEL[i][0] = 2;
-        //Current_FEL[i][1] = -1;
-      }
-
-      if (arc ==2)
-      {
-        for(i = 0; i < NumberofLines; i++)
+  if (arc ==2)
+    {
+      for(i = 0; i < NumberofLines; i++)
         {
           fscanf(fp2,"%d %d %d", FEL[i][1], FEL[i][0], Service_Array[i]);
-
-           
-           if (i != 0) 
-            { if (FEL[i][1] = FEL[i-1][1])  // if times are equal  
-              { if (FEL[i][0] == 0)         // if lower event is priority 0
-                {
-                a = ServiceArray[i]; 
-                ServiceArray[i] = ServiceArray[i-1];
-                Service_Array[i-1] = a;
-                } // switch service times 
-              } 
-            }
           
-
-        }
-        fseek(fp2, 0, SEEK_SET); 
-      }
-
-
-      if (argc > 2)
-      {
-        FEL[0][0] = 0; // INITIAL CONDITIONS
-        FEL[0][1] = 0;
-        FEL[1][0] = 1;
-        FEL[1][1] = 0;
-
-        TasksRemain1--;
-        TasksRemain0--; // Decrementing # arrivals
-      }
-
-      while( ( (TasksRemain0 > 0) || (TasksRemain1 > 0) ) && (NumberofLines > 0) ) // Need condition for mode2
-  {
-    //Check for all of the current time events
-    NumberOfTimes = 0;//Current number of time events
-    for(i = 0; i <= NumberOfTasks * 2 - 1; i++)
-      {
-        if(FEL[i][1] == time)
-    {
-      //Copy one line of the FEL to the Current_FEL
-      Current_FEL[NumberOfTimes][0] = FEL[i][0];
-      Current_FEL[NumberOfTimes][1] = FEL[i][1];
-      NumberOfTimes++;
-    }
-      }
-    //At this point Current_FEL contains all the time events, there are NumberOfTimes
-
-    /*
-    if ((Server == 0) && (NumberOfTimes == 0))
-      {
-        NoServiceTime++;
-      }
-    */
-
-    if(NumberOfTimes != 0)//probably unnecessary
-      {
-        //Departures > priorities > nonpriorities
-        //After an event, change Current_FEL[x][0] to 2
-        for(i = -1; i <= 1; i++)//Look in order
-    {
-      for(k = 0; k < NumberOfTimes; k++)//Go through all looking for i
-        {
-          if(Current_FEL[k][0] == i)
-      {
-        //Do the event corresponding to i
-        if(i == -1)
-          {
-            if(Queue_0  > 0)
-              {
-               Queue_0--;
-                r = 0;
-          while (FEL[r][1] >= time)
+	  if (i != 0) 
             {
-              r++;
+	      if (FEL[i][1] = FEL[i-1][1])  // if times are equal  
+		{
+		  if (FEL[i][0] == 0)         // if lower event is priority 0
+		    {
+		      a = ServiceArray[i];
+		      ServiceArray[i] = ServiceArray[i-1];
+		      Service_Array[i-1] = a;
+		    } // switch service times 
+		}
             }
-          if ( argc > 2)
-          {  FEL[r][1] = time + GetTime(AvgServiceTime); }
-          
-          if (argc ==2)
-          {
-            FEL[r][1] = time + Service_Array[Arrival_Counter];
-            Arrival_Counter++;
-          }
+        }
+      fseek(fp2, 0, SEEK_SET);
+    }
 
-          FEL[r][0] = -1;
-              }
 
-            else if(Queue_1  > 0)
-              {
-                Queue_1--;
-                r = 0;
-                while (FEL[r][1] >= time)
-                  {
-                    r++;
-                  }
+  if (argc > 2)
+    {
+      FEL[0][0] = 0; // INITIAL CONDITIONS
+      FEL[0][1] = 0;
+      FEL[1][0] = 1;
+      FEL[1][1] = 0;
 
-                if ( argc > 2)
-                {  FEL[r][1] = time + GetTime(AvgServiceTime); }
+      TasksRemain1--;
+      TasksRemain0--; // Decrementing # arrivals
+    }
+
+  while( ( (TasksRemain0 > 0) || (TasksRemain1 > 0) ) && (NumberofLines > 0) ) // Need condition for mode2
+    {
+      //Check for all of the current time events
+      NumberOfTimes = 0;//Current number of time events
+      for(i = 0; i <= NumberOfTasks * 2 - 1; i++)
+	{
+	  if(FEL[i][1] == time)
+	    {
+	      //Copy one line of the FEL to the Current_FEL
+	      Current_FEL[NumberOfTimes][0] = FEL[i][0];
+	      Current_FEL[NumberOfTimes][1] = FEL[i][1];
+	      NumberOfTimes++;
+	    }
+	}
+      //At this point Current_FEL contains all the time events, there are NumberOfTimes
+
+      if(NumberOfTimes != 0)//probably unnecessary
+	{
+	  //Departures > priorities > nonpriorities
+	  //After an event, change Current_FEL[x][0] to 2
+	  for(i = -1; i <= 1; i++)//Look in order
+	    {
+	      for(k = 0; k < NumberOfTimes; k++)//Go through all looking for i
+		{
+		  if(Current_FEL[k][0] == i)
+		    {
+		      //Do the event corresponding to i
+		      if(i == -1)
+			{
+			  if(Queue_0  > 0)
+			    {
+			      Queue_0--;
+			      r = 0;
+			      while (FEL[r][1] >= time)
+				{
+				  r++;
+				}
+			      if(argc > 2)
+				{
+				  FEL[r][1] = time + GetTime(AvgServiceTime);
+				}          
+			      if (argc ==2)
+				{
+				  FEL[r][1] = time + Service_Array[Arrival_Counter];
+				  Arrival_Counter++;
+				}
+			      FEL[r][0] = -1;
+			    }
+			  else if(Queue_1  > 0)
+			    {
+			      Queue_1--;
+			      r = 0;
+			      while (FEL[r][1] >= time)
+				{
+				  r++;
+				}
+
+			      if(argc > 2)
+				{
+				  FEL[r][1] = time + GetTime(AvgServiceTime);
+				}
                 
-                if (argc ==2)
-                {
-                  FEL[r][1] = time + Service_Array[Arrival_Counter];
-                  Arrival_Counter++;
-                }
-
-                FEL[r][0] = -1;
-        }
-
-              else
-          {
-            ServiceTimeStart = time;
-            Server = 0;
-          }
-          }
-        else if(i == 0) // PRIORITY 0 ARRIVAL
-          {
-            if (Server ==1)
-        {
-          Queue_0++;
-        }
-            else 
-        {
-          AverageCPU += time - ServiceTimeStart;
-          Server = 1;
-          r = 0;
-          while (FEL[r][1] >= time)
-            {
-              r++;
-            }
-          if ( argc > 2)
-          {  FEL[r][1] = time + GetTime(AvgServiceTime); }
+			      if(argc ==2)
+				{
+				  FEL[r][1] = time + Service_Array[Arrival_Counter];
+				  Arrival_Counter++;
+				}
+			      FEL[r][0] = -1;
+			    }
+			  else
+			    {
+			      ServiceTimeStart = time;
+			      Server = 0;
+			    }
+			}
+		      else if(i == 0) // PRIORITY 0 ARRIVAL
+			{
+			  if(Server ==1)
+			    {
+			      Queue_0++;
+			    }
+			  else
+			    {
+			      AverageCPU += time - ServiceTimeStart;
+			      Server = 1;
+			      r = 0;
+			      while (FEL[r][1] >= time)
+				{
+				  r++;
+				}
+			      if(argc > 2)
+				{
+				  FEL[r][1] = time + GetTime(AvgServiceTime);
+				}
+			      if(argc ==2)
+				{
+				  FEL[r][1] = time + Service_Array[Arrival_Counter];
+				  Arrival_Counter++;
+				}
+			      FEL[r][0] = -1;
+			    }
+			  if ( (TasksRemain0 > 0)  && (argc > 2) ) 
+			    {
+			      r= 0;
+			      while (FEL[r][1] >= time)
+				{
+				  r++;
+				}
+			      FEL[r][1] = time + GetTime(Lambda0);
+			      FEL[r][0] = 0;
+			      TasksRemain0--;
+			    }
+			  if(argc  == 2)
+			    {
+			      NumberofLines--;
+			    }
+			  QueueLength0 = QueueLength0 + Queue_0;
+			}
+		      else
+			{
+			  if (Server ==1)
+			    {
+			      Queue_1++;
+			    }
+			  else
+			    {
+			      AverageCPU += time - ServiceTimeStart;
+			      Server = 1;
+			      r = 0;
+			      while(FEL[r][1] >= time)
+				{
+				  r++;
+				}
+			      if (argc > 2)
+				{
+				  FEL[r][1] = time + GetTime(AvgServiceTime);
+				}
           
-          if (argc ==2)
-          {
-            FEL[r][1] = time + Service_Array[Arrival_Counter];
-            Arrival_Counter++;
-          }
+			      if (argc ==2)
+				{
+				  FEL[r][1] = time + Service_Array[Arrival_Counter];
+				  Arrival_Counter++;
+				}
 
-          FEL[r][0] = -1;
-              }
-            
-
-            if ( (TasksRemain0 > 0)  && (argc > 2) ) 
-              {
-          r= 0;
-          while (FEL[r][1] >= time)
-            {
-              r++;
-            }
-          FEL[r][1] = time + GetTime(Lambda0);
-          FEL[r][0] = 0;
-          TasksRemain0--;
-              }
-          if ( argc  == 2) {NumberofLines--;};
-
-            QueueLength0 = QueueLength0 + Queue_0;
-          }
-        else
-          {
-            if (Server ==1)
-        {
-          Queue_1++;
-        }
-            else
-        { 
-          AverageCPU += time - ServiceTimeStart;
-          Server = 1;
-          r = 0;
-          while (FEL[r][1] >= time)
-            {
-              r++;
-            }
-          if ( argc > 2)
-          {  FEL[r][1] = time + GetTime(AvgServiceTime); }
-          
-          if (argc ==2)
-          {
-            FEL[r][1] = time + Service_Array[Arrival_Counter];
-            Arrival_Counter++;
-          }
-
-          FEL[r][0] = -1;
-              }
+			      FEL[r][0] = -1;
+			    }
     
-            if ( (TasksRemain1 > 0) && ( argc > 2) )
-              {
-          r = 0;
-          while (FEL[r][1] >= time)
-            {
-              r++;
-            }
-          FEL[r][1] = time + GetTime(Lambda1);
-          FEL[r][0] = 1;
-          TasksRemain1--;
-              }
-          if (argc ==2){NumberofLines--;}
-            QueueLength1 = QueueLength1 + Queue_1;
+			  if ( (TasksRemain1 > 0) && ( argc > 2) )
+			    {
+			      r = 0;
+			      while (FEL[r][1] >= time)
+				{
+				  r++;
+				}
+			      FEL[r][1] = time + GetTime(Lambda1);
+			      FEL[r][0] = 1;
+			      TasksRemain1--;
+			    }
+			  if (argc ==2)
+			    {
+			      NumberofLines--;
+			    }
+			  QueueLength1 = QueueLength1 + Queue_1;
+			}
+		    }
+		}
+	    }
+	}
 
-          }
-      }
-        }
-    }
-      }
 
-
-    //double Previous_T = 0, Previous_Queue0 = 0, Previous_Queue1 = 0;
-    CumulWaitingTime0 += (time - Previous_T) * Previous_Queue0;
-    CumulWaitingTime1 += (time - Previous_T) * Previous_Queue1;
-    Previous_Queue0 = Queue_0;
-          Previous_Queue1 = Queue_1;
-    Previous_T = time;
+      //double Previous_T = 0, Previous_Queue0 = 0, Previous_Queue1 = 0;
+      CumulWaitingTime0 += (time - Previous_T) * Previous_Queue0;
+      CumulWaitingTime1 += (time - Previous_T) * Previous_Queue1;
+      Previous_Queue0 = Queue_0;
+      Previous_Queue1 = Queue_1;
+      Previous_T = time;
     
-    //Sort FEL
-    for (i = 0; i < (TasksRemain * 2); i++)
-      {
-        for (j = i + 1; j < (TasksRemain * 2); j++)
-    {
-      if (FEL[i][1] > FEL[j][1])
-        {
-          swap1 =  FEL[i][1];
-          swap2 = FEL[i][0];
-          FEL[i][1] = FEL[j][1];
-          FEL[i][0] = FEL[j][0];
-          FEL[j][1] = swap1;
-          FEL[j][0] = swap2;
-        }
+      //Sort FEL
+      for (i = 0; i < (TasksRemain * 2); i++)
+	{
+	  for (j = i + 1; j < (TasksRemain * 2); j++)
+	    {
+	      if (FEL[i][1] > FEL[j][1])
+		{
+		  swap1 =  FEL[i][1];
+		  swap2 = FEL[i][0];
+		  FEL[i][1] = FEL[j][1];
+		  FEL[i][0] = FEL[j][0];
+		  FEL[j][1] = swap1;
+		  FEL[j][0] = swap2;
+		}
+	    }
+	}
+      //There will be garbage used times
+      //First credible entry is FEL[r][1] > time
+      //FEL[r][1] is the next time the loop will go to, i.e. time=FEL[r][1]
+      r = 0;
+      while (FEL[r][1] <= time)
+	{
+	  r++;
+	  if(r == (NumberOfTasks * 2 - 1))
+	    break;
+	}
+      //last value
+      time = FEL[r][1];
     }
-      }
-    //There will be garbage used times
-    //First credible entry is FEL[r][1] > time
-    //FEL[r][1] is the next time the loop will go to, i.e. time=FEL[r][1]
-    r = 0;
-    while (FEL[r][1] <= time)
-      {
-        r++;
-        if(r == (NumberOfTasks * 2 - 1))
-    break;
-      }
-    //last value
-    time = FEL[r][1];
-    //printf("Time: %f\n",time);
-
-    /*
-      QueLength = QueLength + Queue_0 + Queue_1; //Accumulating Que Length
-      QueLength0 = QueLength0 + Queue_0;
-      QueLength1 = QueLength1 + Queue_1;
-    */
-  }
 
   // CUMULATIVE STATISTICS
 
-      QueueLength = QueueLength0 + QueueLength1;
+  QueueLength = QueueLength0 + QueueLength1;
 
-      double AverageQueLength =0;
-      double AverageWatitingTime0 = 0;
-      double AverageWatitingTime1 = 0;
+  double AverageQueLength =0;
+  double AverageWatitingTime0 = 0;
+  double AverageWatitingTime1 = 0;
 
-      AverageQueLength = QueueLength / ((double)NumberOfTasks * 2.0);
-      //declare cumulwaiting
-      AverageWatitingTime1 = CumulWaitingTime1/((double)NumberOfTasks);
-      AverageWatitingTime0 = CumulWaitingTime0/((double)NumberOfTasks);
-      AverageCPU = (time - AverageCPU) / time;
+  AverageQueLength = QueueLength / ((double)NumberOfTasks * 2.0);
+  //declare cumulwaiting
+  AverageWatitingTime1 = CumulWaitingTime1/((double)NumberOfTasks);
+  AverageWatitingTime0 = CumulWaitingTime0/((double)NumberOfTasks);
+  AverageCPU = (time - AverageCPU) / time;
 
-      fp = fopen("proj1-a_output", "w");
-      fprintf(fp, "%f\n%f\n%f\n%f",AverageWatitingTime0,AverageWatitingTime1,AverageQueLength,AverageCPU);
-      fclose(fp);
+  fp = fopen("proj1-a_output", "w");
+  fprintf(fp, "%f\n%f\n%f\n%f",AverageWatitingTime0,AverageWatitingTime1,AverageQueLength,AverageCPU);
+  fclose(fp);
 
-      printf("%f\t%f\t%f\t%f\t\n", AverageQueLength, AverageWatitingTime0, AverageWatitingTime1, AverageCPU);
+  printf("%f\t%f\t%f\t%f\t\n", AverageQueLength, AverageWatitingTime0, AverageWatitingTime1, AverageCPU);
 
     
-      if (argc ==2){fclose(fp2);}
+  if (argc ==2)
+    {
+      fclose(fp2);
+    }
 
 
   return 0;
