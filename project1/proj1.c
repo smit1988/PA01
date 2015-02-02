@@ -18,15 +18,19 @@ int main(int argc, char ** argv)
   int NumberofLines = 2;
   int TasksRemain0 = 2;
   int TasksRemain1 = 2;
+  float Lambda0, Lambda1, AvgServiceTime;
+  FILE * fp2;
+  char buffer[1024];
+  fp2 = NULL;
+  Lambda0 = 0;
+  Lambda1 = 0;
+  AvgServiceTime = 0;
 
   if (argc > 2)  // MODE 1
     {
-      float Lambda0, Lambda1, AvgServiceTime, NumberOfTasks;
-
       Lambda0 = atof(argv[1]);
       Lambda1 = atof(argv[2]);
       AvgServiceTime = atof(argv[3]);
-      NumberOfTasks = atof(argv[4]); 
 
       TasksRemain = atoi(argv[4]);
       TasksRemain0 = TasksRemain;
@@ -35,23 +39,24 @@ int main(int argc, char ** argv)
 
   if (argc ==2) 
     {
-      FILE * fp2 = fopen(argv[1], "r");
+      fp2 = fopen(argv[1], "r");
 
-      while (feof(fp2) == 0) // TEST
+      while (feof(fp2) == 0)
 	{
-	  if (feof(fp2) == 0)
-	    {
-	      TasksRemain++;
-	    }
-	  fseek(fp2, 0, SEEK_SET); // fp2 @ beginning of file
-	  NumberofLines = TasksRemain;
+	  fgets(buffer,1023,fp2);
+	  TasksRemain++;
 	}
-      int Service_Array[NumberofLines];
-      int Arrival_Counter = 0;
+      TasksRemain--;
+      fseek(fp2, 0, SEEK_SET); // fp2 @ beginning of file
+      NumberofLines = TasksRemain;
     }
+  int Service_Array[NumberofLines];
+  int Arrival_Counter;
+  Arrival_Counter = 0;
+  Service_Array[0] = 0;
 
   FILE * fp;
-  int Server = 0, Queue_0 = 0, Queue_1 = 0, i,j, k, r = 0, NumberOfTimes, a =0, b = 0, c =0;
+  int Server = 0, Queue_0 = 0, Queue_1 = 0, i,j, k, r = 0, NumberOfTimes, a =0;
       
   int QueueLength = 0, QueueLength0 = 0, QueueLength1 = 0;
   double swap1 = 0, swap2 = 0;
@@ -65,7 +70,7 @@ int main(int argc, char ** argv)
      
   double Current_FEL[4][2]; //array of all the current time events
  
-  for(i = 0; i <= NumberOfTasks * 2 -1; i++)
+  for(i = 0; i <= TasksRemain * 2 -1; i++)
     {       
       FEL[i][0] = 2;
       FEL[i][1] = -1;
@@ -73,28 +78,28 @@ int main(int argc, char ** argv)
       //Current_FEL[i][1] = -1;
     }
 
-  if (arc ==2)
+  if (argc ==2)
     {
       for(i = 0; i < NumberofLines; i++)
         {
-          fscanf(fp2,"%d %d %d", FEL[i][1], FEL[i][0], Service_Array[i]);
+          fscanf(fp2,"%lf %lf %d", &FEL[i][1], &FEL[i][0], &Service_Array[i]);
           
 	  if (i != 0) 
             {
-	      if (FEL[i][1] = FEL[i-1][1])  // if times are equal  
+	      if (FEL[i][1] == FEL[i-1][1])  // if times are equal  
 		{
 		  if (FEL[i][0] == 0)         // if lower event is priority 0
 		    {
-		      a = ServiceArray[i];
-		      ServiceArray[i] = ServiceArray[i-1];
+		      a = Service_Array[i];
+		      Service_Array[i] = Service_Array[i-1];
 		      Service_Array[i-1] = a;
 		    } // switch service times 
 		}
             }
         }
+      time = FEL[0][1];//Set first time
       fseek(fp2, 0, SEEK_SET);
     }
-
 
   if (argc > 2)
     {
@@ -109,9 +114,10 @@ int main(int argc, char ** argv)
 
   while( ( (TasksRemain0 > 0) || (TasksRemain1 > 0) ) && (NumberofLines > 0) ) // Need condition for mode2
     {
+      printf("NumberofLines: %d\n",NumberofLines);
       //Check for all of the current time events
       NumberOfTimes = 0;//Current number of time events
-      for(i = 0; i <= NumberOfTasks * 2 - 1; i++)
+      for(i = 0; i <= TasksRemain * 2 - 1; i++)
 	{
 	  if(FEL[i][1] == time)
 	    {
@@ -181,6 +187,10 @@ int main(int argc, char ** argv)
 			      ServiceTimeStart = time;
 			      Server = 0;
 			    }
+			  if(argc == 2)
+			    {
+			      NumberofLines--;
+			    }
 			}
 		      else if(i == 0) // PRIORITY 0 ARRIVAL
 			{
@@ -219,10 +229,12 @@ int main(int argc, char ** argv)
 			      FEL[r][0] = 0;
 			      TasksRemain0--;
 			    }
+			  /*
 			  if(argc  == 2)
 			    {
 			      NumberofLines--;
 			    }
+			  */
 			  QueueLength0 = QueueLength0 + Queue_0;
 			}
 		      else
@@ -265,10 +277,12 @@ int main(int argc, char ** argv)
 			      FEL[r][0] = 1;
 			      TasksRemain1--;
 			    }
+			  /*
 			  if (argc ==2)
 			    {
 			      NumberofLines--;
 			    }
+			  */
 			  QueueLength1 = QueueLength1 + Queue_1;
 			}
 		    }
@@ -307,11 +321,12 @@ int main(int argc, char ** argv)
       while (FEL[r][1] <= time)
 	{
 	  r++;
-	  if(r == (NumberOfTasks * 2 - 1))
+	  if(r == (TasksRemain * 2 - 1))
 	    break;
 	}
       //last value
       time = FEL[r][1];
+      printf("Time: %f\n", time);
     }
 
   // CUMULATIVE STATISTICS
@@ -322,10 +337,10 @@ int main(int argc, char ** argv)
   double AverageWatitingTime0 = 0;
   double AverageWatitingTime1 = 0;
 
-  AverageQueLength = QueueLength / ((double)NumberOfTasks * 2.0);
+  AverageQueLength = QueueLength / ((double)TasksRemain * 2.0);
   //declare cumulwaiting
-  AverageWatitingTime1 = CumulWaitingTime1/((double)NumberOfTasks);
-  AverageWatitingTime0 = CumulWaitingTime0/((double)NumberOfTasks);
+  AverageWatitingTime1 = CumulWaitingTime1/((double)TasksRemain);
+  AverageWatitingTime0 = CumulWaitingTime0/((double)TasksRemain);
   AverageCPU = (time - AverageCPU) / time;
 
   fp = fopen("proj1-a_output", "w");
