@@ -60,7 +60,7 @@ int main(int argc, char ** argv)
       
   int QueueLength = 0;
   double swap1 = 0, swap2 = 0;
-  double time = 0, ServiceTimeStart = 0, AverageCPU = 0;
+  double time = 0, start_time = 0, ServiceTimeStart = 0, AverageCPU = 0;
   double CumulWaitingTime1 = 0, CumulWaitingTime0 = 0;
   double Previous_T = 0, Previous_Queue0 = 0, Previous_Queue1 = 0;
   //FEL take numberoftasks * 5
@@ -111,6 +111,8 @@ int main(int argc, char ** argv)
       TasksRemain0--; // Decrementing # arrivals
     }
 
+  start_time = time;
+  ServiceTimeStart = time;
   while( ( (TasksRemain0 > 0) || (TasksRemain1 > 0) ) && (NumberofLines > 0) ) // Need condition for mode2
     {
       //Check for all of the current time events
@@ -198,7 +200,7 @@ int main(int argc, char ** argv)
 			    }
 			  else
 			    {
-			      AverageCPU += time - ServiceTimeStart;
+			      AverageCPU += (time - ServiceTimeStart);
 			      Server = 1;
 			      r = 0;
 			      while (FEL[r][1] >= time)
@@ -237,7 +239,7 @@ int main(int argc, char ** argv)
 			    }
 			  else
 			    {
-			      AverageCPU += time - ServiceTimeStart;
+			      AverageCPU += (time - ServiceTimeStart);
 			      Server = 1;
 			      r = 0;
 			      while(FEL[r][1] >= time)
@@ -322,11 +324,12 @@ int main(int argc, char ** argv)
 
   if(argc == 2)
     TasksRemain /= 2;
-  AverageQueLength = QueueLength / time;//((double)TasksRemain * 2.0);
+  AverageQueLength = (CumulWaitingTime1 + CumulWaitingTime0)/(time - start_time);
+  //AverageQueLength = QueueLength / time;//((double)TasksRemain * 2.0);
   //declare cumulwaiting
   AverageWatitingTime1 = CumulWaitingTime1/((double)TasksRemain);
   AverageWatitingTime0 = CumulWaitingTime0/((double)TasksRemain);
-  AverageCPU = (time - AverageCPU) / time;
+  AverageCPU = ((time - start_time) - AverageCPU) / (time - start_time);
 
   fp = fopen("proj1-a_output", "w");
   fprintf(fp, "%f\n%f\n%f\n%f",AverageWatitingTime0,AverageWatitingTime1,AverageQueLength,AverageCPU);
