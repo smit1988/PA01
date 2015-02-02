@@ -3,35 +3,48 @@
 #include <string.h>
 #include <math.h>
 
-double GetServiceTime(float avgservicetime);
-double GetPriorityOneTime(float lambda1);
-double GetPriorityZeroTime(float lamda0);
+int GetTime(float LamOrServ);
+/*
+int GetServiceTime(float avgservicetime);
+int GetPriorityOneTime(float lambda1);
+int GetPriorityZeroTime(float lamda0);
+*/
 
-
-     
-double GetPriorityZeroTime(float lambda0)
+int GetTime(float LamOrServ)
+{
+  double X = (double)rand()/ RAND_MAX; // Generates X value between 0 and 1
+  int R0 = ceil(-(1/LamOrServ) * log(1-X));  // Generates IA time R value
+  return R0;
+}
+  
+/*   
+int GetPriorityZeroTime(float lambda0)
 {
   double X = (double)rand()/ RAND_MAX; // Generates X value between 0 and 1
   double R0 = -(1/lambda0) * log(1-X);  // Generates IA time R value
-  double IAT0 = (lambda0 * exp(-lambda0 *R0) ); 
-  return 1/IAT0;
+  int IAT0 = ceil(lambda0 * exp(-lambda0 *R0) ); 
+  printf("IATO: %d\n",IAT0);
+  return IAT0;
 }
 
-double GetPriorityOneTime(float lambda1) 
+int GetPriorityOneTime(float lambda1) 
 {
   double X = (double)rand()/ RAND_MAX; // Generates X value between 0 and 1
   double R1 = -(1/lambda1) * log(1-X);  // Generates IA time R value
-  double IAT1 = (lambda1 * exp(-lambda1 *R1) ); 
-  return 1/IAT1;
+  int IAT1 = ceil(lambda1 * exp(-lambda1 *R1) ); 
+  printf("IAT1: %d\n",IAT1);
+  return IAT1;
 }
 
-double GetServiceTime(float avgservicetime)
+int GetServiceTime(float avgservicetime)
 {
   double X = (double)rand()/ RAND_MAX; // Generates X value between 0 and 1
   double RS= -(1/avgservicetime) * log(1-X);  // Generates Service time R value
-  double ST = (avgservicetime * exp(-avgservicetime *RS) );
-  return 1/ST;
+  int ST = ceil(avgservicetime * exp(-avgservicetime *RS) );
+  printf("ST: %d\n",ST);
+  return ST;
 } 
+*/
 
 int main(int argc, char ** argv)
 {
@@ -44,6 +57,7 @@ int main(int argc, char ** argv)
       AvgServiceTime = atof(argv[3]);
       NumberOfTasks = atof(argv[4]);
 
+      FILE * fp;
       int Server = 0, Queue_0 = 0, Queue_1 = 0, i,j, k, r = 0, NumberOfTimes;
       int TasksRemain = atoi(argv[4]);
       int TasksRemain0 = TasksRemain;
@@ -121,7 +135,7 @@ int main(int argc, char ** argv)
 				    {
 				      r++;
 				    }
-				  FEL[r][1] = time + GetServiceTime(AvgServiceTime);
+				  FEL[r][1] = time + GetTime(AvgServiceTime);
 				  FEL[r][0] = -1;
 			        }
 
@@ -133,7 +147,7 @@ int main(int argc, char ** argv)
 				    {
 				      r++;
 				    }
-				  FEL[r][1] = time + GetServiceTime(AvgServiceTime);
+				  FEL[r][1] = time + GetTime(AvgServiceTime);
 				  FEL[r][0] = -1;
 			        }
 
@@ -158,7 +172,7 @@ int main(int argc, char ** argv)
 				    {
 				      r++;
 				    }
-				  FEL[r][1] = time + GetServiceTime(AvgServiceTime);
+				  FEL[r][1] = time + GetTime(AvgServiceTime);
 				  FEL[r][0] = -1;
 			        }
 			    	
@@ -170,7 +184,7 @@ int main(int argc, char ** argv)
 				    {
 				      r++;
 				    }
-				  FEL[r][1] = time + GetPriorityZeroTime(Lambda0);
+				  FEL[r][1] = time + GetTime(Lambda0);
 				  FEL[r][0] = 0;
 				  TasksRemain0--;
 			      	}
@@ -191,7 +205,7 @@ int main(int argc, char ** argv)
 				    {
 				      r++;
 				    }
-				  FEL[r][1] = time + GetServiceTime(AvgServiceTime);
+				  FEL[r][1] = time + GetTime(AvgServiceTime);
 				  FEL[r][0] = -1;
 			        }
 		
@@ -202,7 +216,7 @@ int main(int argc, char ** argv)
 				    {
 				      r++;
 				    }
-				  FEL[r][1] = time + GetPriorityOneTime(Lambda1);
+				  FEL[r][1] = time + GetTime(Lambda1);
 				  FEL[r][0] = 1;
 				  TasksRemain1--;
 			        }
@@ -249,6 +263,7 @@ int main(int argc, char ** argv)
 	    }
 	  //last value
 	  time = FEL[r][1];
+	  //printf("Time: %f\n",time);
 
 	  /*
 	    QueLength = QueLength + Queue_0 + Queue_1; //Accumulating Que Length
@@ -270,6 +285,10 @@ int main(int argc, char ** argv)
       AverageWatitingTime1 = CumulWaitingTime1/((double)NumberOfTasks);
       AverageWatitingTime0 = CumulWaitingTime0/((double)NumberOfTasks);
       AverageCPU = (time - AverageCPU) / time;
+
+      fp = fopen("proj1-a_output", "w");
+      fprintf(fp, "%f\n%f\n%f\n%f",AverageWatitingTime0,AverageWatitingTime1,AverageQueLength,AverageCPU);
+      fclose(fp);
 
       printf("%f\t%f\t%f\t%f\t\n", AverageQueLength, AverageWatitingTime0, AverageWatitingTime1, AverageCPU);
 
