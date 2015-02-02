@@ -58,7 +58,7 @@ int main(int argc, char ** argv)
   FILE * fp;
   int Server = 0, Queue_0 = 0, Queue_1 = 0, i,j, k, r = 0, NumberOfTimes, a =0;
       
-  int QueueLength = 0, QueueLength0 = 0, QueueLength1 = 0;
+  int QueueLength = 0;
   double swap1 = 0, swap2 = 0;
   double time = 0, ServiceTimeStart = 0, AverageCPU = 0;
   double CumulWaitingTime1 = 0, CumulWaitingTime0 = 0;
@@ -74,8 +74,6 @@ int main(int argc, char ** argv)
     {       
       FEL[i][0] = 2;
       FEL[i][1] = -1;
-      //Current_FEL[i][0] = 2;
-      //Current_FEL[i][1] = -1;
     }
 
   if (argc ==2)
@@ -98,6 +96,7 @@ int main(int argc, char ** argv)
             }
         }
       time = FEL[0][1];//Set first time
+      Previous_T = time;
       fseek(fp2, 0, SEEK_SET);
     }
 
@@ -114,7 +113,6 @@ int main(int argc, char ** argv)
 
   while( ( (TasksRemain0 > 0) || (TasksRemain1 > 0) ) && (NumberofLines > 0) ) // Need condition for mode2
     {
-      printf("NumberofLines: %d\n",NumberofLines);
       //Check for all of the current time events
       NumberOfTimes = 0;//Current number of time events
       for(i = 0; i <= TasksRemain * 2 - 1; i++)
@@ -229,13 +227,7 @@ int main(int argc, char ** argv)
 			      FEL[r][0] = 0;
 			      TasksRemain0--;
 			    }
-			  /*
-			  if(argc  == 2)
-			    {
-			      NumberofLines--;
-			    }
-			  */
-			  QueueLength0 = QueueLength0 + Queue_0;
+			  QueueLength += Queue_1 + Queue_0;
 			}
 		      else
 			{
@@ -277,21 +269,13 @@ int main(int argc, char ** argv)
 			      FEL[r][0] = 1;
 			      TasksRemain1--;
 			    }
-			  /*
-			  if (argc ==2)
-			    {
-			      NumberofLines--;
-			    }
-			  */
-			  QueueLength1 = QueueLength1 + Queue_1;
+			  QueueLength += Queue_1 + Queue_0;
 			}
 		    }
 		}
 	    }
 	}
 
-
-      //double Previous_T = 0, Previous_Queue0 = 0, Previous_Queue1 = 0;
       CumulWaitingTime0 += (time - Previous_T) * Previous_Queue0;
       CumulWaitingTime1 += (time - Previous_T) * Previous_Queue1;
       Previous_Queue0 = Queue_0;
@@ -326,18 +310,19 @@ int main(int argc, char ** argv)
 	}
       //last value
       time = FEL[r][1];
-      printf("Time: %f\n", time);
     }
 
   // CUMULATIVE STATISTICS
 
-  QueueLength = QueueLength0 + QueueLength1;
+  //QueueLength = QueueLength0 + QueueLength1;
 
   double AverageQueLength =0;
   double AverageWatitingTime0 = 0;
   double AverageWatitingTime1 = 0;
 
-  AverageQueLength = QueueLength / ((double)TasksRemain * 2.0);
+  if(argc == 2)
+    TasksRemain /= 2;
+  AverageQueLength = QueueLength / time;//((double)TasksRemain * 2.0);
   //declare cumulwaiting
   AverageWatitingTime1 = CumulWaitingTime1/((double)TasksRemain);
   AverageWatitingTime0 = CumulWaitingTime0/((double)TasksRemain);
@@ -346,8 +331,6 @@ int main(int argc, char ** argv)
   fp = fopen("proj1-a_output", "w");
   fprintf(fp, "%f\n%f\n%f\n%f",AverageWatitingTime0,AverageWatitingTime1,AverageQueLength,AverageCPU);
   fclose(fp);
-
-  printf("%f\t%f\t%f\t%f\t\n", AverageQueLength, AverageWatitingTime0, AverageWatitingTime1, AverageCPU);
 
     
   if (argc ==2)
