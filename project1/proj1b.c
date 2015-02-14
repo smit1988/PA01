@@ -221,10 +221,10 @@ int main (int argc, char ** argv)
 				      Queue_List[FEL_size - 1 - a][2] = 65;
 				    }
 				}
-			      if((c==0) && (a==((FEL_real_size)-1)))
+			      if((c==0) && (a==0)
 				{
 				  c = 1;
-				  a = -1;
+				  a = FEL_real_size;
 				}
 			    } 				  	
 			}
@@ -337,10 +337,10 @@ int main (int argc, char ** argv)
 				      Queue_List[FEL_size - 1 - a][2] = 65;
 				    }
 				}
-			      if((c==0) && (a==((FEL_real_size)-1)))
+			      if((c==0) && (a==0)
 				{
 				  c=1;
-				  a=-1;
+				  a=FEL_real_size;
 				}
 			    }
 
@@ -464,10 +464,10 @@ int main (int argc, char ** argv)
 				      Queue_List[FEL_size - 1 - a][2] = 65;
 				    }
 				}
-			      if((c==0) && (a==((FEL_real_size)-1)))
+			      if((c==0) && (a==0)
 				{
 				  c=1;
-				  a=-1;
+				  a=FEL_real_size;
 				}
 			    }
 
@@ -517,38 +517,31 @@ int main (int argc, char ** argv)
       Previous_T = time;
 
       //Sort FEL
-      for (i = 0; i < (FEL_size); i++)
+      for (i = 0; i < (FEL_real_size); i++)
 	{
 	  for (j = i + 1; j < (FEL_size); j++)
 	    {
-	      if (FEL[i][1] > FEL[j][1])
+	      if (FEL[FEL_size - 1 - i][1] < FEL[FEL_size - 1 - j][1])
 	   	 {
-		   swap1 =  FEL[i][1];
-		   swap2 = FEL[i][0];
-		   FEL[i][1] = FEL[j][1];
-		   FEL[i][0] = FEL[j][0];
-		   FEL[j][1] = swap1;
-		   FEL[j][0] = swap2;
+		   swap1 =  FEL[FEL_size - 1 - i][1];
+		   swap2 = FEL[FEL_size - 1 - i][0];
+		   FEL[FEL_size - 1 - i][1] = FEL[FEL_size - 1 - j][1];
+		   FEL[FEL_size - 1 - i][0] = FEL[FEL_size - 1 - j][0];
+		   FEL[FEL_size - 1 - j][1] = swap1;
+		   FEL[FEL_size - 1 - j][0] = swap2;
 		 }
 	    }
 	}
 
-      r = 0;
+      r = FEL_size - 4 - FEL_real_size;
       while(FEL[r][1] <= time)
 	{
 	  r++;
-	  if(r == (FEL_size - 1))
+	  if(r == FEL_size - 1)
 	    break;
 	}
       //last value
       time = FEL[r][1];
-      //If r(number of garbage values) is less than 66, move to new FEL
-      //update FEL_size
-      //Fill new FEL with garbage (first)
-      if(r < 66)
-	{
-
-	}
       //printf("time: %lf\n",time);
     } //END of while loop
 
