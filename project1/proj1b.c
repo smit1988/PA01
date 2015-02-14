@@ -64,19 +64,23 @@ int main (int argc, char ** argv)
 
   FILE * fp;
   int Server = 64, Queue_0 = 0, Queue_1 = 0, i,j, k, r = 0, NumberOfTimes, a =0, b =0, c =0;
+  int FEL_real_size = 0, Queue_real_size = 0;
       
   int QueueLength = 0;
   double swap1 = 0, swap2 = 0, swap3 =0;
   double time = 0, start_time = 0, ServiceTimeStart = 0, AverageCPU = 0;
   double CumulWaitingTime1 = 0, CumulWaitingTime0 = 0;
   double Previous_T = 0, Previous_Queue0 = 0, Previous_Queue1 = 0;
+  double Mu_Min = (AvgServiceTime * 3), Mu_Max = 0, Load_Bal_Fac = 0;
+  double Cumul_Load_Bal = 0, Previous_Server = 0, CumulServer = 0;
 
-  double FEL[TasksRemain * 2][2]; // Future events list
+  int FEL_size = (TasksRemain * 2) + 68;
+  double FEL[FEL_size][2]; // Future events list
   double Current_FEL[68][2];  // Current Events list
-  double Queue_List [TasksRemain * 2][3]; // Current Queue
+  double Queue_List [FEL_size][3]; // Current Queue
 
   // INITIALIZING FEL TABLE
-  for(i = 0; i < (TasksRemain * 2); i++)
+  for(i = 0; i < (FEL_size); i++)
     {      
       FEL[i][0] = 2;
       FEL[i][1] = -1;
@@ -88,10 +92,11 @@ int main (int argc, char ** argv)
   // INITIALLIZING CURRENT_FEL
   if(argc > 2)
     {
-      FEL[0][0] = 0;
-      FEL[0][1] = 0;
-      FEL[1][0] = 1;
-      FEL[1][1] = 0;
+      FEL[FEL_size - 1][0] = 0;
+      FEL[FEL_size - 1][1] = 0;
+      FEL[FEL_size - 2][0] = 1;
+      FEL[FEL_size - 2][1] = 0;
+      FEL_real_size = 2;
 
       TasksRemain1--;
       TasksRemain0--; // Decrementing # arrivals
@@ -106,13 +111,13 @@ int main (int argc, char ** argv)
     {
       //Check for all of the current time events
       NumberOfTimes = 0;//Current number of time events
-      for(i = 0; i < TasksRemain * 2; i++)
+      for(i = 0; i < FEL_real_size; i++)
 	{
-	  if(FEL[i][1] == time)
+	  if(FEL[FEL_size - 1 - i][1] == time)
 	    {
 	      //Copy one line of the FEL to the Current_FEL
-	      Current_FEL[NumberOfTimes][0] = FEL[i][0];
-	      Current_FEL[NumberOfTimes][1] = FEL[i][1];
+	      Current_FEL[NumberOfTimes][0] = FEL[FEL_size - 1 - i][0];
+	      Current_FEL[NumberOfTimes][1] = FEL[FEL_size - 1 - i][1];
 	      NumberOfTimes++;
 	    }
 	}
@@ -130,11 +135,11 @@ int main (int argc, char ** argv)
 		    {
 		      //Do the event corresponding to i
 		      if(i == -1)
-			{ 
+			{
 			  Server++;
-			  for (b = 0; b < (TasksRemain * 2); b++)  // SORTING QUEUE_LIST by time
+			  for (b = 0; b < (FEL_size); b++)  // SORTING QUEUE_LIST by time
 			    {
-			      for (c = b + 1; c < (TasksRemain * 2); c++)
+			      for (c = b + 1; c < (FEL_size); c++)
 				{
 				  if (Queue_List[b][1] > Queue_List[c][1]) 
 				    {
@@ -152,7 +157,7 @@ int main (int argc, char ** argv)
 			    }
 
 			  c = 0;
-			  for (a = 0; a < (TasksRemain * 2); a++) 
+			  for (a = 0; a < (FEL_size); a++) 
 			    {
 			      if (Queue_List[a][0] == c ) //if priority c 
 				{
@@ -178,15 +183,23 @@ int main (int argc, char ** argv)
 					  if(argc > 2)
 					    {
 					      FEL[r][1] = time + GetTime(AvgServiceTime);
+					      //Finding Lambda min and mix
+					      if(Mu_Min < (FEL[r][1] - time))
+						Mu_Min = (FEL[r][1] - time);
+					      //Mu_Min = 1/(umin) which is CPU time taken by longest sub-task (backwardsish)
+					      if(Mu_Max > (FEL[r][1] - time))
+						Mu_Max = (FEL[r][1] - time);
+					      Load_Bal_Fac = (Mu_Min - Mu_Max)/AvgServiceTime;
 					      FEL[r][0] = -1;
 					    }
 					}
+				      Cumul_Load_Bal += Load_Bal_Fac;
 				      Queue_List[a][0] = 2;
 				      Queue_List[a][1] = -1;
 				      Queue_List[a][2] = 65;
 				    }
 				}
-			      if((c==0) && (a==((TasksRemain*2)-1)))
+			      if((c==0) && (a==((FEL_size)-1)))
 				{
 				  c = 1;
 				  a = -1;
@@ -207,9 +220,9 @@ int main (int argc, char ** argv)
 			  Queue_List[r][2] = rand() % 32 + 1;
 			  Queue_0++;
 
-			  for(b = 0; b < (TasksRemain * 2); b++)  // SORTING QUEUE_LIST by time
+			  for(b = 0; b < (FEL_size); b++)  // SORTING QUEUE_LIST by time
 			    {
-			      for(c = b + 1; c < (TasksRemain * 2); c++)
+			      for(c = b + 1; c < (FEL_size); c++)
 				{
 				  if(Queue_List[b][1] > Queue_List[c][1]) 
 				    {
@@ -227,7 +240,7 @@ int main (int argc, char ** argv)
 			    }
 
 			  c = 0;
-			  for(a = 0; a < (TasksRemain * 2); a++) 
+			  for(a = 0; a < (FEL_size); a++) 
 			    {
 			      if(Queue_List[a][0] == c ) //if priority c 
 				{
@@ -252,15 +265,23 @@ int main (int argc, char ** argv)
 					  if(argc > 2)
 					    {
 					      FEL[r][1] = time + GetTime(AvgServiceTime);
+					      //Finding Lambda min and mix
+                                              if(Mu_Min < (FEL[r][1] - time))
+                                                Mu_Min = (FEL[r][1] - time);
+                                              //Mu_Min = 1/(umin) which is CPU time taken by longest sub-task (backwardsish)
+						if(Mu_Max > (FEL[r][1] - time))
+						  Mu_Max = (FEL[r][1] - time);
+                                              Load_Bal_Fac = (Mu_Min - Mu_Max)/AvgServiceTime;
 					      FEL[r][0] = -1;
 					    }
 					}
+                                      Cumul_Load_Bal += Load_Bal_Fac;
 				      Queue_List[a][0] = 2;
 				      Queue_List[a][1] = -1;
 				      Queue_List[a][2] = 65;
 				    }
 				}
-			      if((c==0) && (a==((TasksRemain*2)-1)))
+			      if((c==0) && (a==((FEL_size)-1)))
 				{
 				  c=1;
 				  a=-1;
@@ -293,9 +314,9 @@ int main (int argc, char ** argv)
 			  Queue_List[r][2] = rand() % 32 + 1;
 			  Queue_1++;
 
-			  for(b = 0; b < (TasksRemain * 2); b++)  // SORTING QUEUE_LIST by time
+			  for(b = 0; b < (FEL_size); b++)  // SORTING QUEUE_LIST by time
 			    {
-			      for(c = b + 1; c < (TasksRemain * 2); c++)
+			      for(c = b + 1; c < (FEL_size); c++)
 				{
 				  if(Queue_List[b][1] > Queue_List[c][1]) 
 				    {
@@ -313,7 +334,7 @@ int main (int argc, char ** argv)
 			    }
 
 			  c = 0;
-			  for (a = 0; a < (TasksRemain * 2); a++) 
+			  for (a = 0; a < (FEL_size); a++) 
 			    {
 			      if(Queue_List[a][0] == c ) //if priority c 
 				{
@@ -338,15 +359,23 @@ int main (int argc, char ** argv)
 					  if(argc > 2)
 					    {
 					      FEL[r][1] = time + GetTime(AvgServiceTime);
+                                              //Finding Lambda min and mix
+                                              if(Mu_Min < (FEL[r][1] - time))
+                                                Mu_Min = (FEL[r][1] - time);
+                                              //Mu_Min = 1/(umin) which is CPU time taken by longest sub-task (backwardsish)
+					      if(Mu_Max > (FEL[r][1] - time))
+						Mu_Max = (FEL[r][1] - time);
+                                              Load_Bal_Fac = (Mu_Min - Mu_Max)/AvgServiceTime;
 					      FEL[r][0] = -1;
 					    }
 					}
+                                      Cumul_Load_Bal += Load_Bal_Fac;
 				      Queue_List[a][0] = 2;
 				      Queue_List[a][1] = -1;
 				      Queue_List[a][2] = 65;
 				    }
 				}
-			      if((c==0) && (a==((TasksRemain*2)-1)))
+			      if((c==0) && (a==((FEL_size)-1)))
 				{
 				  c=1;
 				  a=-1;
@@ -369,10 +398,19 @@ int main (int argc, char ** argv)
 	    }  
 	}     
 
+      CumulWaitingTime0 += (time - Previous_T) * Previous_Queue0;
+      CumulWaitingTime1 += (time - Previous_T) * Previous_Queue1;
+      Previous_Queue0 = Queue_0;
+      Previous_Queue1 = Queue_1;
+      //Add up FREE server time
+      CumulServer += (time - Previous_T) * Previous_Server;
+      Previous_Server = Server;
+      Previous_T = time;
+
       //Sort FEL
-      for (i = 0; i < (TasksRemain * 2); i++)
+      for (i = 0; i < (FEL_size); i++)
 	{
-	  for (j = i + 1; j < (TasksRemain * 2); j++)
+	  for (j = i + 1; j < (FEL_size); j++)
 	    {
 	      if (FEL[i][1] > FEL[j][1])
 	   	 {
@@ -390,11 +428,34 @@ int main (int argc, char ** argv)
       while(FEL[r][1] <= time)
 	{
 	  r++;
-	  if(r == (TasksRemain * 2 - 1))
+	  if(r == (FEL_size - 1))
 	    break;
 	}
       //last value
       time = FEL[r][1];
+      //If r(number of garbage values) is less than 66, move to new FEL
+      //update FEL_size
+      //Fill new FEL with garbage (first)
+      if(r < 66)
+	{
+
+	}
+      //printf("time: %lf\n",time);
     } //END of while loop
+
+  double AverageQueLength =0;
+  double AverageLoadFactor = 0;
+  double AverageUtil = 0;
+  double AverageWatitingTime1 = 0;
+  double AverageWatitingTime0 = 0;
+
+  AverageUtil = 1 - (CumulServer / (64*(time - start_time)));
+  AverageLoadFactor = Cumul_Load_Bal / (((double)TasksRemain) * 2);
+  AverageQueLength = (CumulWaitingTime1 + CumulWaitingTime0)/(time - start_time);
+  AverageWatitingTime1 = CumulWaitingTime1/((double)TasksRemain);
+  AverageWatitingTime0 = CumulWaitingTime0/((double)TasksRemain);
+
+  printf("AverageUtil: AverageLoadFactor: AverageQueLength: AverageWatitingTime0: AverageWatitingTime1:\n");
+  printf("%lf       %lf             %lf            %lf                %lf\n",AverageUtil, AverageLoadFactor, AverageQueLength, AverageWatitingTime0, AverageWatitingTime1);
   return 0;
 }     // End of main
