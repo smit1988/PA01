@@ -64,7 +64,7 @@ int main (int argc, char ** argv)
 
   FILE * fp;
   int Server = 64, Queue_0 = 0, Queue_1 = 0, i,j, k, r = 0, NumberOfTimes, a =0, b =0, c =0;
-  int FEL_real_size = 0, Queue_real_size = 0;
+  int FEL_real_size = 0;
       
   int QueueLength = 0;
   double swap1 = 0, swap2 = 0, swap3 =0;
@@ -137,33 +137,47 @@ int main (int argc, char ** argv)
 		      if(i == -1)
 			{
 			  Server++;
-			  for (b = 0; b < (FEL_size); b++)  // SORTING QUEUE_LIST by time
+			  r = FEL_size - 1;
+			  while (FEL[r][1] >= time)
 			    {
-			      for (c = b + 1; c < (FEL_size); c++)
+			      r--;
+			    }
+			  FEL_real_size = r + 2 - FEL_size;
+			  r = FEL_size - 1;
+			  while(Queue_List[r][1] != -1)
+			    {
+			      r--;
+			    }
+			  if(FEL_real_size < (r + 2 - FEL_size))
+			    FEL_real_size = r + 2 - FEL_size;
+
+			  for (b = 0; b < (FEL_real_size); b++)  // SORTING QUEUE_LIST by time
+			    {
+			      for (c = b + 1; c < (FEL_real_size); c++)
 				{
-				  if (Queue_List[b][1] > Queue_List[c][1]) 
+				  if (Queue_List[FEL_size - 1 - b][1] < Queue_List[FEL_size - 1 - c][1]) 
 				    {
-				      swap1 =  Queue_List[b][1];
-				      swap2 = Queue_List[b][0];
-				      swap3 = Queue_List[b][2];
-				      Queue_List[b][1] = Queue_List[c][1];
-				      Queue_List[b][0] = Queue_List[c][0];
-				      Queue_List[b][2] = Queue_List[c][2];
-				      Queue_List[c][1] = swap1;
-				      Queue_List[c][0] = swap2;
-				      Queue_List[c][2] = swap3;
+				      swap1 =  Queue_List[FEL_size - 1 - c][1];
+				      swap2 = Queue_List[FEL_size - 1 - c][0];
+				      swap3 = Queue_List[FEL_size - 1 - c][2];
+				      Queue_List[FEL_size - 1 - c][1] = Queue_List[FEL_size - 1 - b][1];
+				      Queue_List[FEL_size - 1 - c][0] = Queue_List[FEL_size - 1 - b][0];
+				      Queue_List[FEL_size - 1 - c][2] = Queue_List[FEL_size - 1 - b][2];
+				      Queue_List[FEL_size - 1 - b][1] = swap1;
+				      Queue_List[FEL_size - 1 - b][0] = swap2;
+				      Queue_List[FEL_size - 1 - b][2] = swap3;
 				    }
 				}
 			    }
 
 			  c = 0;
-			  for (a = 0; a < (FEL_size); a++) 
+			  for(a = FEL_real_size - 1; a >= 0; a--)
 			    {
-			      if (Queue_List[a][0] == c ) //if priority c 
+			      if (Queue_List[FEL_size - 1 - a][0] == c ) //if priority c 
 				{
-				  if (Queue_List[a][2] <= Server ) // if it can be serviced
+				  if (Queue_List[FEL_size - 1 - a][2] <= Server ) // if it can be serviced
 				    {
-				      Server -= Queue_List[a][2];
+				      Server -= Queue_List[FEL_size - 1 - a][2];
 				      if (c ==0)
 					{
 					  Queue_0--;
@@ -173,13 +187,18 @@ int main (int argc, char ** argv)
 					  Queue_1--;
 					}
 
-				      for (b =0; b < Queue_List[a][2]; b++) // generate departure time for subtasks
+				      for (b =0; b < Queue_List[FEL_size - 1 - a][2]; b++) // generate departure time for subtasks
 					{
-					  r = 0;
+					  //x=0;
+					  r = FEL_size - 1;
 					  while (FEL[r][1] >= time)
 					    {
-					      r++;
+					      r--;
+					      //x++;
 					    }
+					  //x+1 is the new fel real size
+					  //x = r - (felsize -1)
+					  //FEL_real_size = r + 2 - FEL_size;
 					  if(argc > 2)
 					    {
 					      FEL[r][1] = time + GetTime(AvgServiceTime);
@@ -194,12 +213,12 @@ int main (int argc, char ** argv)
 					    }
 					}
 				      Cumul_Load_Bal += Load_Bal_Fac;
-				      Queue_List[a][0] = 2;
-				      Queue_List[a][1] = -1;
-				      Queue_List[a][2] = 65;
+				      Queue_List[FEL_size - 1 - a][0] = 2;
+				      Queue_List[FEL_size - 1 - a][1] = -1;
+				      Queue_List[FEL_size - 1 - a][2] = 65;
 				    }
 				}
-			      if((c==0) && (a==((FEL_size)-1)))
+			      if((c==0) && (a==((FEL_real_size)-1)))
 				{
 				  c = 1;
 				  a = -1;
@@ -209,10 +228,10 @@ int main (int argc, char ** argv)
 
 		      else if(i == 0) // PRIORITY 0 ARRIVAL
 			{
-			  r = 0;
+			  r = FEL_size - 1;
 			  while(Queue_List[r][1] != -1)
 			    {
-			      r++;       //finds garbage in Quelist
+			      r--;       //finds garbage in Quelist
 			    }
 
 			  Queue_List[r][0] = 0;
@@ -220,33 +239,48 @@ int main (int argc, char ** argv)
 			  Queue_List[r][2] = rand() % 32 + 1;
 			  Queue_0++;
 
-			  for(b = 0; b < (FEL_size); b++)  // SORTING QUEUE_LIST by time
+			  r = FEL_size - 1;
+			  while (FEL[r][1] >= time)
 			    {
-			      for(c = b + 1; c < (FEL_size); c++)
+			      r--;
+			    }
+			  FEL_real_size = r + 2 - FEL_size;
+			  r = FEL_size - 1;
+			  while(Queue_List[r][1] != -1)
+			    {
+			      r--;
+			    }
+			  if(FEL_real_size < (r + 2 - FEL_size))
+			    FEL_real_size = r + 2 - FEL_size;
+
+
+			  for(b = 0; b < (FEL_real_size); b++)  // SORTING QUEUE_LIST by time
+			    {
+			      for(c = b + 1; c < (FEL_real_size); c++)
 				{
-				  if(Queue_List[b][1] > Queue_List[c][1]) 
+				  if(Queue_List[FEL_size - 1 - b][1] < Queue_List[FEL_size - 1 - c][1]) 
 				    {
-				      swap1 =  Queue_List[b][1];
-				      swap2 = Queue_List[b][0];
-				      swap3 = Queue_List[b][2];
-				      Queue_List[b][1] = Queue_List[c][1];
-				      Queue_List[b][0] = Queue_List[c][0];
-				      Queue_List[b][2] = Queue_List[c][2];
-				      Queue_List[c][1] = swap1;
-				      Queue_List[c][0] = swap2;
-				      Queue_List[c][2] = swap3;
+				      swap1 =  Queue_List[FEL_size - 1 - b][1];
+				      swap2 = Queue_List[FEL_size - 1 - b][0];
+				      swap3 = Queue_List[FEL_size - 1 - b][2];
+				      Queue_List[FEL_size - 1 - b][1] = Queue_List[FEL_size - 1 - c][1];
+				      Queue_List[FEL_size - 1 - b][0] = Queue_List[FEL_size - 1 - c][0];
+				      Queue_List[FEL_size - 1 - b][2] = Queue_List[FEL_size - 1 - c][2];
+				      Queue_List[FEL_size - 1 - c][1] = swap1;
+				      Queue_List[FEL_size - 1 - c][0] = swap2;
+				      Queue_List[FEL_size - 1 - c][2] = swap3;
 				    }
 				}
 			    }
 
 			  c = 0;
-			  for(a = 0; a < (FEL_size); a++) 
+			  for(a = 0; a < (FEL_real_size); a++) 
 			    {
-			      if(Queue_List[a][0] == c ) //if priority c 
+			      if(Queue_List[FEL_size - 1 - a][0] == c ) //if priority c 
 				{
-				  if(Queue_List[a][2] <= Server ) // if it can be serviced
+				  if(Queue_List[FEL_size - 1 - a][2] <= Server ) // if it can be serviced
 				    {
-				      Server -= Queue_List[a][2];
+				      Server -= Queue_List[FEL_size - 1 - a][2];
 				      if(c ==0)
 					{
 					  Queue_0--;
@@ -255,12 +289,12 @@ int main (int argc, char ** argv)
 					{
 					  Queue_1--;
 					}
-				      for(b =0; b < Queue_List[a][2]; b++) // generate departure time for subtasks
+				      for(b =0; b < Queue_List[FEL_size - 1 - a][2]; b++) // generate departure time for subtasks
 					{
-					  r = 0;
+					  r = FEL_size - 1;
 					  while(FEL[r][1] >= time)
 					    {
-					      r++;
+					      r--;
 					    }
 					  if(argc > 2)
 					    {
@@ -276,22 +310,22 @@ int main (int argc, char ** argv)
 					    }
 					}
                                       Cumul_Load_Bal += Load_Bal_Fac;
-				      Queue_List[a][0] = 2;
-				      Queue_List[a][1] = -1;
-				      Queue_List[a][2] = 65;
+				      Queue_List[FEL_size - 1 - a][0] = 2;
+				      Queue_List[FEL_size - 1 - a][1] = -1;
+				      Queue_List[FEL_size - 1 - a][2] = 65;
 				    }
 				}
-			      if((c==0) && (a==((FEL_size)-1)))
+			      if((c==0) && (a==((FEL_real_size)-1)))
 				{
 				  c=1;
 				  a=-1;
 				}
 			    }
 
-			  r = 0;
+			  r = FEL_size - 1;
 			  while (FEL[r][1] >= time)
 			    {
-			      r++;
+			      r--;
 			    }
 		
 			  FEL[r][1] = time + GetTime(Lambda0);
@@ -303,10 +337,10 @@ int main (int argc, char ** argv)
 
 		      else
 			{
-			  r = 0;
+			  r = FEL_size - 1;
 			  while(Queue_List[r][1] != -1)
 			    {
-			      r++;
+			      r--;
 			    }
 
 			  Queue_List[r][0] = 1;
@@ -314,33 +348,48 @@ int main (int argc, char ** argv)
 			  Queue_List[r][2] = rand() % 32 + 1;
 			  Queue_1++;
 
-			  for(b = 0; b < (FEL_size); b++)  // SORTING QUEUE_LIST by time
+			  r = FEL_size - 1;
+			  while (FEL[r][1] >= time)
 			    {
-			      for(c = b + 1; c < (FEL_size); c++)
+			      r--;
+			    }
+			  FEL_real_size = r + 2 - FEL_size;
+			  r = FEL_size - 1;
+			  while(Queue_List[r][1] != -1)
+			    {
+			      r--;
+			    }
+			  if(FEL_real_size < (r + 2 - FEL_size))
+			    FEL_real_size = r + 2 - FEL_size;
+
+
+			  for(b = 0; b < (FEL_real_size); b++)  // SORTING QUEUE_LIST by time
+			    {
+			      for(c = b + 1; c < (FEL_real_size); c++)
 				{
-				  if(Queue_List[b][1] > Queue_List[c][1]) 
+				  if(Queue_List[FEL_size - 1 - b][1] < Queue_List[FEL_size - 1 - c][1]) 
 				    {
-				      swap1 =  Queue_List[b][1];
-				      swap2 = Queue_List[b][0];
-				      swap3 = Queue_List[b][2];
-				      Queue_List[b][1] = Queue_List[c][1];
-				      Queue_List[b][0] = Queue_List[c][0];
-				      Queue_List[b][2] = Queue_List[c][2];
-				      Queue_List[c][1] = swap1;
-				      Queue_List[c][0] = swap2;
-				      Queue_List[c][2] = swap3;
+				      swap1 =  Queue_List[FEL_size - 1 - b][1];
+				      swap2 = Queue_List[FEL_size - 1 - b][0];
+				      swap3 = Queue_List[FEL_size - 1 - b][2];
+				      Queue_List[FEL_size - 1 - b][1] = Queue_List[FEL_size - 1 - c][1];
+				      Queue_List[FEL_size - 1 - b][0] = Queue_List[FEL_size - 1 - c][0];
+				      Queue_List[FEL_size - 1 - b][2] = Queue_List[FEL_size - 1 - c][2];
+				      Queue_List[FEL_size - 1 - c][1] = swap1;
+				      Queue_List[FEL_size - 1 - c][0] = swap2;
+				      Queue_List[FEL_size - 1 - c][2] = swap3;
 				    }
 				}
 			    }
 
 			  c = 0;
-			  for (a = 0; a < (FEL_size); a++) 
+			  for (a = 0; a < (FEL_real_size); a++) 
 			    {
-			      if(Queue_List[a][0] == c ) //if priority c 
+			      if(Queue_List[FEL_size - 1 - a][0] == c ) //if priority c 
 				{
-				  if(Queue_List[a][2] <= Server ) // if it can be serviced
+				  if(Queue_List[FEL_size - 1 - a][2] <= Server ) // if it can be serviced
 				    {
-				      Server -= Queue_List[a][2];
+				      Server -= Queue_List[FEL_size - 1 - a][2];
 				      if(c ==0)
 					{
 					  Queue_0--;
@@ -349,12 +398,12 @@ int main (int argc, char ** argv)
 					{
 					  Queue_1--;
 					}
-				      for(b =0; b < Queue_List[a][2]; b++) // generate departure time for subtasks
+				      for(b =0; b < Queue_List[FEL_size - 1 - a][2]; b++) // generate departure time for subtasks
 					{
-					  r = 0;
+					  r = FEL_size - 1;
 					  while(FEL[r][1] >= time)
 					    {
-					      r++;
+					      r--;
 					    }
 					  if(argc > 2)
 					    {
@@ -370,22 +419,22 @@ int main (int argc, char ** argv)
 					    }
 					}
                                       Cumul_Load_Bal += Load_Bal_Fac;
-				      Queue_List[a][0] = 2;
-				      Queue_List[a][1] = -1;
-				      Queue_List[a][2] = 65;
+				      Queue_List[FEL_size - 1 - a][0] = 2;
+				      Queue_List[FEL_size - 1 - a][1] = -1;
+				      Queue_List[FEL_size - 1 - a][2] = 65;
 				    }
 				}
-			      if((c==0) && (a==((FEL_size)-1)))
+			      if((c==0) && (a==((FEL_real_size)-1)))
 				{
 				  c=1;
 				  a=-1;
 				}
 			    }
 
-			  r = 0;
+			  r = FEL_size - 1;
 			  while (FEL[r][1] >= time)
 			    {
-			      r++;
+			      r--;
 			    }
 		
 			  FEL[r][1] = time + GetTime(Lambda1);
@@ -397,6 +446,22 @@ int main (int argc, char ** argv)
 		} 
 	    }  
 	}     
+
+      //update FEL_real_size to number of non garbage in Queue_List or FEL whichever is larger
+      r = FEL_size - 1;
+      while (FEL[r][1] >= time)
+	{
+	  r--;
+	}
+      FEL_real_size = r + 2 - FEL_size;
+      r = FEL_size - 1;
+      while(Queue_List[r][1] != -1)
+	{
+	  r--;
+	}
+      if(FEL_real_size < (r + 2 - FEL_size))
+	FEL_real_size = r + 2 - FEL_size;
+
 
       CumulWaitingTime0 += (time - Previous_T) * Previous_Queue0;
       CumulWaitingTime1 += (time - Previous_T) * Previous_Queue1;
