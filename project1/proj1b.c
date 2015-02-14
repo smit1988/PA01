@@ -109,6 +109,7 @@ int main (int argc, char ** argv)
   //BEGINNING OF WHILE LOOP
   while( ( (TasksRemain0 > 0) || (TasksRemain1 > 0) ) && (NumberofLines > 0) ) // Need condition for mode2
     {
+      //printf("while\n");
       //Check for all of the current time events
       NumberOfTimes = 0;//Current number of time events
       for(i = 0; i < FEL_real_size; i++)
@@ -121,7 +122,6 @@ int main (int argc, char ** argv)
 	      NumberOfTimes++;
 	    }
 	}
-
 
       if(NumberOfTimes != 0)//probably unnecessary
 	{
@@ -221,7 +221,7 @@ int main (int argc, char ** argv)
 				      Queue_List[FEL_size - 1 - a][2] = 65;
 				    }
 				}
-			      if((c==0) && (a==0)
+			      if((c==0) && (a==0))
 				{
 				  c = 1;
 				  a = FEL_real_size;
@@ -237,7 +237,6 @@ int main (int argc, char ** argv)
 			      r--;       //finds garbage in Quelist
 			    }
 			  FEL_real_size += 1;
-
 			  Queue_List[r][0] = 0;
 			  Queue_List[r][1] = time;
 			  Queue_List[r][2] = rand() % 32 + 1;
@@ -277,14 +276,14 @@ int main (int argc, char ** argv)
 				    }
 				}
 			    }
-
 			  //This segment finds the exact FEL_real_size
 			  r = FEL_size - 1;
                           while (FEL[r][1] >= time)
                             {
                               r--;
                             }
-                          FEL_real_size = r + 2 - FEL_size;
+			  FEL_real_size = FEL_size - r ;
+                          //FEL_real_size = r + 2 - FEL_size;
                           r = FEL_size - 1;
                           while(Queue_List[r][1] != -1)
                             {
@@ -292,7 +291,6 @@ int main (int argc, char ** argv)
                             }
                           if(FEL_real_size < (r + 2 - FEL_size))
                             FEL_real_size = r + 2 - FEL_size;
-
 
 			  c = 0;
 			  for(a = FEL_real_size - 1; a >= 0; a--)
@@ -337,7 +335,7 @@ int main (int argc, char ** argv)
 				      Queue_List[FEL_size - 1 - a][2] = 65;
 				    }
 				}
-			      if((c==0) && (a==0)
+			      if((c==0) && (a==0))
 				{
 				  c=1;
 				  a=FEL_real_size;
@@ -353,7 +351,6 @@ int main (int argc, char ** argv)
 			  FEL[r][1] = time + GetTime(Lambda0);
 			  FEL[r][0] = 0;
 			  TasksRemain0--;
-					  	
 			} // i == 0
 
 
@@ -365,7 +362,6 @@ int main (int argc, char ** argv)
 			      r--;
 			    }
 			  FEL_real_size += 1;
-
 			  Queue_List[r][0] = 1;
 			  Queue_List[r][1] = time;
 			  Queue_List[r][2] = rand() % 32 + 1;
@@ -411,7 +407,8 @@ int main (int argc, char ** argv)
                             {
                               r--;
                             }
-                          FEL_real_size = r + 2 - FEL_size;
+			  FEL_real_size = FEL_size - r;
+                          //FEL_real_size = r + 2 - FEL_size;
                           r = FEL_size - 1;
                           while(Queue_List[r][1] != -1)
                             {
@@ -464,13 +461,12 @@ int main (int argc, char ** argv)
 				      Queue_List[FEL_size - 1 - a][2] = 65;
 				    }
 				}
-			      if((c==0) && (a==0)
+			      if((c==0) && (a==0))
 				{
 				  c=1;
 				  a=FEL_real_size;
 				}
 			    }
-
 			  r = FEL_size - 1;
 			  while (FEL[r][1] >= time)
 			    {
@@ -480,8 +476,8 @@ int main (int argc, char ** argv)
 		
 			  FEL[r][1] = time + GetTime(Lambda1);
 			  FEL[r][0] = 1;
-			  TasksRemain1--;
-					  	
+			  TasksRemain1--;	
+	  	
 			} // else (i == 1)
 		    } 
 		} 
@@ -533,7 +529,8 @@ int main (int argc, char ** argv)
 	    }
 	}
 
-      r = FEL_size - 4 - FEL_real_size;
+      r = 0;
+      //r = FEL_size - 4 - FEL_real_size;
       while(FEL[r][1] <= time)
 	{
 	  r++;
