@@ -76,7 +76,7 @@ int main (int argc, char ** argv)
   double Queue_List [TasksRemain * 2][3]; // Current Queue
 
   // INITIALIZING FEL TABLE
-  for(i = 0; i  TasksRemain * 2 ; i++)
+  for(i = 0; i < (TasksRemain * 2); i++)
     {      
       FEL[i][0] = 2;
       FEL[i][1] = -1;
@@ -396,4 +396,5 @@ int main (int argc, char ** argv)
       //last value
       time = FEL[r][1];
     } //END of while loop
+  return 0;
 }     // End of main
