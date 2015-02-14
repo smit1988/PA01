@@ -137,6 +137,7 @@ int main (int argc, char ** argv)
 		      if(i == -1)
 			{
 			  Server++;
+			  /*
 			  r = FEL_size - 1;
 			  while (FEL[r][1] >= time)
 			    {
@@ -150,6 +151,7 @@ int main (int argc, char ** argv)
 			    }
 			  if(FEL_real_size < (r + 2 - FEL_size))
 			    FEL_real_size = r + 2 - FEL_size;
+			  */
 
 			  for (b = 0; b < (FEL_real_size); b++)  // SORTING QUEUE_LIST by time
 			    {
@@ -199,6 +201,7 @@ int main (int argc, char ** argv)
 					  //x+1 is the new fel real size
 					  //x = r - (felsize -1)
 					  //FEL_real_size = r + 2 - FEL_size;
+					  FEL_real_size += 1;
 					  if(argc > 2)
 					    {
 					      FEL[r][1] = time + GetTime(AvgServiceTime);
@@ -233,12 +236,14 @@ int main (int argc, char ** argv)
 			    {
 			      r--;       //finds garbage in Quelist
 			    }
+			  FEL_real_size += 1;
 
 			  Queue_List[r][0] = 0;
 			  Queue_List[r][1] = time;
 			  Queue_List[r][2] = rand() % 32 + 1;
 			  Queue_0++;
 
+			  /*
 			  r = FEL_size - 1;
 			  while (FEL[r][1] >= time)
 			    {
@@ -252,7 +257,7 @@ int main (int argc, char ** argv)
 			    }
 			  if(FEL_real_size < (r + 2 - FEL_size))
 			    FEL_real_size = r + 2 - FEL_size;
-
+			  */
 
 			  for(b = 0; b < (FEL_real_size); b++)  // SORTING QUEUE_LIST by time
 			    {
@@ -273,8 +278,24 @@ int main (int argc, char ** argv)
 				}
 			    }
 
+			  //This segment finds the exact FEL_real_size
+			  r = FEL_size - 1;
+                          while (FEL[r][1] >= time)
+                            {
+                              r--;
+                            }
+                          FEL_real_size = r + 2 - FEL_size;
+                          r = FEL_size - 1;
+                          while(Queue_List[r][1] != -1)
+                            {
+                              r--;
+                            }
+                          if(FEL_real_size < (r + 2 - FEL_size))
+                            FEL_real_size = r + 2 - FEL_size;
+
+
 			  c = 0;
-			  for(a = 0; a < (FEL_real_size); a++) 
+			  for(a = FEL_real_size - 1; a >= 0; a--)
 			    {
 			      if(Queue_List[FEL_size - 1 - a][0] == c ) //if priority c 
 				{
@@ -296,6 +317,7 @@ int main (int argc, char ** argv)
 					    {
 					      r--;
 					    }
+					  FEL_real_size += 1;
 					  if(argc > 2)
 					    {
 					      FEL[r][1] = time + GetTime(AvgServiceTime);
@@ -327,7 +349,7 @@ int main (int argc, char ** argv)
 			    {
 			      r--;
 			    }
-		
+			  FEL_real_size += 1;
 			  FEL[r][1] = time + GetTime(Lambda0);
 			  FEL[r][0] = 0;
 			  TasksRemain0--;
@@ -342,12 +364,14 @@ int main (int argc, char ** argv)
 			    {
 			      r--;
 			    }
+			  FEL_real_size += 1;
 
 			  Queue_List[r][0] = 1;
 			  Queue_List[r][1] = time;
 			  Queue_List[r][2] = rand() % 32 + 1;
 			  Queue_1++;
 
+			  /*
 			  r = FEL_size - 1;
 			  while (FEL[r][1] >= time)
 			    {
@@ -361,7 +385,7 @@ int main (int argc, char ** argv)
 			    }
 			  if(FEL_real_size < (r + 2 - FEL_size))
 			    FEL_real_size = r + 2 - FEL_size;
-
+			  */
 
 			  for(b = 0; b < (FEL_real_size); b++)  // SORTING QUEUE_LIST by time
 			    {
@@ -382,8 +406,23 @@ int main (int argc, char ** argv)
 				}
 			    }
 
+			  r = FEL_size - 1;
+                          while (FEL[r][1] >= time)
+                            {
+                              r--;
+                            }
+                          FEL_real_size = r + 2 - FEL_size;
+                          r = FEL_size - 1;
+                          while(Queue_List[r][1] != -1)
+                            {
+                              r--;
+                            }
+                          if(FEL_real_size < (r + 2 - FEL_size))
+                            FEL_real_size = r + 2 - FEL_size;
+
+
 			  c = 0;
-			  for (a = 0; a < (FEL_real_size); a++) 
+			  for(a = FEL_real_size - 1; a >= 0; a--)
 			    {
 			      if(Queue_List[FEL_size - 1 - a][0] == c ) //if priority c 
 				{
@@ -405,6 +444,7 @@ int main (int argc, char ** argv)
 					    {
 					      r--;
 					    }
+					  FEL_real_size += 1;
 					  if(argc > 2)
 					    {
 					      FEL[r][1] = time + GetTime(AvgServiceTime);
@@ -436,6 +476,7 @@ int main (int argc, char ** argv)
 			    {
 			      r--;
 			    }
+			  FEL_real_size += 1;
 		
 			  FEL[r][1] = time + GetTime(Lambda1);
 			  FEL[r][0] = 1;
@@ -447,7 +488,10 @@ int main (int argc, char ** argv)
 	    }  
 	}     
 
+
       //update FEL_real_size to number of non garbage in Queue_List or FEL whichever is larger
+      //if there was a departure, Queue_List only decreased and FEL_real_size has already been updated
+      /*
       r = FEL_size - 1;
       while (FEL[r][1] >= time)
 	{
@@ -461,7 +505,7 @@ int main (int argc, char ** argv)
 	}
       if(FEL_real_size < (r + 2 - FEL_size))
 	FEL_real_size = r + 2 - FEL_size;
-
+      */
 
       CumulWaitingTime0 += (time - Previous_T) * Previous_Queue0;
       CumulWaitingTime1 += (time - Previous_T) * Previous_Queue1;
