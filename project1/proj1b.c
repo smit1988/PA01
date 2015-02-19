@@ -1,560 +1,562 @@
 // Noah Smith smit1988
 // Vikram Manja vmanja
 
+
+
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
 
-int GetTime(float LamOrServ);
 
-int GetTime(float LamOrServ)
-{
-  double X = (double)rand()/ RAND_MAX; // Generates X value between 0 and 1
-  int R0 = ceil(-(1/LamOrServ) * log(1-X));  // Generates IA time R value
-  return R0;
-}
 
-int main (int argc, char ** argv)
+
+typedef struct Nodes
 {
+  
+  int priority;
+  int Time;
+  int subtasks;
+  int Servicetimes[32];
+  int Loadbalance;
+  struct Nodes * next; 
+
+} ArrivalNode;
+
+typedef struct Nodes2
+{
+  int Time;
+  struct Nodes2 * next;
+
+} DepartureNode;
+
+ArrivalNode * Arrival_createNode(FILE * filepointer);
+
+
+
+int main (int argc, char ** argv) 
+{
+
   int TasksRemain = 0;
   int NumberofLines = 2;
-  int TasksRemain0 = 2;
-  int TasksRemain1 = 2;
-  float Lambda0, Lambda1, AvgServiceTime;
-  FILE * fp2;
+  FILE * fp2 = NULL;
   char buffer[1024];
-  fp2 = NULL;
-  Lambda0 = 0;
-  Lambda1 = 0;
-  AvgServiceTime = 0;
+  int i = 0;
+  int simtime;
+  int time;
+  int j = 0;
+  int newdeptime;
+  int worked = 0;
 
-  if (argc > 2)  // MODE 1
-    {
-      Lambda0 = atof(argv[1]);
-      Lambda1 = atof(argv[2]);
-      AvgServiceTime = atof(argv[3]);
+  ArrivalNode Arrival_head;
+  DepartureNode Departure_head;
+  int Free_Servers = 64;
 
-      TasksRemain = atoi(argv[4]);
-      TasksRemain0 = TasksRemain;
-      TasksRemain1 = TasksRemain;
-    }
+  ArrivalNode * ptr1 = NULL, * CurrentNode = NULL, * ptr2= NULL, * NextNode = NULL;
+  DepartureNode * Dep_ptr1 = NULL, * Dep_ptr2 = NULL;
 
- /* if (argc ==2) 
-    {
-      fp2 = fopen(argv[1], "r");
+  int Indicator=0, QueueLenght0 = 0, QueueLenght1 = 0;
+/*---------------------------Creating ARRIVAL NODE-----------------------------*/  
+ArrivalNode * Arrival_createNode(FILE * filepointer)
 
-      while (feof(fp2) == 0)
-	{
+{
+  ArrivalNode * NewNode = malloc(sizeof(ArrivalNode));
+  fscanf (filepointer, "%d %d %d " , &NewNode->Time, &NewNode->priority, &NewNode->subtasks);
+  int I = 0;
+  for (I = 0; I <  NewNode->subtasks; I++)
+  {
+    fscanf(filepointer, "%d", &NewNode->Servicetimes[I]);
+  }
+  //PUT IN Loadbalancing Calculations
+  NewNode->next = NULL;
+  printf("Creating Arrival node\n" );
+  return NewNode;
+}
+
+
+  if ( argc == 2)
+  {
+   fp2 = fopen(argv[1], "r"); // opening file
+
+      while (feof(fp2) == 0) // counting lines
+	 {
 	  fgets(buffer,1023,fp2);
 	  TasksRemain++;
-	}
-      TasksRemain--;
-      fseek(fp2, 0, SEEK_SET); // fp2 @ beginning of file
-      NumberofLines = TasksRemain;
+	 }
+    
+    TasksRemain--;
+    fseek(fp2, 0, SEEK_SET); // fp2 @ beginning of file
+
+    NumberofLines = TasksRemain;
+
+    printf("Starting Node creation\n");
+  /*-----------------------------------CREATING LINKED LIST OF ARRIVALS--------------------------------*/
+    Arrival_head.next = Arrival_createNode(fp2);
+    ptr1 = Arrival_head.next;
+
+    printf("Created first node\n");
+    for (i = 1; i < NumberofLines -1; i++)
+    {
+      ptr1->next = Arrival_createNode(fp2);
+      ptr1 = ptr1->next; 
+      printf("%d", ptr1->Time);
     }
-*/
 
-   // DECLARATIONS
-   
-  int Service_Array[NumberofLines];
-  int Arrival_Counter;
-  Arrival_Counter = 0;
-  Service_Array[0] = 0;
+    
+    
+    //Initializing Times
+    
+    CurrentNode = Arrival_head.next;
+    simtime = CurrentNode->Time;
+    time = CurrentNode->Time;
+    Departure_head.next = NULL;
+/*************************************************--------------------WHILE LOOP-----------------------------******************/
 
-  FILE * fp;
-  int Server = 64, Queue_0 = 0, Queue_1 = 0, i,j, k, r = 0, NumberOfTimes, a =0, b =0, c =0;
-  int FEL_real_size = 0;
+    while ( (Arrival_head.next != NULL) || (Departure_head.next != NULL) ) //while departures/arrivals still exist
+    {
       
-  int QueueLength = 0;
-  double swap1 = 0, swap2 = 0, swap3 =0;
-  double time = 0, start_time = 0, ServiceTimeStart = 0, AverageCPU = 0;
-  double CumulWaitingTime1 = 0, CumulWaitingTime0 = 0;
-  double Previous_T = 0, Previous_Queue0 = 0, Previous_Queue1 = 0;
-  double Mu_Min = (AvgServiceTime * 3), Mu_Max = 0, Load_Bal_Fac = 0;
-  double Cumul_Load_Bal = 0, Previous_Server = 0, CumulServer = 0;
+    printf("WHILE\n");
 
-  int FEL_size = (TasksRemain * 2) + 68;
-  double FEL[FEL_size][2]; // Future events list
-  double Current_FEL[68][2];  // Current Events list
-  double Queue_List [FEL_size][3]; // Current Queue
+    /*----------------------DEPARTURES---------------------------*/
+      if (Departure_head.next != NULL) // Look for departures if they exist
+      { 
 
-  // INITIALIZING FEL TABLE
-  for(i = 0; i < (FEL_size); i++)
-    {      
-      FEL[i][0] = 2;
-      FEL[i][1] = -1;
-      Queue_List[i][0] = 2;
-      Queue_List[i][1] = -1;
-      Queue_List[i][2] = 65;
-    }
+        while ( (Departure_head.next)->Time == time) //If departures occur, pop front node and increment freeservers
+        { 
+          Free_Servers++;
+          Dep_ptr1 = Departure_head.next;
+          Dep_ptr2 = Dep_ptr1->next;
+          Departure_head.next = Dep_ptr2;
+          //Dep_ptr1->next = NULL;
+          //free(Dep_ptr1->next);
+          free(Dep_ptr1);
 
-  // INITIALLIZING CURRENT_FEL
-  if(argc > 2)
-    {
-      FEL[FEL_size - 1][0] = 0;
-      FEL[FEL_size - 1][1] = 0;
-      FEL[FEL_size - 2][0] = 1;
-      FEL[FEL_size - 2][1] = 0;
-      FEL_real_size = 2;
-
-      TasksRemain1--;
-      TasksRemain0--; // Decrementing # arrivals
-    }
+          printf("DEPARTING\n");
+        }
+      }
+   
+    if (Arrival_head.next == NULL){time = (Departure_head.next)->Time; continue;}
 
 
-  start_time = time;
-  ServiceTimeStart = time;
 
-  //BEGINNING OF WHILE LOOP
-  while( ( (TasksRemain0 > 0) || (TasksRemain1 > 0) ) && (NumberofLines > 0) ) // Need condition for mode2
-    {
-      //printf("while\n");
-      //Check for all of the current time events
-      NumberOfTimes = 0;//Current number of time events
-      for(i = 0; i < FEL_real_size; i++)
-	{
-	  if(FEL[FEL_size - 1 - i][1] == time)
-	    {
-	      //Copy one line of the FEL to the Current_FEL
-	      Current_FEL[NumberOfTimes][0] = FEL[FEL_size - 1 - i][0];
-	      Current_FEL[NumberOfTimes][1] = FEL[FEL_size - 1 - i][1];
-	      NumberOfTimes++;
-	    }
-	}
+      /*----------------------------------Check queuelist for priority 0----------------------------------*/
+      ptr1 = &Arrival_head;
+      //printf("%d\n",(ptr1->next)->Time);
+      while ( (ptr1->next)->Time < time) // || ( ( Indicator < 0) && (CurrentNode->Time = time) ) )  
+      {
+        printf("checking 0\n");
+        if ( (ptr1->next)->priority == 0)
+        {
+          printf("found 0\n");
+          
+         if ( (ptr1->next)->subtasks < Free_Servers)
+         {
+          ptr2 = ptr1->next;
+          if (ptr2 == CurrentNode)
+            { if(ptr2->Time != (ptr2->next)->Time ) 
+              {
+                CurrentNode = ptr1;
+              } 
+              else 
+              {
+                CurrentNode = CurrentNode->next;
+              }
+            }
+          QueueLenght0--;
+          Free_Servers = Free_Servers - ptr2->subtasks;
+          Dep_ptr1 = &Departure_head;
+           // CREATING DEPARTURE NODES
+          for(i = 0; i < (ptr2->subtasks) ; i++)
+          {
+            worked = 0;
+            Dep_ptr1 = &Departure_head;
+            newdeptime = time + ptr2->Servicetimes[i];
+            printf("%d\n", newdeptime );
+            
+            if (Dep_ptr1->next == NULL)        // if Departures empty
+              {
+               Dep_ptr1->next = malloc(sizeof(DepartureNode));
+               Dep_ptr1 = Dep_ptr1->next;
+               Dep_ptr1->Time = newdeptime;
+               Dep_ptr1->next = NULL;
+               continue;
+              }
 
-      if(NumberOfTimes != 0)//probably unnecessary
-	{
-	  //Departures > priorities > nonpriorities
-	  //After an event, change Current_FEL[x][0] to 2
-	  for(i = -1; i <= 1; i++)//Look in order
-	    {
-	      for(k = 0; k < NumberOfTimes; k++)//Go through all looking for i
-		{
-		  if(Current_FEL[k][0] == i)
-		    {
-		      //Do the event corresponding to i
-		      if(i == -1)
-			{
-			  Server++;
-			  /*
-			  r = FEL_size - 1;
-			  while (FEL[r][1] >= time)
-			    {
-			      r--;
-			    }
-			  FEL_real_size = r + 2 - FEL_size;
-			  r = FEL_size - 1;
-			  while(Queue_List[r][1] != -1)
-			    {
-			      r--;
-			    }
-			  if(FEL_real_size < (r + 2 - FEL_size))
-			    FEL_real_size = r + 2 - FEL_size;
-			  */
+            // departures not empty
 
-			  for (b = 0; b < (FEL_real_size); b++)  // SORTING QUEUE_LIST by time
-			    {
-			      for (c = b + 1; c < (FEL_real_size); c++)
-				{
-				  if (Queue_List[FEL_size - 1 - b][1] < Queue_List[FEL_size - 1 - c][1]) 
-				    {
-				      swap1 =  Queue_List[FEL_size - 1 - c][1];
-				      swap2 = Queue_List[FEL_size - 1 - c][0];
-				      swap3 = Queue_List[FEL_size - 1 - c][2];
-				      Queue_List[FEL_size - 1 - c][1] = Queue_List[FEL_size - 1 - b][1];
-				      Queue_List[FEL_size - 1 - c][0] = Queue_List[FEL_size - 1 - b][0];
-				      Queue_List[FEL_size - 1 - c][2] = Queue_List[FEL_size - 1 - b][2];
-				      Queue_List[FEL_size - 1 - b][1] = swap1;
-				      Queue_List[FEL_size - 1 - b][0] = swap2;
-				      Queue_List[FEL_size - 1 - b][2] = swap3;
-				    }
-				}
-			    }
+            while (Dep_ptr1->next != NULL)
+            {
+              if ( (Dep_ptr1->next)->Time > newdeptime)
+              {
+                Dep_ptr2 = Dep_ptr1->next;
+                Dep_ptr1->next = malloc(sizeof(DepartureNode));
+                Dep_ptr1 = Dep_ptr1->next;
+                Dep_ptr1->next = Dep_ptr2;
+                Dep_ptr1->Time = newdeptime;
+                worked = 1;
+                break;
+              }
+             }  
 
-			  c = 0;
-			  for(a = FEL_real_size - 1; a >= 0; a--)
-			    {
-			      if (Queue_List[FEL_size - 1 - a][0] == c ) //if priority c 
-				{
-				  if (Queue_List[FEL_size - 1 - a][2] <= Server ) // if it can be serviced
-				    {
-				      Server -= Queue_List[FEL_size - 1 - a][2];
-				      if (c ==0)
-					{
-					  Queue_0--;
-					}
-				      if (c ==1)
-					{
-					  Queue_1--;
-					}
+             if (worked == 1){continue;} 
 
-				      for (b =0; b < Queue_List[FEL_size - 1 - a][2]; b++) // generate departure time for subtasks
-					{
-					  //x=0;
-					  r = FEL_size - 1;
-					  while (FEL[r][1] >= time)
-					    {
-					      r--;
-					      //x++;
-					    }
-					  //x+1 is the new fel real size
-					  //x = r - (felsize -1)
-					  //FEL_real_size = r + 2 - FEL_size;
-					  FEL_real_size += 1;
-					  if(argc > 2)
-					    {
-					      FEL[r][1] = time + GetTime(AvgServiceTime);
-					      //Finding Lambda min and mix
-					      if(Mu_Min < (FEL[r][1] - time))
-						Mu_Min = (FEL[r][1] - time);
-					      //Mu_Min = 1/(umin) which is CPU time taken by longest sub-task (backwardsish)
-					      if(Mu_Max > (FEL[r][1] - time))
-						Mu_Max = (FEL[r][1] - time);
-					      Load_Bal_Fac = (Mu_Min - Mu_Max)/AvgServiceTime;
-					      FEL[r][0] = -1;
-					    }
-					}
-				      Cumul_Load_Bal += Load_Bal_Fac;
-				      Queue_List[FEL_size - 1 - a][0] = 2;
-				      Queue_List[FEL_size - 1 - a][1] = -1;
-				      Queue_List[FEL_size - 1 - a][2] = 65;
-				    }
-				}
-			      if((c==0) && (a==0))
-				{
-				  c = 1;
-				  a = FEL_real_size;
-				}
-			    } 				  	
-			}
-
-		      else if(i == 0) // PRIORITY 0 ARRIVAL
-			{
-			  r = FEL_size - 1;
-			  while(Queue_List[r][1] != -1)
-			    {
-			      r--;       //finds garbage in Quelist
-			    }
-			  FEL_real_size += 1;
-			  Queue_List[r][0] = 0;
-			  Queue_List[r][1] = time;
-			  Queue_List[r][2] = rand() % 32 + 1;
-			  Queue_0++;
-
-			  /*
-			  r = FEL_size - 1;
-			  while (FEL[r][1] >= time)
-			    {
-			      r--;
-			    }
-			  FEL_real_size = r + 2 - FEL_size;
-			  r = FEL_size - 1;
-			  while(Queue_List[r][1] != -1)
-			    {
-			      r--;
-			    }
-			  if(FEL_real_size < (r + 2 - FEL_size))
-			    FEL_real_size = r + 2 - FEL_size;
-			  */
-
-			  for(b = 0; b < (FEL_real_size); b++)  // SORTING QUEUE_LIST by time
-			    {
-			      for(c = b + 1; c < (FEL_real_size); c++)
-				{
-				  if(Queue_List[FEL_size - 1 - b][1] < Queue_List[FEL_size - 1 - c][1]) 
-				    {
-				      swap1 =  Queue_List[FEL_size - 1 - b][1];
-				      swap2 = Queue_List[FEL_size - 1 - b][0];
-				      swap3 = Queue_List[FEL_size - 1 - b][2];
-				      Queue_List[FEL_size - 1 - b][1] = Queue_List[FEL_size - 1 - c][1];
-				      Queue_List[FEL_size - 1 - b][0] = Queue_List[FEL_size - 1 - c][0];
-				      Queue_List[FEL_size - 1 - b][2] = Queue_List[FEL_size - 1 - c][2];
-				      Queue_List[FEL_size - 1 - c][1] = swap1;
-				      Queue_List[FEL_size - 1 - c][0] = swap2;
-				      Queue_List[FEL_size - 1 - c][2] = swap3;
-				    }
-				}
-			    }
-			  //This segment finds the exact FEL_real_size
-			  r = FEL_size - 1;
-                          while (FEL[r][1] >= time)
-                            {
-                              r--;
-                            }
-			  FEL_real_size = FEL_size - r ;
-                          //FEL_real_size = r + 2 - FEL_size;
-                          r = FEL_size - 1;
-                          while(Queue_List[r][1] != -1)
-                            {
-                              r--;
-                            }
-                          if(FEL_real_size < (r + 2 - FEL_size))
-                            FEL_real_size = r + 2 - FEL_size;
-
-			  c = 0;
-			  for(a = FEL_real_size - 1; a >= 0; a--)
-			    {
-			      if(Queue_List[FEL_size - 1 - a][0] == c ) //if priority c 
-				{
-				  if(Queue_List[FEL_size - 1 - a][2] <= Server ) // if it can be serviced
-				    {
-				      Server -= Queue_List[FEL_size - 1 - a][2];
-				      if(c ==0)
-					{
-					  Queue_0--;
-					}
-				      if(c ==1)
-					{
-					  Queue_1--;
-					}
-				      for(b =0; b < Queue_List[FEL_size - 1 - a][2]; b++) // generate departure time for subtasks
-					{
-					  r = FEL_size - 1;
-					  while(FEL[r][1] >= time)
-					    {
-					      r--;
-					    }
-					  FEL_real_size += 1;
-					  if(argc > 2)
-					    {
-					      FEL[r][1] = time + GetTime(AvgServiceTime);
-					      //Finding Lambda min and mix
-                                              if(Mu_Min < (FEL[r][1] - time))
-                                                Mu_Min = (FEL[r][1] - time);
-                                              //Mu_Min = 1/(umin) which is CPU time taken by longest sub-task (backwardsish)
-						if(Mu_Max > (FEL[r][1] - time))
-						  Mu_Max = (FEL[r][1] - time);
-                                              Load_Bal_Fac = (Mu_Min - Mu_Max)/AvgServiceTime;
-					      FEL[r][0] = -1;
-					    }
-					}
-                                      Cumul_Load_Bal += Load_Bal_Fac;
-				      Queue_List[FEL_size - 1 - a][0] = 2;
-				      Queue_List[FEL_size - 1 - a][1] = -1;
-				      Queue_List[FEL_size - 1 - a][2] = 65;
-				    }
-				}
-			      if((c==0) && (a==0))
-				{
-				  c=1;
-				  a=FEL_real_size;
-				}
-			    }
-
-			  r = FEL_size - 1;
-			  while (FEL[r][1] >= time)
-			    {
-			      r--;
-			    }
-			  FEL_real_size += 1;
-			  FEL[r][1] = time + GetTime(Lambda0);
-			  FEL[r][0] = 0;
-			  TasksRemain0--;
-			} // i == 0
+              if (Dep_ptr1->next == NULL)        // if Departures empty
+              {
+               Dep_ptr1->next = malloc(sizeof(DepartureNode));
+               Dep_ptr1 = Dep_ptr1->next;
+               Dep_ptr1->Time = newdeptime;
+               Dep_ptr1->next = NULL;
+               continue;
+              }
 
 
-		      else
-			{
-			  r = FEL_size - 1;
-			  while(Queue_List[r][1] != -1)
-			    {
-			      r--;
-			    }
-			  FEL_real_size += 1;
-			  Queue_List[r][0] = 1;
-			  Queue_List[r][1] = time;
-			  Queue_List[r][2] = rand() % 32 + 1;
-			  Queue_1++;
-
-			  /*
-			  r = FEL_size - 1;
-			  while (FEL[r][1] >= time)
-			    {
-			      r--;
-			    }
-			  FEL_real_size = r + 2 - FEL_size;
-			  r = FEL_size - 1;
-			  while(Queue_List[r][1] != -1)
-			    {
-			      r--;
-			    }
-			  if(FEL_real_size < (r + 2 - FEL_size))
-			    FEL_real_size = r + 2 - FEL_size;
-			  */
-
-			  for(b = 0; b < (FEL_real_size); b++)  // SORTING QUEUE_LIST by time
-			    {
-			      for(c = b + 1; c < (FEL_real_size); c++)
-				{
-				  if(Queue_List[FEL_size - 1 - b][1] < Queue_List[FEL_size - 1 - c][1]) 
-				    {
-				      swap1 =  Queue_List[FEL_size - 1 - b][1];
-				      swap2 = Queue_List[FEL_size - 1 - b][0];
-				      swap3 = Queue_List[FEL_size - 1 - b][2];
-				      Queue_List[FEL_size - 1 - b][1] = Queue_List[FEL_size - 1 - c][1];
-				      Queue_List[FEL_size - 1 - b][0] = Queue_List[FEL_size - 1 - c][0];
-				      Queue_List[FEL_size - 1 - b][2] = Queue_List[FEL_size - 1 - c][2];
-				      Queue_List[FEL_size - 1 - c][1] = swap1;
-				      Queue_List[FEL_size - 1 - c][0] = swap2;
-				      Queue_List[FEL_size - 1 - c][2] = swap3;
-				    }
-				}
-			    }
-
-			  r = FEL_size - 1;
-                          while (FEL[r][1] >= time)
-                            {
-                              r--;
-                            }
-			  FEL_real_size = FEL_size - r;
-                          //FEL_real_size = r + 2 - FEL_size;
-                          r = FEL_size - 1;
-                          while(Queue_List[r][1] != -1)
-                            {
-                              r--;
-                            }
-                          if(FEL_real_size < (r + 2 - FEL_size))
-                            FEL_real_size = r + 2 - FEL_size;
+            }
 
 
-			  c = 0;
-			  for(a = FEL_real_size - 1; a >= 0; a--)
-			    {
-			      if(Queue_List[FEL_size - 1 - a][0] == c ) //if priority c 
-				{
-				  if(Queue_List[FEL_size - 1 - a][2] <= Server ) // if it can be serviced
-				    {
-				      Server -= Queue_List[FEL_size - 1 - a][2];
-				      if(c ==0)
-					{
-					  Queue_0--;
-					}
-				      if(c ==1)
-					{
-					  Queue_1--;
-					}
-				      for(b =0; b < Queue_List[FEL_size - 1 - a][2]; b++) // generate departure time for subtasks
-					{
-					  r = FEL_size - 1;
-					  while(FEL[r][1] >= time)
-					    {
-					      r--;
-					    }
-					  FEL_real_size += 1;
-					  if(argc > 2)
-					    {
-					      FEL[r][1] = time + GetTime(AvgServiceTime);
-                                              //Finding Lambda min and mix
-                                              if(Mu_Min < (FEL[r][1] - time))
-                                                Mu_Min = (FEL[r][1] - time);
-                                              //Mu_Min = 1/(umin) which is CPU time taken by longest sub-task (backwardsish)
-					      if(Mu_Max > (FEL[r][1] - time))
-						Mu_Max = (FEL[r][1] - time);
-                                              Load_Bal_Fac = (Mu_Min - Mu_Max)/AvgServiceTime;
-					      FEL[r][0] = -1;
-					    }
-					}
-                                      Cumul_Load_Bal += Load_Bal_Fac;
-				      Queue_List[FEL_size - 1 - a][0] = 2;
-				      Queue_List[FEL_size - 1 - a][1] = -1;
-				      Queue_List[FEL_size - 1 - a][2] = 65;
-				    }
-				}
-			      if((c==0) && (a==0))
-				{
-				  c=1;
-				  a=FEL_real_size;
-				}
-			    }
-			  r = FEL_size - 1;
-			  while (FEL[r][1] >= time)
-			    {
-			      r--;
-			    }
-			  FEL_real_size += 1;
-		
-			  FEL[r][1] = time + GetTime(Lambda1);
-			  FEL[r][0] = 1;
-			  TasksRemain1--;	
-	  	
-			} // else (i == 1)
-		    } 
-		} 
-	    }  
-	}     
+            
+          ptr1->next = ptr2->next;
+          //free(ptr2->subtasks);
+          free (ptr2); // Pop arrival node
+          continue;         
+         }
+        }
+        ptr1 = ptr1->next;
+        //Indicator++;
+      }
+/*-----------------------------Check queuelist for priority 1------------------------------------*/
+      ptr1 = &Arrival_head;
+      while ( (ptr1->next)->Time < time) //|| (( Indicator < 1) && (CurrentNode->Time = time) ) ) 
+ 
+      {
+        printf("Checkin 1 \n");
+
+        if ( (ptr1->next)->priority == 1)
+        {
+         printf("Found 1\n");
+         if ( (ptr1->next)->subtasks < Free_Servers)
+         {
+          ptr2 = ptr1->next;
+          if (ptr2 == CurrentNode){ if(ptr2->Time != (ptr2->next)->Time ) {CurrentNode = ptr1;} else {CurrentNode = CurrentNode->next;} }
+          QueueLenght1--;
+          Free_Servers = Free_Servers - ptr2->subtasks;
+          Dep_ptr1 = &Departure_head;
+
+           // CREATING DEPARTURE NODES
+          for(i = 0; i < (ptr2->subtasks) ; i++)
+          {
+            worked = 0;
+            Dep_ptr1 = &Departure_head;
+            newdeptime = time + ptr2->Servicetimes[i];
+            printf("%d\n", newdeptime );
+            
+            if (Dep_ptr1->next == NULL)        // if Departures empty
+              {
+               Dep_ptr1->next = malloc(sizeof(DepartureNode));
+               Dep_ptr1 = Dep_ptr1->next;
+               Dep_ptr1->Time = newdeptime;
+               Dep_ptr1->next = NULL;
+               continue;
+              }
+
+            // departures not empty
+
+            while (Dep_ptr1->next != NULL)
+            {
+              if ( (Dep_ptr1->next)->Time > newdeptime)
+              {
+                Dep_ptr2 = Dep_ptr1->next;
+                Dep_ptr1->next = malloc(sizeof(DepartureNode));
+                Dep_ptr1 = Dep_ptr1->next;
+                Dep_ptr1->next = Dep_ptr2;
+                Dep_ptr1->Time = newdeptime;
+                worked =1;
+                break;
+              }
+             }  
+
+                  if (worked == 1){continue;} 
+
+              if (Dep_ptr1->next == NULL)        // if Departures empty
+              {
+               Dep_ptr1->next = malloc(sizeof(DepartureNode));
+               Dep_ptr1 = Dep_ptr1->next;
+               Dep_ptr1->Time = newdeptime;
+               Dep_ptr1->next = NULL;
+               continue;
+              }
 
 
-      //update FEL_real_size to number of non garbage in Queue_List or FEL whichever is larger
-      //if there was a departure, Queue_List only decreased and FEL_real_size has already been updated
-      /*
-      r = FEL_size - 1;
-      while (FEL[r][1] >= time)
-	{
-	  r--;
-	}
-      FEL_real_size = r + 2 - FEL_size;
-      r = FEL_size - 1;
-      while(Queue_List[r][1] != -1)
-	{
-	  r--;
-	}
-      if(FEL_real_size < (r + 2 - FEL_size))
-	FEL_real_size = r + 2 - FEL_size;
-      */
+            }
 
-      CumulWaitingTime0 += (time - Previous_T) * Previous_Queue0;
-      CumulWaitingTime1 += (time - Previous_T) * Previous_Queue1;
-      Previous_Queue0 = Queue_0;
-      Previous_Queue1 = Queue_1;
-      //Add up FREE server time
-      CumulServer += (time - Previous_T) * Previous_Server;
-      Previous_Server = Server;
-      Previous_T = time;
 
-      //Sort FEL
-      for (i = 0; i < (FEL_real_size); i++)
-	{
-	  for (j = i + 1; j < (FEL_size); j++)
-	    {
-	      if (FEL[FEL_size - 1 - i][1] < FEL[FEL_size - 1 - j][1])
-	   	 {
-		   swap1 =  FEL[FEL_size - 1 - i][1];
-		   swap2 = FEL[FEL_size - 1 - i][0];
-		   FEL[FEL_size - 1 - i][1] = FEL[FEL_size - 1 - j][1];
-		   FEL[FEL_size - 1 - i][0] = FEL[FEL_size - 1 - j][0];
-		   FEL[FEL_size - 1 - j][1] = swap1;
-		   FEL[FEL_size - 1 - j][0] = swap2;
-		 }
-	    }
-	}
+            
+          ptr1->next = ptr2->next;
+          //free(ptr2->subtasks);
+          free (ptr2); // Pop arrival node
+          continue;         
+         }
+         }
+        
+        ptr1 = ptr1->next;
+     //   Indicator++;
+        
+      }
 
-      r = 0;
-      //r = FEL_size - 4 - FEL_real_size;
-      while(FEL[r][1] <= time)
-	{
-	  r++;
-	  if(r == FEL_size - 1)
-	    break;
-	}
-      //last value
-      time = FEL[r][1];
-      //printf("time: %lf\n",time);
-    } //END of while loop
 
-  double AverageQueLength =0;
-  double AverageLoadFactor = 0;
-  double AverageUtil = 0;
-  double AverageWatitingTime1 = 0;
-  double AverageWatitingTime0 = 0;
+      Indicator=5; // random positive int
+      
+      
+  /* CHECK IF ARRIVAL(s) OCCURED  */
+      if ((QueueLenght1==0) && (QueueLenght0 ==0)) { Indicator = 0;}  
 
-  AverageUtil = 1 - (CumulServer / (64*(time - start_time)));
-  AverageLoadFactor = Cumul_Load_Bal / (((double)TasksRemain) * 2);
-  AverageQueLength = (CumulWaitingTime1 + CumulWaitingTime0)/(time - start_time);
-  AverageWatitingTime1 = CumulWaitingTime1/((double)TasksRemain);
-  AverageWatitingTime0 = CumulWaitingTime0/((double)TasksRemain);
+      if (CurrentNode->Time == time){ if (CurrentNode->priority == 0) {QueueLenght0++;} if (CurrentNode->priority == 1){QueueLenght1++;} 
+        if(Indicator==0){Indicator--;} }
+      NextNode = CurrentNode->next;
+      if (NextNode->Time == CurrentNode->Time) { CurrentNode = CurrentNode->next;  if (CurrentNode->priority == 0) {QueueLenght0++;} if (CurrentNode->priority == 1){QueueLenght1++;} 
+        if(Indicator == -1){Indicator--;} }
+      
+      j = Indicator;    
 
-  printf("AverageUtil: AverageLoadFactor: AverageQueLength: AverageWatitingTime0: AverageWatitingTime1:\n");
-  printf("%lf       %lf             %lf            %lf                %lf\n",AverageUtil, AverageLoadFactor, AverageQueLength, AverageWatitingTime0, AverageWatitingTime1);
+
+       ptr1 = &Arrival_head;
+     // printf("%d\n",(ptr1->next)->Time);
+      while ( (ptr1->next)->Time <= time) // || ( ( Indicator < 0) && (CurrentNode->Time = time) ) )  
+      {
+        printf("checking 0\n");
+        if ( (ptr1->next)->priority == 0)
+        {
+          printf("found 0\n");
+          
+         if ( (ptr1->next)->subtasks < Free_Servers)
+         {
+          ptr2 = ptr1->next;
+          if (ptr2 == CurrentNode)
+            { if(ptr2->Time != (ptr2->next)->Time ) 
+              {
+                CurrentNode = ptr1;
+              } 
+              else 
+              {
+                CurrentNode = CurrentNode->next;
+              }
+            }
+          QueueLenght0--;
+          Free_Servers = Free_Servers - ptr2->subtasks;
+          Dep_ptr1 = &Departure_head;
+
+          // CREATING DEPARTURE NODES
+          for(i = 0; i < (ptr2->subtasks) ; i++)
+          {
+            worked = 0;
+            Dep_ptr1 = &Departure_head;
+            newdeptime = time + ptr2->Servicetimes[i];
+            printf("%d\n", newdeptime );
+            
+            if (Dep_ptr1->next == NULL)        // if Departures empty
+              {
+               Dep_ptr1->next = malloc(sizeof(DepartureNode));
+               Dep_ptr1 = Dep_ptr1->next;
+               Dep_ptr1->Time = newdeptime;
+               Dep_ptr1->next = NULL;
+               continue;
+              }
+
+            // departures not empty
+
+            while (Dep_ptr1->next != NULL)
+            {
+              if ( (Dep_ptr1->next)->Time >= newdeptime)
+              {
+                Dep_ptr2 = Dep_ptr1->next;
+                Dep_ptr1->next = malloc(sizeof(DepartureNode));
+                Dep_ptr1 = Dep_ptr1->next;
+                Dep_ptr1->next = Dep_ptr2;
+                Dep_ptr1->Time = newdeptime;
+                worked = 1;
+                break;
+              }
+              Dep_ptr1 = Dep_ptr1->next;
+             }  
+
+             if (worked == 1){continue;} 
+
+              if (Dep_ptr1->next == NULL)        // if Departures empty
+              {
+               Dep_ptr1->next = malloc(sizeof(DepartureNode));
+               Dep_ptr1 = Dep_ptr1->next;
+               Dep_ptr1->Time = newdeptime;
+               Dep_ptr1->next = NULL;
+               continue;
+              }
+
+
+            }
+
+
+            
+          ptr1->next = ptr2->next;
+          //free(ptr2->subtasks);
+          free (ptr2); // Pop arrival node
+          continue;         
+         }
+
+         }
+        
+        ptr1 = ptr1->next;
+        //Indicator++;
+      }
+/*-----------------------------Check queuelist for priority 1------------------------------------*/
+      ptr1 = &Arrival_head;
+      while ( (ptr1->next)->Time <= time) //|| (( Indicator < 1) && (CurrentNode->Time = time) ) ) 
+ 
+      {
+        printf("Checkin 1 \n");
+
+        if ( (ptr1->next)->priority == 1)
+        {
+         printf("Found 1\n");
+         if ( (ptr1->next)->subtasks < Free_Servers)
+         {
+          ptr2 = ptr1->next;
+          if (ptr2 == CurrentNode){ if(ptr2->Time != (ptr2->next)->Time ) {CurrentNode = ptr1;} else {CurrentNode = CurrentNode->next;} }
+          QueueLenght1--;
+          Free_Servers = Free_Servers - ptr2->subtasks;
+          Dep_ptr1 = &Departure_head;
+      // CREATING DEPARTURE NODES
+          for(i = 0; i < (ptr2->subtasks) ; i++)
+          {
+            worked = 0;
+            Dep_ptr1 = &Departure_head;
+            newdeptime = time + ptr2->Servicetimes[i];
+            printf("%d\n", newdeptime);
+            
+            if (Dep_ptr1->next == NULL)        // if Departures empty
+              {
+               Dep_ptr1->next = malloc(sizeof(DepartureNode));
+               Dep_ptr1 = Dep_ptr1->next;
+               Dep_ptr1->Time = newdeptime;
+               Dep_ptr1->next = NULL;
+               continue;
+              }
+
+            // departures not empty
+
+            while (Dep_ptr1->next != NULL)
+            {
+              if ( (Dep_ptr1->next)->Time > newdeptime)
+              {
+                worked = 1;
+                Dep_ptr2 = Dep_ptr1->next;
+                Dep_ptr1->next = malloc(sizeof(DepartureNode));
+                Dep_ptr1 = Dep_ptr1->next;
+                Dep_ptr1->next = Dep_ptr2;
+                Dep_ptr1->Time = newdeptime;
+                break;
+              }
+              Dep_ptr1 = Dep_ptr1->next;
+             }  
+
+              if (worked == 1){continue;} 
+
+              if (Dep_ptr1->next == NULL)        // if Departures empty
+              {
+               Dep_ptr1->next = malloc(sizeof(DepartureNode));
+               Dep_ptr1 = Dep_ptr1->next;
+               Dep_ptr1->Time = newdeptime;
+               Dep_ptr1->next = NULL;
+               continue;
+              }
+
+
+            }
+
+
+            
+          ptr1->next = ptr2->next;
+          //free(ptr2->subtasks);
+          free (ptr2); // Pop arrival node
+          continue;         
+          }         
+         }
+        
+        ptr1 = ptr1->next;
+     //   Indicator++;
+        
+      }
+
+
+
+
+
+
+
+
+    printf("Time update\n");
+/*-----------------------------Update time and the current arrival node--------------*/
+  while ((CurrentNode->next)->Time <= time) {CurrentNode = CurrentNode->next;} // update current node    
+
+  printf("Updated current node\n");
+
+  if (Departure_head.next == NULL) 
+  {
+    CurrentNode=CurrentNode->next;
+    time = CurrentNode->Time;
+    printf(" Time = %d\n", time);
+    continue;
+  }
+
+  printf("Update current node/time\n");
+
+  if (  ((Departure_head.next)->Time) < ((CurrentNode->next)->Time) )
+  {
+    time = (Departure_head.next)->Time;
+  }
+      // update time
+  else 
+  {
+    CurrentNode=CurrentNode->next;
+    time = CurrentNode->Time;
+  }
+
+
+printf(" \nTime = %d\n\n", time);
+
+
+    } // end of WHILE
+
+
+
+   
+
+
+    /* Testing
+    ArrivalNode * Head = Arrival_createNode(fp2);
+    ArrivalNode * Head2 = Arrival_createNode(fp2);
+
+    printf(" %d %d %d %d %d \n", Head->Servicetimes[0], Head->Servicetimes[1], Head->Servicetimes[2],Head->Servicetimes[3], Head->Servicetimes[4] );
+    printf(" %d %d %d %d %d \n", Head2->Servicetimes[0], Head2->Servicetimes[1], Head2->Servicetimes[2],Head2->Servicetimes[3], Head2->Servicetimes[4] );
+
+    printf("%d %d %d", Head->Time, Head->priority, Head->subtasks);
+   */
+
+
+ 
+
+
+
+
+
+
+
+ } // end if argc ==2
+
+
+if (argc == 2) 
+{
+ fclose(fp2);
+}
+
   return 0;
-}     // End of main
+}
