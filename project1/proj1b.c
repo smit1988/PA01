@@ -45,6 +45,36 @@ int GetTime(float LamOrServ)
 }
 
 
+/*---------------------------Creating ARRIVAL NODE-----------------------------*/
+ArrivalNode * Arrival_createNode(FILE * filepointer)
+
+{
+  ArrivalNode * NewNode = malloc(sizeof(ArrivalNode));
+  fscanf (filepointer, "%d %d %d " , &NewNode->Time, &NewNode->priority, &NewNode->subtasks);
+  int I = 0 ,C = 0, sum = 0, max = 0, min = 0;
+  double avg = 0;
+  for (I = 0; I <  NewNode->subtasks; I++)
+    {
+      fscanf(filepointer, "%d", &NewNode->Servicetimes[I]);
+    }
+
+  min = NewNode->Servicetimes[0];
+  max = NewNode->Servicetimes[0];
+  for (C =0; C < NewNode->subtasks; C++)
+    {
+      if (NewNode->Servicetimes[C] < min){min = NewNode->Servicetimes[C];}
+      if (NewNode->Servicetimes[C] > max){max = NewNode->Servicetimes[C];}
+      sum = sum + NewNode->Servicetimes[C];
+    }
+  avg = ( (double) sum ) / ( (double) NewNode->subtasks);
+
+  NewNode->Loadbalance =  ( (double) (max - min) ) / ((double) avg);
+
+  NewNode->next = NULL;
+  printf("Creating Arrival node\n" );
+  return NewNode;
+}
+
 
 
 int main (int argc, char ** argv) 
@@ -87,35 +117,7 @@ int main (int argc, char ** argv)
 
   int t1, t0;
 int time1 = 0;
-/*---------------------------Creating ARRIVAL NODE-----------------------------*/  
-ArrivalNode * Arrival_createNode(FILE * filepointer)
 
-{
-  ArrivalNode * NewNode = malloc(sizeof(ArrivalNode));
-  fscanf (filepointer, "%d %d %d " , &NewNode->Time, &NewNode->priority, &NewNode->subtasks);
-  int I = 0 ,C = 0, sum = 0, max = 0, min = 0;
-  double avg = 0;
-  for (I = 0; I <  NewNode->subtasks; I++)
-  {
-    fscanf(filepointer, "%d", &NewNode->Servicetimes[I]);
-  }
-
-  min = NewNode->Servicetimes[0];
-  max = NewNode->Servicetimes[0];
-  for (C =0; C < NewNode->subtasks; C++)
-  {
-    if (NewNode->Servicetimes[C] < min){min = NewNode->Servicetimes[C];}
-    if (NewNode->Servicetimes[C] > max){max = NewNode->Servicetimes[C];}
-    sum = sum + NewNode->Servicetimes[C];
-  }
-  avg = ( (double) sum ) / ( (double) NewNode->subtasks);
-
-  NewNode->Loadbalance =  ( (double) (max - min) ) / ((double) avg);
-
-  NewNode->next = NULL;
-  printf("Creating Arrival node\n" );
-  return NewNode;
-}
 
 /**************************************-MODE 1*************************/
 /***************------------------------MODE 1******---------------*******/
@@ -162,7 +164,7 @@ time = 0;
 time1 = 0;
 
 
-for (i = 1; i < TasksRemain; i++)
+for (j = 1; j < TasksRemain; j++)
 {
   t0 = GetTime(Lambda0);
   t1 = GetTime(Lambda1);
@@ -203,7 +205,11 @@ printf("Time 0 : %d\n", time);
 }
 
 ptr1 = List1_head.next;
-while (ptr1 != NULL){printf("%d\n", ptr1->Time ); ptr1 = ptr1->next;}
+while (ptr1 != NULL)
+{
+printf("ptr1->Time: %d\n", ptr1->Time ); 
+ptr1 = ptr1->next;
+}
 //List1_head 
 //List0_head
 printf("Line 207\n");
