@@ -1,8 +1,6 @@
 // Noah Smith smit1988
 // Vikram Manja vmanja
 
-//HELLO
-
 
 
 
@@ -295,8 +293,10 @@ Average_Load_Balance = (Average_Load_Balance / (TasksRemain0 * 2) );
     Arrival_head.next = Arrival_createNode(fp2);
     ptr1 = Arrival_head.next;
 
+    printf("%d\n" ,NumberofLines);
+
   //  printf("Created first node\n");
-    for (i = 1; i < NumberofLines -1; i++)
+    for (i = 0; i < NumberofLines-1; i++)
     {
       ptr1->next = Arrival_createNode(fp2);
       ptr1 = ptr1->next; 
@@ -807,8 +807,8 @@ Average_Load_Balance = (Average_Load_Balance / (TasksRemain0 * 2) );
    AverageUtil = 1 - (CumulServer / (64*(time - simtime)));
    //AverageLoadFactor = Average_Load_Balance / (((double) );
    AverageQueLength = (Cumulative_wait_time0 + Cumulative_wait_time1)/(time - simtime);
-   AverageWatitingTime1 = Cumulative_wait_time1/( (double) ((NumberofLines-1) / 2.0) );
-   AverageWatitingTime0 = Cumulative_wait_time0/( (double) ((NumberofLines-1) / 2.0) );
+   AverageWatitingTime1 = Cumulative_wait_time1/( (double) ((NumberofLines) / 2.0) );
+   AverageWatitingTime0 = Cumulative_wait_time0/( (double) ((NumberofLines) / 2.0) );
 
    printf("\n\n\n\n");
    printf("avgWaitTime0: %lf\n avgWaitTime1: %lf\n avgQLen: %lf\n avgCPUUtil: %lf\n avgBalance: %lf\n", AverageWatitingTime0, AverageWatitingTime1, AverageQueLength, AverageUtil, Average_Load_Balance);
