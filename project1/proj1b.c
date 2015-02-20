@@ -1,6 +1,8 @@
 // Noah Smith smit1988
 // Vikram Manja vmanja
 
+//HELLO
+
 
 
 
@@ -537,12 +539,12 @@ Average_Load_Balance = (Average_Load_Balance / (TasksRemain0 * 2) );
         
         ptr1 = ptr1->next;
         if (ptr1->next == NULL){break;}
-     //   Indicator++;
+     
         
       }
 
  if (time ==45){printf("Line 324\n");}
-      Indicator=5; // random positive int
+    
       
       
   /* CHECK IF ARRIVAL(s) OCCURED  */
