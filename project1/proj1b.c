@@ -4,6 +4,7 @@
 
 
 
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -456,7 +457,9 @@ Average_Load_Balance = (Average_Load_Balance / (TasksRemain0 * 2) );
       }
 
 /*-----------------------------Check queuelist for priority 1------------------------------------*/
-      if (Arrival_head.next == NULL){time = (Departure_head.next)->Time; printf("\nTime = %d\n\n", time); continue;}
+      //if (Arrival_head.next == NULL){time = (Departure_head.next)->Time; printf("\nTime = %d\n\n", time); continue;}
+      if (Arrival_head.next == NULL){ if (Departure_head.next == NULL){break;} time = (Departure_head.next)->Time; printf("\nTime = %d\n\n", time); continue;}
+
       ptr1 = &Arrival_head;
       while ( (ptr1->next)->Time < time) //|| (( Indicator < 1) && (CurrentNode->Time = time) ) ) 
  
@@ -527,11 +530,13 @@ Average_Load_Balance = (Average_Load_Balance / (TasksRemain0 * 2) );
           ptr1->next = ptr2->next;
           //free(ptr2->subtasks);
           free (ptr2); // Pop arrival node
+          if (ptr1->next == NULL) {break;}
           continue;         
          }
          }
         
         ptr1 = ptr1->next;
+        if (ptr1->next == NULL){break;}
      //   Indicator++;
         
       }
@@ -541,7 +546,7 @@ Average_Load_Balance = (Average_Load_Balance / (TasksRemain0 * 2) );
       
       
   /* CHECK IF ARRIVAL(s) OCCURED  */
-      if ((QueueLength1==0) && (QueueLength0 ==0)) { Indicator = 0;}  
+     // if ((QueueLength1==0) && (QueueLength0 ==0)) { Indicator = 0;}  
 
       if (CurrentNode->Time == time){ if (CurrentNode->priority == 0) {QueueLength0++; Previous_Queue0 = QueueLength0;} if (CurrentNode->priority == 1){QueueLength1++; Previous_Queue1 = QueueLength1;} 
         if(Indicator==0){Indicator--;} }
@@ -554,7 +559,10 @@ Average_Load_Balance = (Average_Load_Balance / (TasksRemain0 * 2) );
       
       j = Indicator;    
 
-    if (Arrival_head.next == NULL){time = (Departure_head.next)->Time; printf("\nTime = %d\n\n", time);continue;}
+    //if (Arrival_head.next == NULL){time = (Departure_head.next)->Time; printf("\nTime = %d\n\n", time);continue;}
+        if (Arrival_head.next == NULL){ if (Departure_head.next == NULL){break;} time = (Departure_head.next)->Time; printf("\nTime = %d\n\n", time); continue;}
+ 
+
        ptr1 = &Arrival_head;
     //  printf("LINE 341\n");
       while ( (ptr1->next)->Time <= time) // || ( ( Indicator < 0) && (CurrentNode->Time = time) ) )  
@@ -656,7 +664,10 @@ Average_Load_Balance = (Average_Load_Balance / (TasksRemain0 * 2) );
 
 ------------Check queuelist for priority 1------------------------------------*/
 
-      if (Arrival_head.next == NULL){time = (Departure_head.next)->Time; printf("\nTime = %d\n\n", time); continue;}
+     // if (Arrival_head.next == NULL){time = (Departure_head.next)->Time; printf("\nTime = %d\n\n", time); continue;}
+          if (Arrival_head.next == NULL){ if (Departure_head.next == NULL){break;} time = (Departure_head.next)->Time; printf("\nTime = %d\n\n", time); continue;}
+
+
       ptr1 = &Arrival_head;
       while ( (ptr1->next)->Time <= time) //|| (( Indicator < 1) && (CurrentNode->Time = time) ) ) 
  
@@ -726,7 +737,7 @@ Average_Load_Balance = (Average_Load_Balance / (TasksRemain0 * 2) );
           ptr1->next = ptr2->next;
           //free(ptr2->subtasks);
           free (ptr2); // Pop arrival node
-          if (ptr2->next == NULL){break;}
+          if (ptr1->next == NULL){break;}
           continue;         
           }         
          }
@@ -745,7 +756,14 @@ Average_Load_Balance = (Average_Load_Balance / (TasksRemain0 * 2) );
 
   //  printf("Time update\n");
 /*-----------------------------Update time and the current arrival node--------------*/
-  while ((CurrentNode->next)->Time <= time) {CurrentNode = CurrentNode->next;} // update current node    
+  
+  if (Arrival_head.next != NULL) 
+  { 
+    if (CurrentNode->next != NULL)
+  {
+    while ((CurrentNode->next)->Time <= time) {CurrentNode = CurrentNode->next;}
+  }
+  } // update current node    
 
  // printf("Updated current node\n");
 
