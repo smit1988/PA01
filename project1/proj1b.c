@@ -45,7 +45,6 @@ int GetTime(float LamOrServ)
 }
 
 
-/*---------------------------Creating ARRIVAL NODE-----------------------------*/
 ArrivalNode * Arrival_createNode(FILE * filepointer)
 
 {
@@ -54,18 +53,18 @@ ArrivalNode * Arrival_createNode(FILE * filepointer)
   int I = 0 ,C = 0, sum = 0, max = 0, min = 0;
   double avg = 0;
   for (I = 0; I <  NewNode->subtasks; I++)
-    {
-      fscanf(filepointer, "%d", &NewNode->Servicetimes[I]);
-    }
+  {
+    fscanf(filepointer, "%d", &NewNode->Servicetimes[I]);
+  }
 
   min = NewNode->Servicetimes[0];
   max = NewNode->Servicetimes[0];
   for (C =0; C < NewNode->subtasks; C++)
-    {
-      if (NewNode->Servicetimes[C] < min){min = NewNode->Servicetimes[C];}
-      if (NewNode->Servicetimes[C] > max){max = NewNode->Servicetimes[C];}
-      sum = sum + NewNode->Servicetimes[C];
-    }
+  {
+    if (NewNode->Servicetimes[C] < min){min = NewNode->Servicetimes[C];}
+    if (NewNode->Servicetimes[C] > max){max = NewNode->Servicetimes[C];}
+    sum = sum + NewNode->Servicetimes[C];
+  }
   avg = ( (double) sum ) / ( (double) NewNode->subtasks);
 
   NewNode->Loadbalance =  ( (double) (max - min) ) / ((double) avg);
@@ -114,9 +113,8 @@ int main (int argc, char ** argv)
 
   int Indicator=0, QueueLength0 = 0, QueueLength1 = 0;
 
-
-  int t1, t0;
 int time1 = 0;
+/*---------------------------Creating ARRIVAL NODE-----------------------------*/  
 
 
 /**************************************-MODE 1*************************/
@@ -130,34 +128,36 @@ int time1 = 0;
       TasksRemain = atoi(argv[4]);
       TasksRemain0 = TasksRemain;
       TasksRemain1 = TasksRemain;
+
+      printf("%d", TasksRemain);
     
 // INITIALIZING First nodes
-ptr2 = List0_head.next;
+
+
+
+List1_head.next = malloc(sizeof(ArrivalNode));
 ptr1 = List1_head.next;
-
-
- printf ("Line 137\n");
-ptr1 = malloc(sizeof(ArrivalNode));
 ptr1->Time = 0;
 ptr1->priority = 1;
 ptr1->subtasks = rand() % 32 + 1;
 for (i=0; i < ptr1->subtasks; i++)
 {
-  ptr1->Servicetimes[i] = GetTime(AvgServiceTime);
+  ptr1->Servicetimes[i] = GetTime(AvgServiceTime);  // ptr on first node
 }
 
 
-printf("Line 151\n");
 
-ptr2 = malloc(sizeof(ArrivalNode));
+
+List0_head.next = malloc(sizeof(ArrivalNode));
+ptr2 = List0_head.next;
 ptr2->Time = 0;
 ptr2->priority = 0;
 ptr2->subtasks = rand() % 32 + 1;
 for (i=0; i < ptr2->subtasks; i++)
 {
-  ptr2->Servicetimes[i] = GetTime(AvgServiceTime);
-}
-
+  ptr2->Servicetimes[i] = GetTime(AvgServiceTime); // ptr on first node
+} 
+                                      
 
 // CREATING ARRIVAL LIST
 time = 0;
@@ -166,12 +166,10 @@ time1 = 0;
 
 for (j = 1; j < TasksRemain; j++)
 {
-  t0 = GetTime(Lambda0);
-  t1 = GetTime(Lambda1);
 
 ptr1->next = malloc(sizeof(ArrivalNode));
 ptr1 = ptr1->next;
-ptr1->Time = t1 + time1;
+ptr1->Time = GetTime(Lambda1) + time1;
 time1 = ptr1->Time;
 ptr1->priority = 1;
 ptr1->subtasks = rand() % 32 + 1;
@@ -181,14 +179,14 @@ for (i=0; i < ptr1->subtasks; i++)
 }
 
 ptr1->next = NULL;
-printf("Time 1: %d\n", time1);
+//printf("Time 1: %d\n", time1);
 ///printf("%d\n", time);
 
-printf ("Line 187\n");
+//printf ("Line 187\n");
 
 ptr2->next = malloc(sizeof(ArrivalNode));
 ptr2 = ptr2->next;
-ptr2->Time = t0 + time;
+ptr2->Time = GetTime(Lambda0) + time;
 time = ptr2->Time;
 ptr2->priority = 0;
 ptr2->subtasks = rand() % 32 + 1;
@@ -200,19 +198,15 @@ for (i=0; i < ptr2->subtasks; i++)
 ptr2->next = NULL;
 
 //printf("%d\n", time1);
-printf("Time 0 : %d\n", time);
+//printf("Time 0 : %d\n", time);
 
 }
 
 ptr1 = List1_head.next;
-while (ptr1 != NULL)
-{
-printf("ptr1->Time: %d\n", ptr1->Time ); 
-ptr1 = ptr1->next;
-}
+while (ptr1 != NULL){printf("%d\n", ptr1->Time ); ptr1 = ptr1->next;}
 //List1_head 
 //List0_head
-printf("Line 207\n");
+//printf("Line 207\n");
 
 ptr1 = List1_head.next;
 ptr1 = ptr1->next; // ptr on 2nd node of list 1
@@ -223,7 +217,7 @@ ptr3 = Arrival_head.next;
 ptr3->next = List1_head.next;
 ptr3 = ptr3->next; // ptr3 on 2nd node of arrival
 
-printf("Line 218\n");
+//printf("Line 218\n");
 
 
 while ( (ptr1 != NULL) && (ptr2 != NULL) )
@@ -251,11 +245,11 @@ else {ptr3->next = ptr2;}
 
 // Calculatin LOAD balance
 
-printf("Line 246\n");
+//printf("Line 246\n");
 
 ptr3 = Arrival_head.next;
 
-while (ptr3 != NULL){printf("%d\n", ptr3->Time); ptr3 = ptr3->next;}
+//while (ptr3 != NULL){printf("%d\n", ptr3->Time); ptr3 = ptr3->next;}
 
 ptr3 = Arrival_head.next;
 
@@ -274,7 +268,7 @@ ptr3 = Arrival_head.next;
 
 Average_Load_Balance = (Average_Load_Balance / (TasksRemain0 * 2) );
 
-printf("Line 265\n");
+//printf("Line 265\n");
 
 } //end if argc > 2
 
@@ -294,17 +288,17 @@ printf("Line 265\n");
 
     NumberofLines = TasksRemain;
 
-    printf("Starting Node creation\n");
+ //   printf("Starting Node creation\n");
   /*-----------------------------------CREATING LINKED LIST OF ARRIVALS--------------------------------*/
     Arrival_head.next = Arrival_createNode(fp2);
     ptr1 = Arrival_head.next;
 
-    printf("Created first node\n");
+  //  printf("Created first node\n");
     for (i = 1; i < NumberofLines -1; i++)
     {
       ptr1->next = Arrival_createNode(fp2);
       ptr1 = ptr1->next; 
-      printf("%d", ptr1->Time);
+      //printf("%d", ptr1->Time);
     }
 
   //  printf("THE # of lines is %d\n\n" ,NumberofLines);
@@ -328,7 +322,7 @@ printf("Line 265\n");
     while ( (Arrival_head.next != NULL) || (Departure_head.next != NULL) ) //while departures/arrivals still exist
     {
       
-    printf("WHILE\n");
+    //printf("WHILE\n");
 
   Cumulative_wait_time0 += (time - Previous_T) * Previous_Queue0;
   Cumulative_wait_time1 += (time - Previous_T) * Previous_Queue1;
@@ -352,22 +346,22 @@ printf("Line 265\n");
           free(Dep_ptr1);
           i++;
 
-          printf("DEPARTING\n");
+      //    printf("DEPARTING\n");
           if (Departure_head.next == NULL){ break;}
         }
       }
 
-      printf("\n\n %d Departures", i);
-      printf("Free Servers = %d\n", Free_Servers);
+    //  printf("\n\n %d Departures", i);
+   //   printf("Free Servers = %d\n", Free_Servers);
    
     if (Arrival_head.next == NULL){ if (Departure_head.next == NULL){break;} time = (Departure_head.next)->Time; printf("\nTime = %d\n\n", time); continue;}
 
-    printf("Free Servers = %d\n", Free_Servers);
+  //  printf("Free Servers = %d\n", Free_Servers);
 
     if (time == 45){ ptr1 = &Arrival_head; 
       while (ptr1->next != NULL)
       { 
-        printf( "     %d" ,(ptr1->next)->Time);
+        //printf( "     %d" ,(ptr1->next)->Time);
         ptr1 = ptr1->next; 
       }
     }
@@ -377,10 +371,10 @@ printf("Line 265\n");
       //printf("%d\n",(ptr1->next)->Time);
       while ( (ptr1->next)->Time < time) // || ( ( Indicator < 0) && (CurrentNode->Time = time) ) )  
       {
-        printf("checking 0\n");
+      //  printf("checking 0\n");
         if ( (ptr1->next)->priority == 0)
         {
-          printf("found 0\n");
+      //    printf("found 0\n");
           
          if ( (ptr1->next)->subtasks <= Free_Servers)
          {
@@ -468,11 +462,11 @@ printf("Line 265\n");
       while ( (ptr1->next)->Time < time) //|| (( Indicator < 1) && (CurrentNode->Time = time) ) ) 
  
       {
-        printf("Checkin 1 \n");
+        //printf("Checkin 1 \n");
 
         if ( (ptr1->next)->priority == 1)
         {
-         printf("Found 1\n");
+      //   printf("Found 1\n");
          if ( (ptr1->next)->subtasks <= Free_Servers)
          {
           ptr2 = ptr1->next;
@@ -487,7 +481,7 @@ printf("Line 265\n");
             worked = 0;
             Dep_ptr1 = &Departure_head;
             newdeptime = time + ptr2->Servicetimes[i];
-            printf("%d\n", newdeptime );
+         //   printf("%d\n", newdeptime );
             
             if (Dep_ptr1->next == NULL)        // if Departures empty
               {
@@ -563,16 +557,16 @@ printf("Line 265\n");
 
     if (Arrival_head.next == NULL){time = (Departure_head.next)->Time; printf("\nTime = %d\n\n", time);continue;}
        ptr1 = &Arrival_head;
-      printf("LINE 341\n");
+    //  printf("LINE 341\n");
       while ( (ptr1->next)->Time <= time) // || ( ( Indicator < 0) && (CurrentNode->Time = time) ) )  
       {
 
      //   if ((ptr1->next)->next == NULL) {}
 
-        printf("checking 0\n");
+     //   printf("checking 0\n");
         if ( (ptr1->next)->priority == 0)
         {
-          printf("found 0\n");
+       //   printf("found 0\n");
           
          if ( (ptr1->next)->subtasks <= Free_Servers)
          {
@@ -600,7 +594,7 @@ printf("Line 265\n");
             worked = 0;
             Dep_ptr1 = &Departure_head;
             newdeptime = time + ptr2->Servicetimes[i];
-            printf("%d\n", newdeptime );
+            //printf("%d\n", newdeptime );
             
             if (Dep_ptr1->next == NULL)        // if Departures empty
               {
@@ -668,11 +662,11 @@ printf("Line 265\n");
       while ( (ptr1->next)->Time <= time) //|| (( Indicator < 1) && (CurrentNode->Time = time) ) ) 
  
       {
-        printf("Checkin 1 \n");
+     //   printf("Checkin 1 \n");
 
         if ( (ptr1->next)->priority == 1)
         {
-         printf("Found 1\n");
+     //    printf("Found 1\n");
          if ( (ptr1->next)->subtasks <= Free_Servers)
          {
           ptr2 = ptr1->next;
@@ -686,7 +680,7 @@ printf("Line 265\n");
             worked = 0;
             Dep_ptr1 = &Departure_head;
             newdeptime = time + ptr2->Servicetimes[i];
-            printf("%d\n", newdeptime);
+           // printf("%d\n", newdeptime);
             
             if (Dep_ptr1->next == NULL)        // if Departures empty
               {
@@ -750,21 +744,21 @@ printf("Line 265\n");
 
  
 
-    printf("Time update\n");
+  //  printf("Time update\n");
 /*-----------------------------Update time and the current arrival node--------------*/
   while ((CurrentNode->next)->Time <= time) {CurrentNode = CurrentNode->next;} // update current node    
 
-  printf("Updated current node\n");
+ // printf("Updated current node\n");
 
   if (Departure_head.next == NULL) 
   {
     CurrentNode=CurrentNode->next;
     time = CurrentNode->Time;
-    printf(" Time = %d\n", time);
+  //  printf(" Time = %d\n", time);
     continue;
   }
 
-  printf("Update current node/time\n");
+  //printf("Update current node/time\n");
 
   if (  ((Departure_head.next)->Time) < ((CurrentNode->next)->Time) )
   {
@@ -778,7 +772,7 @@ printf("Line 265\n");
   }
 
 
-printf(" \nTime = %d\n\n", time);
+//printf(" \nTime = %d\n\n", time);
 
 
     } // end of WHILE
