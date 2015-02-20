@@ -70,7 +70,7 @@ ArrivalNode * Arrival_createNode(FILE * filepointer)
   NewNode->Loadbalance =  ( (double) (max - min) ) / ((double) avg);
 
   NewNode->next = NULL;
-  printf("Creating Arrival node\n" );
+  //printf("Creating Arrival node\n" );
   return NewNode;
 }
 
@@ -115,7 +115,7 @@ int main (int argc, char ** argv)
 
 int time1 = 0;
 /*---------------------------Creating ARRIVAL NODE-----------------------------*/  
-
+ Arrival_head.Time = 10000000;
 
 /**************************************-MODE 1*************************/
 /***************------------------------MODE 1******---------------*******/
@@ -129,7 +129,7 @@ int time1 = 0;
       TasksRemain0 = TasksRemain;
       TasksRemain1 = TasksRemain;
 
-      printf("%d", TasksRemain);
+      //printf("%d", TasksRemain);
     
 // INITIALIZING First nodes
 
@@ -203,7 +203,7 @@ ptr2->next = NULL;
 }
 
 ptr1 = List1_head.next;
-while (ptr1 != NULL){printf("%d\n", ptr1->Time ); ptr1 = ptr1->next;}
+ while (ptr1 != NULL){/*printf("%d\n", ptr1->Time );*/ ptr1 = ptr1->next;}
 //List1_head 
 //List0_head
 //printf("Line 207\n");
@@ -293,7 +293,7 @@ Average_Load_Balance = (Average_Load_Balance / (TasksRemain0 * 2) );
     Arrival_head.next = Arrival_createNode(fp2);
     ptr1 = Arrival_head.next;
 
-    printf("%d\n" ,NumberofLines);
+    //printf("%d\n" ,NumberofLines);
 
   //  printf("Created first node\n");
     for (i = 0; i < NumberofLines-1; i++)
@@ -356,7 +356,7 @@ Average_Load_Balance = (Average_Load_Balance / (TasksRemain0 * 2) );
     //  printf("\n\n %d Departures", i);
    //   printf("Free Servers = %d\n", Free_Servers);
    
-    if (Arrival_head.next == NULL){ if (Departure_head.next == NULL){break;} time = (Departure_head.next)->Time; printf("\nTime = %d\n\n", time); continue;}
+      if (Arrival_head.next == NULL){ if (Departure_head.next == NULL){break;} time = (Departure_head.next)->Time; /*printf("\nTime = %d\n\n", time);*/ continue;}
 
   //  printf("Free Servers = %d\n", Free_Servers);
 
@@ -460,7 +460,7 @@ Average_Load_Balance = (Average_Load_Balance / (TasksRemain0 * 2) );
 
 /*-----------------------------Check queuelist for priority 1------------------------------------*/
       //if (Arrival_head.next == NULL){time = (Departure_head.next)->Time; printf("\nTime = %d\n\n", time); continue;}
-      if (Arrival_head.next == NULL){ if (Departure_head.next == NULL){break;} time = (Departure_head.next)->Time; printf("\nTime = %d\n\n", time); continue;}
+      if (Arrival_head.next == NULL){ if (Departure_head.next == NULL){break;} time = (Departure_head.next)->Time; /*printf("\nTime = %d\n\n", time);*/ continue;}
 
       ptr1 = &Arrival_head;
       while ( (ptr1->next)->Time < time) //|| (( Indicator < 1) && (CurrentNode->Time = time) ) ) 
@@ -543,16 +543,31 @@ Average_Load_Balance = (Average_Load_Balance / (TasksRemain0 * 2) );
         
       }
 
- if (time ==45){printf("Line 324\n");}
+      //if (time ==45){printf("Line 324\n");}
     
       
       
   /* CHECK IF ARRIVAL(s) OCCURED  */
      // if ((QueueLength1==0) && (QueueLength0 ==0)) { Indicator = 0;}  
 
-      if (CurrentNode->Time == time){ if (CurrentNode->priority == 0) {QueueLength0++; Previous_Queue0 = QueueLength0;} if (CurrentNode->priority == 1){QueueLength1++; Previous_Queue1 = QueueLength1;} 
-        if(Indicator==0){Indicator--;} }
-      NextNode = CurrentNode->next;
+ if(CurrentNode->Time == time)
+   { 
+     if(CurrentNode->priority == 0)
+       {
+	 QueueLength0++; 
+	 Previous_Queue0 = QueueLength0;
+       }
+     if(CurrentNode->priority == 1)
+       {
+	 QueueLength1++;
+	 Previous_Queue1 = QueueLength1;
+       } 
+     if(Indicator==0)
+       {
+	 Indicator--;
+       }
+   }
+ NextNode = CurrentNode->next;
       if (NextNode != NULL)
         {
           if (NextNode->Time == CurrentNode->Time) { CurrentNode = CurrentNode->next;  if (CurrentNode->priority == 0) {QueueLength0++; Previous_Queue0 = QueueLength0;} if (CurrentNode->priority == 1){QueueLength1++; Previous_Queue1 = QueueLength1;} 
@@ -562,7 +577,7 @@ Average_Load_Balance = (Average_Load_Balance / (TasksRemain0 * 2) );
       j = Indicator;    
 
     //if (Arrival_head.next == NULL){time = (Departure_head.next)->Time; printf("\nTime = %d\n\n", time);continue;}
-        if (Arrival_head.next == NULL){ if (Departure_head.next == NULL){break;} time = (Departure_head.next)->Time; printf("\nTime = %d\n\n", time); continue;}
+      if (Arrival_head.next == NULL){ if (Departure_head.next == NULL){break;} time = (Departure_head.next)->Time; /*printf("\nTime = %d\n\n", time);*/ continue;}
  
 
        ptr1 = &Arrival_head;
@@ -667,7 +682,7 @@ Average_Load_Balance = (Average_Load_Balance / (TasksRemain0 * 2) );
 ------------Check queuelist for priority 1------------------------------------*/
 
      // if (Arrival_head.next == NULL){time = (Departure_head.next)->Time; printf("\nTime = %d\n\n", time); continue;}
-          if (Arrival_head.next == NULL){ if (Departure_head.next == NULL){break;} time = (Departure_head.next)->Time; printf("\nTime = %d\n\n", time); continue;}
+      if (Arrival_head.next == NULL){ if (Departure_head.next == NULL){break;} time = (Departure_head.next)->Time; /*printf("\nTime = %d\n\n", time);*/ continue;}
 
 
       ptr1 = &Arrival_head;
@@ -810,9 +825,12 @@ Average_Load_Balance = (Average_Load_Balance / (TasksRemain0 * 2) );
    AverageWatitingTime1 = Cumulative_wait_time1/( (double) ((NumberofLines) / 2.0) );
    AverageWatitingTime0 = Cumulative_wait_time0/( (double) ((NumberofLines) / 2.0) );
 
-   printf("\n\n\n\n");
-   printf("avgWaitTime0: %lf\n avgWaitTime1: %lf\n avgQLen: %lf\n avgCPUUtil: %lf\n avgBalance: %lf\n", AverageWatitingTime0, AverageWatitingTime1, AverageQueLength, AverageUtil, Average_Load_Balance);
+   //printf("\n\n\n\n");
+   FILE * fp3;
+   fp3 = fopen("proj1_output","w");
+   fprintf(fp3, "avgWaitTime0: %lf\navgWaitTime1: %lf\navgQLen: %lf\navgCPUUtil: %lf\navgBalance: %lf\n", AverageWatitingTime0, AverageWatitingTime1, AverageQueLength, AverageUtil, Average_Load_Balance);
 
+   fclose(fp3);
 
 
 
