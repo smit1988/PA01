@@ -753,6 +753,7 @@ Average_Load_Balance = (Average_Load_Balance / (TasksRemain0 * 2) );
           ptr1->next = ptr2->next;
           //free(ptr2->subtasks);
           free (ptr2); // Pop arrival node
+          ptr2 = NULL;
           if (ptr1->next == NULL){break;}
           continue;         
           }         
@@ -792,6 +793,7 @@ Average_Load_Balance = (Average_Load_Balance / (TasksRemain0 * 2) );
   }
 
   //printf("Update current node/time\n");
+  if (Arrival_head.next == NULL){time = (Departure_head.next)->Time; continue;}
 
   if (CurrentNode->next == NULL) {time = (Departure_head.next)->Time; continue;}
 
