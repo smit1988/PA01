@@ -278,10 +278,10 @@ Average_Load_Balance = (Average_Load_Balance / (TasksRemain0 * 2) );
    fp2 = fopen(argv[1], "r"); // opening file
 
       while (feof(fp2) == 0) // counting lines
-	 {
-	  fgets(buffer,1023,fp2);
-	  TasksRemain++;
-	 }
+   {
+    fgets(buffer,1023,fp2);
+    TasksRemain++;
+   }
     
     TasksRemain--;
     fseek(fp2, 0, SEEK_SET); // fp2 @ beginning of file
@@ -554,17 +554,17 @@ Average_Load_Balance = (Average_Load_Balance / (TasksRemain0 * 2) );
    { 
      if(CurrentNode->priority == 0)
        {
-	 QueueLength0++; 
-	 Previous_Queue0 = QueueLength0;
+   QueueLength0++; 
+   Previous_Queue0 = QueueLength0;
        }
      if(CurrentNode->priority == 1)
        {
-	 QueueLength1++;
-	 Previous_Queue1 = QueueLength1;
+   QueueLength1++;
+   Previous_Queue1 = QueueLength1;
        } 
      if(Indicator==0)
        {
-	 Indicator--;
+   Indicator--;
        }
    }
  NextNode = CurrentNode->next;
@@ -678,7 +678,6 @@ Average_Load_Balance = (Average_Load_Balance / (TasksRemain0 * 2) );
  //if (time ==45){printf("Line 430\n");}
 
 /*-----------------
-
 ------------Check queuelist for priority 1------------------------------------*/
 
      // if (Arrival_head.next == NULL){time = (Departure_head.next)->Time; printf("\nTime = %d\n\n", time); continue;}
@@ -778,7 +777,7 @@ Average_Load_Balance = (Average_Load_Balance / (TasksRemain0 * 2) );
   { 
     if (CurrentNode->next != NULL)
   {
-    while ((CurrentNode->next)->Time <= time) {CurrentNode = CurrentNode->next;}
+    while ( (CurrentNode->next)->Time <= time)  {CurrentNode = CurrentNode->next;}
   }
   } // update current node    
 
@@ -793,6 +792,8 @@ Average_Load_Balance = (Average_Load_Balance / (TasksRemain0 * 2) );
   }
 
   //printf("Update current node/time\n");
+
+  if (CurrentNode->next == NULL) {time = (Departure_head.next)->Time; continue;}
 
   if (  ((Departure_head.next)->Time) < ((CurrentNode->next)->Time) )
   {
