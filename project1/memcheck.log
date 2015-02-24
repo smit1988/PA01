@@ -1,0 +1,81 @@
+==15250== Memcheck, a memory error detector
+==15250== Copyright (C) 2002-2012, and GNU GPL'd, by Julian Seward et al.
+==15250== Using Valgrind-3.8.1 and LibVEX; rerun with -h for copyright info
+==15250== Command: ./proj1b .4 .24 .2 10000
+==15250== Parent PID: 12760
+==15250== 
+--15250-- 
+--15250-- Valgrind options:
+--15250--    --tool=memcheck
+--15250--    --leak-check=full
+--15250--    --verbose
+--15250--    --log-file=memcheck.log
+--15250-- Contents of /proc/version:
+--15250--   Linux version 2.6.32-504.8.1.el6.x86_64 (mockbuild@x86-002.build.bos.redhat.com) (gcc version 4.4.7 20120313 (Red Hat 4.4.7-9) (GCC) ) #1 SMP Fri Dec 19 12:09:25 EST 2014
+--15250-- Arch and hwcaps: AMD64, amd64-sse3-cx16
+--15250-- Page sizes: currently 4096, max supported 4096
+--15250-- Valgrind library directory: /usr/lib64/valgrind
+--15250-- Reading syms from /home/shay/b/smit1988/ECE264/Solutions/PA01/project1/proj1b
+--15250-- Reading syms from /usr/lib64/valgrind/memcheck-amd64-linux
+--15250--    object doesn't have a dynamic symbol table
+--15250-- Reading syms from /lib64/ld-2.12.so
+--15250-- Scheduler: using generic scheduler lock implementation.
+--15250-- Reading suppressions file: /usr/lib64/valgrind/default.supp
+==15250== embedded gdbserver: reading from /tmp/vgdb-pipe-from-vgdb-to-15250-by-smit1988-on-shay.ecn.purdue.edu
+==15250== embedded gdbserver: writing to   /tmp/vgdb-pipe-to-vgdb-from-15250-by-smit1988-on-shay.ecn.purdue.edu
+==15250== embedded gdbserver: shared mem   /tmp/vgdb-pipe-shared-mem-vgdb-15250-by-smit1988-on-shay.ecn.purdue.edu
+==15250== 
+==15250== TO CONTROL THIS PROCESS USING vgdb (which you probably
+==15250== don't want to do, unless you know exactly what you're doing,
+==15250== or are doing some strange experiment):
+==15250==   /usr/lib64/valgrind/../../bin/vgdb --pid=15250 ...command...
+==15250== 
+==15250== TO DEBUG THIS PROCESS USING GDB: start GDB like this
+==15250==   /path/to/gdb ./proj1b
+==15250== and then give GDB the following command
+==15250==   target remote | /usr/lib64/valgrind/../../bin/vgdb --pid=15250
+==15250== --pid is optional if only one valgrind process is running
+==15250== 
+--15250-- REDIR: 0x37664176d0 (strlen) redirected to 0x38049551 (vgPlain_amd64_linux_REDIR_FOR_strlen)
+--15250-- Reading syms from /usr/lib64/valgrind/vgpreload_core-amd64-linux.so
+--15250-- Reading syms from /usr/lib64/valgrind/vgpreload_memcheck-amd64-linux.so
+--15250-- REDIR: 0x37664174e0 (index) redirected to 0x4a07c30 (index)
+--15250-- REDIR: 0x3766417560 (strcmp) redirected to 0x4a08570 (strcmp)
+--15250-- Reading syms from /lib64/libm-2.12.so
+--15250-- Reading syms from /lib64/libc-2.12.so
+--15250-- REDIR: 0x3766884cd0 (strcasecmp) redirected to 0x480155c (_vgnU_ifunc_wrapper)
+--15250-- REDIR: 0x3766886f90 (strncasecmp) redirected to 0x480155c (_vgnU_ifunc_wrapper)
+--15250-- REDIR: 0x3766882c40 (__GI_strrchr) redirected to 0x4a07ab0 (__GI_strrchr)
+--15250-- REDIR: 0x3766881160 (__GI_strlen) redirected to 0x4a07fb0 (__GI_strlen)
+--15250-- REDIR: 0x3766889670 (memcpy) redirected to 0x4a08b60 (memcpy)
+--15250-- REDIR: 0x376687a640 (malloc) redirected to 0x4a069ac (malloc)
+--15250-- REDIR: 0x376687b520 (free) redirected to 0x4a063a9 (free)
+==15250== Invalid read of size 8
+==15250==    at 0x40223F: main (proj1b.c:796)
+==15250==  Address 0x5081b90 is 144 bytes inside a block of size 152 free'd
+==15250==    at 0x4A06430: free (vg_replace_malloc.c:446)
+==15250==    by 0x40217C: main (proj1b.c:755)
+==15250== 
+--15250-- REDIR: 0x376688aaf0 (strchrnul) redirected to 0x4a09fb0 (strchrnul)
+--15250-- REDIR: 0x3766884500 (mempcpy) redirected to 0x4a0a020 (mempcpy)
+==15250== 
+==15250== HEAP SUMMARY:
+==15250==     in use at exit: 0 bytes in 0 blocks
+==15250==   total heap usage: 349,433 allocs, 349,433 frees, 8,311,480 bytes allocated
+==15250== 
+==15250== All heap blocks were freed -- no leaks are possible
+==15250== 
+==15250== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 6 from 6)
+==15250== 
+==15250== 1 errors in context 1 of 1:
+==15250== Invalid read of size 8
+==15250==    at 0x40223F: main (proj1b.c:796)
+==15250==  Address 0x5081b90 is 144 bytes inside a block of size 152 free'd
+==15250==    at 0x4A06430: free (vg_replace_malloc.c:446)
+==15250==    by 0x40217C: main (proj1b.c:755)
+==15250== 
+--15250-- 
+--15250-- used_suppression:      4 U1004-ARM-_dl_relocate_object
+--15250-- used_suppression:      2 glibc-2.5.x-on-SUSE-10.2-(PPC)-2a
+==15250== 
+==15250== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 6 from 6)
