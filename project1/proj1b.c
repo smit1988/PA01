@@ -793,9 +793,8 @@ Average_Load_Balance = (Average_Load_Balance / (TasksRemain0 * 2) );
   }
 
   //printf("Update current node/time\n");
-  if (Arrival_head.next == NULL){time = (Departure_head.next)->Time; continue;}
+  if (Arrival_head.next == NULL){time = (Departure_head.next)->Time; continue;} //checks if arrivals are over
 
-  if (CurrentNode->next == NULL) {time = (Departure_head.next)->Time; continue;}
 
   if (  ((Departure_head.next)->Time) < ((CurrentNode->next)->Time) )
   {
